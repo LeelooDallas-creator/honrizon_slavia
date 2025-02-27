@@ -7,16 +7,17 @@ import Dropdown from './Nav/Dropdown.astro';
 
 <header>
     <nav class="navbar">
-        <h2><a href="/">{SITE_TITLE}</a></h2>
+        <a href="/"><img src="../../public/img/logo.png" alt="Logo" class="navbar-logo" /></a>
         <div class="internal-links">
             <HeaderLink href="/about">About</HeaderLink>
             <HeaderLink href="./guide">Guide</HeaderLink>
             <div class="dropdown">
                 <a href="#" class="dropdown-toggle">Envie ▼</a>
                 <ul class="dropdown-menu">
-                    <li><a href="#">Web Design</a></li>
-                    <li><a href="#">Développement</a></li>
-                    <li><a href="#">SEO</a></li>
+                    <li><a href="#">Solo</a></li>
+                    <li><a href="#">A deux</a></li>
+                    <li><a href="#">Culture</a></li>
+					 <li><a href="#">Nature</a></li>
                 </ul>
             </div>
         </div>
@@ -28,7 +29,7 @@ import Dropdown from './Nav/Dropdown.astro';
 
 <style>
     .navbar {
-        background-color: white;
+        background-color: black;
         padding: 10px;
         display: flex;
         justify-content: space-between;
@@ -48,7 +49,7 @@ import Dropdown from './Nav/Dropdown.astro';
     }
 
     .navbar a {
-        color: black;
+        color: white;
         text-decoration: none;
         padding: 10px;
     }
