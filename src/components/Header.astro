@@ -1,7 +1,6 @@
 ---
 import NavLink from './Nav/NavLink.astro';
-import { SITE_TITLE } from '../consts';
-import Button from './Button.astro';
+import Button from './Button/Button.astro';
 import Dropdown from './Nav/Dropdown.astro';
 ---
 
@@ -51,39 +50,5 @@ import Dropdown from './Nav/Dropdown.astro';
 
     .navbar a:hover {
         text-decoration: underline;
-    }
-
-    .dropdown {
-        position: relative;
-    }
-
-    .dropdown-menu {
-        display: none;
-        position: absolute;
-        background-color: white;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-        min-width: 160px;
-        top: 100%;
-        left: 0;
-        border-radius: 5px;
-        z-index: 10;
-    }
-
-    .dropdown-menu li {
-        display: block;
-    }
-
-    .dropdown-menu a {
-        color: black;
-        padding: 10px 15px;
-        display: block;
-    }
-
-    .dropdown-menu a:hover {
-        background-color: #f1f1f1;
-    }
-
-    .dropdown-menu.show {
-        display: block;
     }
 </style>
