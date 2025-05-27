@@ -1,91 +1,96 @@
 ---
+interface DropdownProps {
+  title: string;
+}
+
+const { title } = Astro.props as DropdownProps;
+
+const envieItems = [
+  { title: "Solo", href: "/envie/markdown-style-guide" },
+  { title: "A deux", href: "/envie/second-post" },
+  { title: "Culture", href: "/envie/third-post" },
+  { title: "Nature", href: "/envie/using-mdx" }
+];
 ---
-<nav class="navbar">
   <ul>
-      <li class="dropdown envie-dropdown">
-          <a href="#" class="dropdown-toggle">Envie ▼</a>
-          <ul class="dropdown-menu">
-              <li><a href="../../content/envie/">Solo</a></li>
-              <li><a href="/">A deux</a></li>
-              <li><a href="/">Culture</a></li>
-              <li><a href="/">Nature</a></li>
-          </ul>
-      </li>
+    <li class="relative dropdown">
+      <a href="#" class="dropdown-toggle">
+        {title} ▼
+      </a>
+      <ul class="dropdown-menu">
+        {envieItems.map((item) => (
+          <li>
+            <a href={item.href} class="dropdown-link">
+              {item.title}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </li>
   </ul>
-</nav>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.dropdown').forEach((dropdown) => {
+      const toggle = dropdown.querySelector('.dropdown-toggle');
+      const menu = dropdown.querySelector('.dropdown-menu');
+
+      toggle?.addEventListener('click', (e) => {
+        e.preventDefault();
+        menu?.classList.toggle('show');
+      });
+
+      window.addEventListener('click', (e) => {
+        if (!dropdown.contains(e.target as Node)) {
+          menu?.classList.remove('show');
+        }
+      });
+    });
+  });
+</script>
 
 <style>
-  .navbar {
-    color:white;
-    padding: 10px;
-  }
-
-  .navbar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    
-  }
-
-  .navbar li {
-    position: relative;
-  }
-
-  .navbar a {
-    color: white;
+  .dropdown-toggle {
+    display: inline-block;
+    padding: 8px 16px;
     text-decoration: none;
-    padding: 12px 20px;
-    display: block;
+    color: white;
+    cursor: pointer;
   }
 
-  .navbar a:hover {
-    background-color: #fffff;
+  .dropdown-toggle:hover {
     text-decoration: underline;
   }
 
-  .dropdown-menu {
-    display: none;
-    position: absolute;
-    background-color: black;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    min-width: 160px;
-    top: 100%;
-    left: 0;
-    border-radius: 5px;
-    z-index: 10;
-  }
+  .dropdown {
+  position: relative; /* indispensable */
+}
 
-  .dropdown-menu li {
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%; /* juste en dessous du lien */
+  left: 0;
+  width: 192px;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border-radius: 6px;
+  z-index: 50;
+  padding: 0;
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+  .dropdown-link {
     display: block;
+    padding: 8px 16px;
+    font-size: 14px;
+    color: black;
+    text-decoration: none;
   }
 
-  .dropdown-menu a {
-    color: white;
-    padding: 10px 15px;
-    display: block;
-  }
-
-  .dropdown-menu a:hover {
-    color:black;
-    background-color: #f1f1f1;
-  }
-
-  /* Classe pour afficher le menu */
-  .dropdown-menu.show {
-    display: block;
+  .dropdown-link:hover {
+    background-color: #f3f3f3;
   }
 </style>
-
-<script>
-  document.querySelector(".dropdown-toggle").addEventListener("click", function (e) {
-    e.preventDefault(); // Empêche le lien de recharger la page
-    document.querySelector(".dropdown-menu").classList.toggle("show");
-  });
-
-  // Ferme le menu si on clique en dehors
-  window.addEventListener("click", function (e) {
-    if (!document.querySelector(".dropdown").contains(e.target)) {
-      document.querySelector(".dropdown-menu").classList.remove("show");
-    }
-  });
-</script>

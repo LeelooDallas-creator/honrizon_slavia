@@ -5,50 +5,45 @@ import Dropdown from './Nav/Dropdown.astro';
 ---
 
 <header>
-    <nav class="navbar">
-        <a href="/"><img src="/img/logo.png" alt="Logo" class="navbar-logo" /></a>
-        <div class="internal-links">
-            <NavLink href="./about">About</NavLink>
-            <Dropdown />
-            <NavLink href="./guide">Guide</NavLink>
-          
-            </div>
-        </div>
-        <div class="button">
-            <Button/>
-        </div>
-    </nav>
+  <nav class="navbar">
+    <a href="/"><img src="/img/logo.png" alt="Logo" class="navbar-logo" /></a>
+    <div class="internal-links">
+      <NavLink href="/about">About</NavLink>
+      <Dropdown title="Envie" />
+      <NavLink href="/guide">Guide</NavLink>
+    </div>
+    <div class="button">
+      <Button />
+    </div>
+  </nav>
 </header>
 
 <style>
-    .navbar {
-        background-color: black;
-        padding: .5rem 1rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    }
-    .internal-links {
-        display: flex;
-        gap: 15px;
-        align-items: center;
-        margin-left: 20px; /* Marge à gauche pour espacer les liens du logo */
-    }
-
-     .navbar-logo {
-        width: 250px; /* Ajuste cette valeur pour réduire la taille du logo */
-        height: auto; /* Assure que l'aspect du logo reste intact */
-    }
-
-    .navbar a {
-        color: white;
-        text-decoration: none;
-        padding: .5rem;
-        margin-right: 10px; /* Marge entre les liens */
-    }
-
-    .navbar a:hover {
-        text-decoration: underline;
-    }
+  .navbar {
+    background-color: black;
+    padding: 0.5rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+  .internal-links {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-left: 20px; /* Marge à gauche pour espacer les liens du logo */
+  }
+  .navbar-logo {
+    width: 250px; /* Ajuste cette valeur pour réduire la taille du logo */
+    height: auto; /* Assure que l'aspect du logo reste intact */
+  }
+  .navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem;
+    margin-right: 10px; /* Marge entre les liens */
+  }
+  .navbar a:hover {
+    text-decoration: underline;
+  }
 </style>
