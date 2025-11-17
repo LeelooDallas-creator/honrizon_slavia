@@ -6,80 +6,75 @@ interface DropdownProps {
 const { title } = Astro.props as DropdownProps;
 
 const envieItems = [
-  { title: "Solo", href: "/envie/markdown-style-guide" },
-  { title: "A deux", href: "/envie/second-post" },
-  { title: "Culture", href: "/envie/third-post" },
-  { title: "Nature", href: "/envie/using-mdx" }
+  { title: "Solo", href: "/envie/solo" },
+  { title: "A deux", href: "/envie/a-deux" },
+  { title: "Culture", href: "/envie/culture" },
+  { title: "Nature", href: "/envie/nature" }
 ];
 ---
-  <ul>
-      <li class="dropdown envie-dropdown">
-          <a href="#" class="dropdown-toggle">Envie ▼</a>
-          <ul class="dropdown-menu">
-              <li><a href="/envie/solo">Solo</a></li>
-              <li><a href="/envie/a-deux">A deux</a></li>
-              <li><a href="/envie/culture">Culture</a></li>
-              <li><a href="/envie/nature">Nature</a></li>
-          </ul>
-      </li>
-  </ul>
+<ul class="menu">
+  <li class="dropdown">
+    <span class="dropdown-toggle">Envie ▼</span>
 
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.dropdown').forEach((dropdown) => {
-      const toggle = dropdown.querySelector('.dropdown-toggle');
-      const menu = dropdown.querySelector('.dropdown-menu');
-
-  .navbar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-      window.addEventListener('click', (e) => {
-        if (!dropdown.contains(e.target as Node)) {
-          menu?.classList.remove('show');
-        }
-      });
-    });
-  });
-</script>
+    <ul class="dropdown-menu">
+      {envieItems.map(item => (
+        <li>
+          <a class="dropdown-link" href={item.href}>{item.title}</a>
+        </li>
+      ))}
+    </ul>
+  </li>
+</ul>
 
 <style>
-  .dropdown-toggle {
-    display: inline-block;
-    padding: 8px 16px;
-    text-decoration: none;
-    color: white;
-    cursor: pointer;
-  }
-
-  .navbar a:hover {
-    text-decoration: underline;
+  /* Structure */
+  .menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
   }
 
   .dropdown {
-  position: relative; /* indispensable */
-}
+    position: relative;
+    display: inline-block;
+  }
 
-  /* 👇 le menu s'affiche au hover */
+  /* Bouton principal */
+  .dropdown-toggle {
+    padding: 8px 16px;
+    cursor: pointer;
+    color: white;
+    display: inline-block;
+  }
+
+  /* Menu déroulant */
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 160px;
+    background: white;
+    border-radius: 4px;
+    padding: 8px 0;
+    list-style: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  /* Affichage au hover → pas besoin de JS */
   .dropdown:hover .dropdown-menu {
     display: block;
   }
 
-.dropdown-menu.show {
-  display: block;
-}
+  /* Liens du menu */
   .dropdown-link {
     display: block;
     padding: 8px 16px;
-    font-size: 14px;
     color: black;
     text-decoration: none;
   }
 
-  .dropdown-menu a:hover {
-    color:black;
-    background-color: #f1f1f1;
+  .dropdown-link:hover {
+    background-color: #f2f2f2;
   }
 </style>
