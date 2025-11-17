@@ -13,20 +13,15 @@ const envieItems = [
 ];
 ---
   <ul>
-    <li class="relative dropdown">
-      <a href="#" class="dropdown-toggle">
-        {title} ▼
-      </a>
-      <ul class="dropdown-menu">
-        {envieItems.map((item) => (
-          <li>
-            <a href={item.href} class="dropdown-link">
-              {item.title}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </li>
+      <li class="dropdown envie-dropdown">
+          <a href="#" class="dropdown-toggle">Envie ▼</a>
+          <ul class="dropdown-menu">
+              <li><a href="/envie/solo">Solo</a></li>
+              <li><a href="/envie/a-deux">A deux</a></li>
+              <li><a href="/envie/culture">Culture</a></li>
+              <li><a href="/envie/nature">Nature</a></li>
+          </ul>
+      </li>
   </ul>
 
 <script>
@@ -35,10 +30,11 @@ const envieItems = [
       const toggle = dropdown.querySelector('.dropdown-toggle');
       const menu = dropdown.querySelector('.dropdown-menu');
 
-      toggle?.addEventListener('click', (e) => {
-        e.preventDefault();
-        menu?.classList.toggle('show');
-      });
+  .navbar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
 
       window.addEventListener('click', (e) => {
         if (!dropdown.contains(e.target as Node)) {
@@ -58,7 +54,7 @@ const envieItems = [
     cursor: pointer;
   }
 
-  .dropdown-toggle:hover {
+  .navbar a:hover {
     text-decoration: underline;
   }
 
@@ -66,18 +62,10 @@ const envieItems = [
   position: relative; /* indispensable */
 }
 
-.dropdown-menu {
-  display: none;
-  position: absolute;
-  top: 100%; /* juste en dessous du lien */
-  left: 0;
-  width: 192px;
-  background-color: white;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  border-radius: 6px;
-  z-index: 50;
-  padding: 0;
-}
+  /* 👇 le menu s'affiche au hover */
+  .dropdown:hover .dropdown-menu {
+    display: block;
+  }
 
 .dropdown-menu.show {
   display: block;
@@ -90,7 +78,8 @@ const envieItems = [
     text-decoration: none;
   }
 
-  .dropdown-link:hover {
-    background-color: #f3f3f3;
+  .dropdown-menu a:hover {
+    color:black;
+    background-color: #f1f1f1;
   }
 </style>
