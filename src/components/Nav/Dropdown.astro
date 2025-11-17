@@ -1,6 +1,17 @@
 ---
+interface DropdownProps {
+  title: string;
+}
+
+const { title } = Astro.props as DropdownProps;
+
+const envieItems = [
+  { title: "Solo", href: "/envie/markdown-style-guide" },
+  { title: "A deux", href: "/envie/second-post" },
+  { title: "Culture", href: "/envie/third-post" },
+  { title: "Nature", href: "/envie/using-mdx" }
+];
 ---
-<nav class="navbar">
   <ul>
       <li class="dropdown envie-dropdown">
           <a href="#" class="dropdown-toggle">Envie ▼</a>
@@ -12,13 +23,12 @@
           </ul>
       </li>
   </ul>
-</nav>
 
-<style>
-  .navbar {
-    color:white;
-    padding: 10px;
-  }
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.dropdown').forEach((dropdown) => {
+      const toggle = dropdown.querySelector('.dropdown-toggle');
+      const menu = dropdown.querySelector('.dropdown-menu');
 
   .navbar ul {
     list-style: none;
@@ -26,42 +36,46 @@
     margin: 0;
   }
 
-  .navbar li {
-    position: relative;
-  }
+      window.addEventListener('click', (e) => {
+        if (!dropdown.contains(e.target as Node)) {
+          menu?.classList.remove('show');
+        }
+      });
+    });
+  });
+</script>
 
-  .navbar a {
-    color: white;
+<style>
+  .dropdown-toggle {
+    display: inline-block;
+    padding: 8px 16px;
     text-decoration: none;
-    padding: 12px 20px;
-    display: block;
+    color: white;
+    cursor: pointer;
   }
 
   .navbar a:hover {
     text-decoration: underline;
   }
 
-  .dropdown-menu {
-    display: none;
-    position: absolute;
-    background-color: black;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    min-width: 160px;
-    top: 100%;
-    left: 0;
-    border-radius: 5px;
-    z-index: 10;
-  }
+  .dropdown {
+  position: relative; /* indispensable */
+}
 
   /* 👇 le menu s'affiche au hover */
   .dropdown:hover .dropdown-menu {
     display: block;
   }
 
-  .dropdown-menu a {
-    color: white;
-    padding: 10px 15px;
+.dropdown-menu.show {
+  display: block;
+}
+  .dropdown-link {
     display: block;
+    padding: 8px 16px;
+    font-size: 14px;
+    color: black;
+    text-decoration: none;
   }
 
   .dropdown-menu a:hover {
