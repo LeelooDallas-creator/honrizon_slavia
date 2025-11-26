@@ -4,9 +4,15 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "start": "astro dev",
+    "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "lint": "eslint",
+    "unit-tests": "vitest",
+    "e2e-tests": "npx playwright test",
+    "local-ci": "npx prettier . --write && npm run lint && npm run unit-tests && npx playwright install && npm run e2e-tests && npm run build",
+    "commit": "cz",
     "prepare": "husky"
   },
   "dependencies": {
@@ -24,6 +30,8 @@
     "@eslint/js": "^9.39.1",
     "@playwright/test": "^1.57.0",
     "@types/node": "^24.10.1",
+    "commitizen": "^4.3.1",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
     "globals": "^16.5.0",
@@ -38,5 +46,10 @@
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
   }
 }
