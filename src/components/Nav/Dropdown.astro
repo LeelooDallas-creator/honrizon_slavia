@@ -1,80 +1,126 @@
 ---
-interface DropdownProps {
-  title: string;
-}
+import type { DropdownProps } from "@custom-types/DropdownType";
+import FlipCard from "@components/FlipCard/FlipCard.astro";
 
-const { title } = Astro.props as DropdownProps;
-
-const envieItems = [
-  { title: "Solo", href: "/envie/solo" },
-  { title: "A deux", href: "/envie/a-deux" },
-  { title: "Culture", href: "/envie/culture" },
-  { title: "Nature", href: "/envie/nature" }
-];
+const { title, items } = Astro.props as DropdownProps;
 ---
-<ul class="menu">
-  <li class="dropdown">
-    <span class="dropdown-toggle">Envie ▼</span>
 
-    <ul class="dropdown-menu">
-      {envieItems.map(item => (
-        <li>
-          <a class="dropdown-link" href={item.href}>{item.title}</a>
-        </li>
-      ))}
-    </ul>
+<ul class="menu">
+  <li class="nav-dropdown">
+    <span class="dropdown-toggle nav-dropdown-trigger">{title}</span>
+
+    <div class="nav-dropdown-content">
+      <div class="dropdown-inner">
+        <div class="dropdown-grid">
+          {
+            items.map((item) => (
+              <a href={item.href} class="dropdown-item">
+                <h3 class="item-title">{item.subtitle}</h3>
+                <FlipCard {...item} />
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </div>
   </li>
 </ul>
 
 <style>
-  /* Structure */
   .menu {
     list-style: none;
-    margin: 0;
     padding: 0;
   }
 
-  .dropdown {
+  .nav-dropdown {
     position: relative;
     display: inline-block;
   }
 
-  /* Bouton principal */
+  .nav-dropdown:hover .nav-dropdown-content {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* ✅ MODIFIÉ : Le sélecteur cible directement le .dropdown-toggle, qui est maintenant le déclencheur */
   .dropdown-toggle {
-    padding: 8px 16px;
+    padding: 12px;
     cursor: pointer;
     color: white;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    transition: all 0.2s ease;
   }
 
-  /* Menu déroulant */
-  .dropdown-menu {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    min-width: 160px;
-    background: white;
-    border-radius: 4px;
-    padding: 8px 0;
-    list-style: none;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  .dropdown-toggle:hover {
+    opacity: 0.8;
   }
 
-  /* Affichage au hover → pas besoin de JS */
-  .dropdown:hover .dropdown-menu {
-    display: block;
+  .nav-dropdown-content {
+    position: fixed;
+    top: 100px;
+    left: 50%;
+    width: 60dvw;
+    height: 45dvh;
+    transform: translateX(-50%);
+    background-color: white;
+    padding-block: 24px;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.1s ease,
+      visibility 0.1s ease;
+    z-index: 5;
+    border-radius: 12px;
+    box-shadow: 0 0.5rem 10px 0 rgba(88, 91, 91, 0.5);
   }
 
-  /* Liens du menu */
-  .dropdown-link {
-    display: block;
-    padding: 8px 16px;
-    color: black;
+  .dropdown-inner {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-inline: 40px;
+  }
+
+  .dropdown-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 24px;
+  }
+
+  .dropdown-item {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
     text-decoration: none;
+    color: inherit;
+    width: 75%;
+    height: 75%;
   }
 
-  .dropdown-link:hover {
-    background-color: #f2f2f2;
+  .item-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+    text-decoration: underline;
+  }
+
+  .dropdown-item:hover :global(.card) {
+    transform: rotateY(180deg);
+  }
+
+  @media (max-width: 768px) {
+    .nav-dropdown-content {
+      position: absolute;
+      width: 100%;
+      left: 0;
+      transform: none;
+    }
+
+    .dropdown-grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

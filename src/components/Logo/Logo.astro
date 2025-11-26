@@ -1,0 +1,15 @@
+---
+import { Picture } from "astro:assets";
+import logo from "@assets/logo.png";
+---
+
+<Picture src={logo} alt="Logo d'Horizon Slavia" formats={["avif", "webp"]} loading={"eager"} />
+
+<style>
+  picture,
+  img {
+    width: 25%;
+    height: 25%;
+    border-radius: 0%;
+  }
+</style>
