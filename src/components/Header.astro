@@ -1,27 +1,54 @@
 ---
-import NavLink from './Nav/NavLink.astro';
-import Button from './Button/Button.astro';
-import Dropdown from './Nav/Dropdown.astro';
+import Button from "./Button/Button.astro";
+import Dropdown from "./Nav/Dropdown.astro";
+import Logo from "./Logo/Logo.astro";
+
+import legendes from "@assets/logo.jpg";
+import europeCentrale from "@assets/logo.jpg";
+
+const inspirationItems = [
+  {
+    subtitle: "Au coeur des légendes",
+    href: "/legendes",
+    image: legendes,
+    description:
+      "Découvrez des récits oubliés et des mythes fascinants de l'Europe.",
+  },
+];
+
+const carnetItems = [
+  {
+    subtitle: "Europe centrale",
+    href: "/europe-centrale",
+    image: europeCentrale,
+    description: "Récits de voyage et guides pratiques pour l'Europe centrale.",
+  },
+];
 ---
 
-<header>
+<header class="sticky-header">
   <nav class="navbar">
-    <a href="/"><img src="/img/logo.png" alt="Logo" class="navbar-logo" /></a>
+    <a href="/"><Logo /></a>
     <div class="internal-links">
-      <NavLink href="/about">About</NavLink>
-      <Dropdown title="Envie" />
-      <NavLink href="/guide">Guide</NavLink>
-    </div>
-    <div class="button">
+      <Dropdown title="Inspirations" items={inspirationItems} />
+      <Dropdown title="Carnet" items={carnetItems} />
       <Button />
     </div>
   </nav>
 </header>
 
 <style>
+  /* 🛑 Remplacement de .fixed-header par .sticky-header et des propriétés */
+    .sticky-header {
+      /* ✅ CORRECTION : Utilise sticky pour ne se fixer qu'au scroll */
+      position: sticky; 
+      top: 0;          /* C'est là que l'élément s'arrête et se fixe (le haut de la fenêtre) */
+      left: 0;         
+      width: 100%;     
+      z-index: 10;     
+    }
   .navbar {
-    background-color: black;
-    padding: 0.5rem 1rem;
+    background-color: #1b263b;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -29,21 +56,8 @@ import Dropdown from './Nav/Dropdown.astro';
   }
   .internal-links {
     display: flex;
-    gap: 15px;
     align-items: center;
-    margin-left: 20px; /* Marge à gauche pour espacer les liens du logo */
-  }
-  .navbar-logo {
-    width: 250px; /* Ajuste cette valeur pour réduire la taille du logo */
-    height: auto; /* Assure que l'aspect du logo reste intact */
-  }
-  .navbar a {
-    color: white;
-    text-decoration: none;
-    padding: 0.5rem;
-    margin-right: 10px; /* Marge entre les liens */
-  }
-  .navbar a:hover {
-    text-decoration: underline;
+    gap: 50px;
+    margin-inline-end: 100px;
   }
 </style>

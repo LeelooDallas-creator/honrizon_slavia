@@ -1,21 +1,13 @@
 {
   "extends": "astro/tsconfigs/strict",
-  "include": [
-    ".astro/types.d.ts", // Assurez-vous d'inclure ce fichier
-    "**/*",              // Cela inclut tous les fichiers dans le projet, y compris ceux qui ne sont pas explicitement mentionnés
-    "**/*.md",           // Inclut les fichiers Markdown
-    "**/*.mdx",          // Inclut les fichiers MDX
-    "**/*.astro"         // Si vous utilisez des fichiers .astro, assurez-vous de les inclure également
-  ],
   "exclude": ["dist"],
   "compilerOptions": {
     "strictNullChecks": true,
-    "baseUrl": ".", // Ajoutez cette ligne pour définir la base de vos chemins
+    "baseUrl": ".", 
     "paths": {
-      "@content/*": ["src/content/*"],       // Exemple d'alias pour les contenus
-      "@envie/": ["src/content/envie/*"],
-      "@components/*": ["src/components/*"], // Exemple d'alias pour les composants
-      "@assets/*": ["src/assets/*"]          // Exemple d'alias pour les assets
+      "@components/*": ["src/components/*"],
+      "@assets/*": ["src/assets/*"],
+      "@custom-types/*": ["src/types/*"],   
     }
   }
 }
