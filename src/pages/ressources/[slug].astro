@@ -1,0 +1,54 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+export async function getStaticPaths() {
+  const ressources = await getCollection('ressources');
+  return ressources.map((ressource) => ({
+    params: { slug: ressource.id.replace('.md', '') },
+    props: { ressource },
+  }));
+}
+
+const { ressource } = Astro.props;
+const { Content } = await render(ressource);
+---
+
+<!doctype html>
+<html lang="fr">
+	<head>
+		<BaseHead title={ressource.data.title} description={ressource.data.description} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<article class="prose">
+				<div class="title">
+					<h1>{ressource.data.title}</h1>
+					<hr />
+				</div>
+				<Content />
+			</article>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.prose {
+		width: 720px;
+		max-width: calc(100% - 2em);
+		margin: auto;
+		padding: 3em 1em;
+		color: rgb(var(--gray-dark));
+	}
+	.title {
+		margin-bottom: 2em;
+		text-align: center;
+	}
+	.title h1 {
+		margin: 0 0 1em 0;
+	}
+</style>

@@ -1,0 +1,137 @@
+---
+// Composant Hero pour la page d'accueil
+---
+
+<section class="hero">
+	<div class="hero-content">
+		<h1 class="hero-title">Horizon Slavia</h1>
+		<p class="hero-subtitle">Parcourez les sentiers des légendes oubliées</p>
+		<p class="hero-description">
+			Découvrez l'Europe de l'Est à travers ses mythes ancestraux, ses langues fascinantes
+			et ses paysages enchanteurs. Un voyage au cœur de la culture slave.
+		</p>
+		<div class="hero-cta">
+			<a href="/legendes" class="cta-primary">Découvrir les légendes</a>
+			<a href="/europe-centrale" class="cta-secondary">Explorer la région</a>
+		</div>
+	</div>
+</section>
+
+<style>
+	.hero {
+		background: transparent;
+		color: white;
+		padding: 8rem 2rem 6rem 2rem;
+		text-align: center;
+		position: relative;
+		overflow: hidden;
+		margin-top: 0;
+		padding-top: calc(6rem);
+	}
+
+	.hero-content {
+		max-width: 100vw;
+		margin: 0 auto;
+		position: relative;
+		z-index: 1;
+	}
+
+	.hero-title {
+		font-size: 4rem;
+		font-weight: 700;
+		margin: 0 0 1rem 0;
+		background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+		letter-spacing: -0.02em;
+	}
+
+	.hero-subtitle {
+		font-size: 1.5rem;
+		font-weight: 400;
+		margin: 0 0 2rem 0;
+		color: #e0e7ff;
+		font-style: italic;
+	}
+
+	.hero-description {
+		font-size: 1.125rem;
+		line-height: 1.8;
+		margin: 0 0 3rem 0;
+		color: rgba(255, 255, 255, 0.9);
+		max-width: 700px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.hero-cta {
+		display: flex;
+		gap: 1rem;
+		justify-content: center;
+		flex-wrap: wrap;
+	}
+
+	.cta-primary,
+	.cta-secondary {
+		padding: 1rem 2rem;
+		font-size: 1rem;
+		font-weight: 600;
+		text-decoration: none;
+		border-radius: 8px;
+		transition: all 0.3s ease;
+		display: inline-block;
+	}
+
+	.cta-primary {
+		background: var(--accent);
+		color: white;
+		box-shadow: 0 4px 16px rgba(35, 55, 255, 0.3);
+	}
+
+	.cta-primary:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 6px 24px rgba(35, 55, 255, 0.4);
+	}
+
+	.cta-secondary {
+		background: rgba(255, 255, 255, 0.1);
+		color: white;
+		border: 2px solid rgba(255, 255, 255, 0.3);
+		backdrop-filter: blur(10px);
+	}
+
+	.cta-secondary:hover {
+		background: rgba(255, 255, 255, 0.2);
+		border-color: rgba(255, 255, 255, 0.5);
+		transform: translateY(-2px);
+	}
+
+	@media (max-width: 720px) {
+		.hero {
+			padding: 4rem 1.5rem;
+		}
+
+		.hero-title {
+			font-size: 2.5rem;
+		}
+
+		.hero-subtitle {
+			font-size: 1.125rem;
+		}
+
+		.hero-description {
+			font-size: 1rem;
+		}
+
+		.hero-cta {
+			flex-direction: column;
+			align-items: stretch;
+		}
+
+		.cta-primary,
+		.cta-secondary {
+			width: 100%;
+		}
+	}
+</style>
