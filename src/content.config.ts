@@ -23,4 +23,15 @@ const envie = defineCollection({
   }),
 });
 
-export const collections = { blog, envie };
+const ressources = defineCollection({
+  loader: glob({ base: "./src/content/ressources", pattern: "**/*.{md,mdx}" }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    pubDate: z.coerce.date().optional(),
+    updatedDate: z.coerce.date().optional(),
+    heroImage: z.string().optional(),
+  }),
+});
+
+export const collections = { blog, envie, ressources };
