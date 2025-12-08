@@ -1,0 +1,594 @@
+// =============================================
+// MIXINS - HORIZON SLAVIA
+// Reusable SCSS mixins
+// =============================================
+@use 'sass:map';
+@use 'sass:color';
+// Load variables for use in mixins
+@use 'variables' as *;
+
+// =============================================
+// RESPONSIVE
+// =============================================
+
+/// Responsive media query mixin (mobile-first)
+/// Uses the $breakpoints map for consistency and easier maintenance
+/// @param {String} $breakpoint - Breakpoint name (sm, md, lg, xl, 2xl)
+/// @example scss
+///   .container {
+///     padding: $spacing-4;
+///     @include respond-to('md') {
+///       padding: $spacing-8;
+///     }
+///   }
+@mixin respond-to($breakpoint) {
+  @if map.has-key($breakpoints, $breakpoint) {
+    @media (min-width: map.get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  } @else {
+    @warn "Unknown breakpoint: #{$breakpoint}. Available: #{map.keys($breakpoints)}";
+  }
+}
+
+/// Custom breakpoint with specific value
+/// @param {Number} $min-width - Minimum width for media query
+/// @example scss
+///   @include respond-to-custom(50rem) {
+///     display: grid;
+///   }
+@mixin respond-to-custom($min-width) {
+  @media (min-width: $min-width) {
+    @content;
+  }
+}
+
+/// Between two breakpoints
+/// @param {String} $min - Minimum breakpoint name
+/// @param {String} $max - Maximum breakpoint name
+/// @example scss
+///   @include respond-between('md', 'lg') {
+///     display: flex;
+///   }
+@mixin respond-between($min, $max) {
+  $min-value: map.get($breakpoints, $min);
+  $max-value: map.get($breakpoints, $max);
+  
+  @media (min-width: $min-value) and (max-width: calc($max-value - 0.0625em)) {
+    @content;
+  }
+}
+
+// =============================================
+// TYPOGRAPHY
+// =============================================
+
+/// Heading style with Uncial Antiqua font
+/// Aligned with Design System (CDC page 48)
+/// @example scss
+///   h1 {
+///     @include heading-style;
+///     font-size: $font-size-5xl;
+///   }
+@mixin heading-style {
+  font-family: $font-heading;
+  color: $color-primary;
+  line-height: $line-height-tight;
+  font-weight: $font-weight-bold;
+}
+
+/// Body text with Merriweather font
+/// Optimized for readability (persona Marko)
+/// @example scss
+///   p {
+///     @include body-text;
+///   }
+@mixin body-text {
+  font-family: $font-body;
+  line-height: $line-height-relaxed;
+  color: $color-black;
+  font-weight: $font-weight-normal;
+}
+
+/// Responsive typography with mobile and desktop sizes
+/// @param {Number} $mobile-size - Font size on mobile
+/// @param {Number} $desktop-size - Font size on desktop
+/// @example scss
+///   h1 {
+///     @include responsive-typography($font-size-3xl, $font-size-5xl);
+///   }
+@mixin responsive-typography($mobile-size, $desktop-size) {
+  font-size: $mobile-size;
+  
+  @include respond-to('md') {
+    font-size: $desktop-size;
+  }
+}
+
+/// Fluid typography using clamp() for smooth scaling
+/// @param {Number} $min - Minimum font size
+/// @param {String} $preferred - Preferred size (with vw)
+/// @param {Number} $max - Maximum font size
+/// @example scss
+///   h1 {
+///     @include fluid-typography(2rem, 3vw + 1rem, 4rem);
+///   }
+@mixin fluid-typography($min, $preferred, $max) {
+  font-size: clamp($min, $preferred, $max);
+}
+
+// =============================================
+// FLEXBOX UTILITIES
+// =============================================
+
+/// Center content (horizontal + vertical)
+/// @example scss
+///   .hero {
+///     @include flex-center;
+///   }
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/// Space between items
+/// @example scss
+///   .header {
+///     @include flex-between;
+///   }
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/// Column layout
+/// @example scss
+///   .sidebar {
+///     @include flex-column;
+///   }
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+/// Centered column
+/// @example scss
+///   .modal-content {
+///     @include flex-column-center;
+///   }
+@mixin flex-column-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+// =============================================
+// CARD & LAYOUT
+// =============================================
+
+/// Card component with shadow
+/// @param {Number} $padding - Card padding (default: $spacing-6)
+/// @example scss
+///   .info-card {
+///     @include card($spacing-8);
+///   }
+@mixin card($padding: $spacing-6) {
+  background: $color-white;
+  border-radius: $radius-lg;
+  padding: $padding;
+  box-shadow: $shadow-base;
+}
+
+/// Interactive card with hover effect
+/// Perfect for article cards (BF02 - CDC page 8)
+/// @param {Number} $padding - Card padding
+/// @example scss
+///   .article-card {
+///     @include card-interactive;
+///   }
+@mixin card-interactive($padding: $spacing-6) {
+  @include card($padding);
+  @include hover-lift;
+  cursor: pointer;
+  transition: all $transition-base;
+  
+  &:hover {
+    box-shadow: $shadow-lg;
+  }
+}
+
+/// Hover lift animation (for Anna persona - immersive UX)
+/// @param {Number} $distance - Lift distance (default: -0.25rem)
+/// @example scss
+///   .button {
+///     @include hover-lift(-0.5rem);
+///   }
+@mixin hover-lift($distance: -0.25rem) {
+  transition: transform $transition-base, box-shadow $transition-base;
+  
+  &:hover {
+    transform: translateY($distance);
+  }
+}
+
+// =============================================
+// ACCESSIBILITY (WCAG 2.1 AA)
+// Conformité BNF04 (CDC page 11)
+// =============================================
+
+/// Focus visible for keyboard navigation (persona Léa)
+/// @example scss
+///   .link {
+///     @include focus-visible;
+///   }
+@mixin focus-visible {
+  &:focus-visible {
+    outline: 2px solid $color-accent;
+    outline-offset: 2px;
+    border-radius: $radius-sm;
+  }
+  
+  // Remove outline for mouse users (reduce visual noise)
+  &:focus:not(:focus-visible) {
+    outline: none;
+  }
+}
+
+/// Enhanced keyboard navigation with box-shadow
+/// Provides better visual feedback for keyboard users
+/// @example scss
+///   .button {
+///     @include keyboard-navigation;
+///   }
+@mixin keyboard-navigation {
+  @include focus-visible;
+  
+  &:focus-visible {
+    box-shadow: 0 0 0 3px rgba($color-accent, 0.3);
+  }
+}
+
+/// Skip link for screen readers (WCAG 2.1 requirement)
+/// @example scss
+///   .skip-to-content {
+///     @include skip-link;
+///   }
+@mixin skip-link {
+  position: absolute;
+  left: -9999px;
+  z-index: $z-tooltip;
+  padding: $spacing-4 $spacing-6;
+  background: $color-primary;
+  color: $color-white;
+  text-decoration: none;
+  font-weight: $font-weight-bold;
+  border-radius: $radius-base;
+  
+  &:focus {
+    left: 50%;
+    top: $spacing-4;
+    transform: translateX(-50%);
+  }
+}
+
+/// Screen reader only text (visually hidden but accessible)
+/// Alternative to .visually-hidden utility class
+/// @example scss
+///   .label {
+///     @include sr-only;
+///   }
+@mixin sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/// Legacy name for sr-only (backward compatibility)
+@mixin visually-hidden {
+  @include sr-only;
+}
+
+// =============================================
+// PERFORMANCE (Core Web Vitals)
+// Conformité BNF01 (CDC page 10)
+// =============================================
+
+/// Lazy loading images (prevent CLS - Cumulative Layout Shift)
+/// @example scss
+///   .hero-image {
+///     @include img-lazy;
+///   }
+@mixin img-lazy {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  background: $color-neutral-light;
+  
+  &.loaded {
+    animation: fadeIn $transition-base;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/// Aspect ratio (prevent layout shift during image load)
+/// @param {Number} $width - Aspect ratio width
+/// @param {Number} $height - Aspect ratio height
+/// @example scss
+///   .card-image {
+///     @include aspect-ratio(16, 9);
+///   }
+@mixin aspect-ratio($width, $height) {
+  aspect-ratio: #{$width} / #{$height};
+  
+  // Fallback for older browsers
+  @supports not (aspect-ratio: 1 / 1) {
+    position: relative;
+    padding-bottom: calc(#{$height} / #{$width} * 100%);
+    
+    > * {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+/// GPU acceleration for smooth animations
+/// Improves animation performance (60fps target)
+/// @example scss
+///   .hero {
+///     @include gpu-accelerate;
+///   }
+@mixin gpu-accelerate {
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+// =============================================
+// TEXT UTILITIES
+// =============================================
+
+/// Single-line text truncation with ellipsis
+/// @example scss
+///   .title {
+///     @include truncate;
+///   }
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/// Multi-line text truncation (line-clamp)
+/// @param {Number} $lines - Number of lines to show (default: 2)
+/// @example scss
+///   .excerpt {
+///     @include line-clamp(3);
+///   }
+@mixin line-clamp($lines: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// =============================================
+// TRANSITIONS & ANIMATIONS
+// =============================================
+
+/// Smooth transition
+/// @param {String} $property - CSS property to transition (default: all)
+/// @param {Number} $duration - Transition duration (default: $transition-base)
+/// @param {String} $easing - Easing function (default: ease-in-out)
+/// @example scss
+///   .button {
+///     @include transition(background-color, $transition-fast, ease-out);
+///   }
+@mixin transition($property: all, $duration: $transition-base, $easing: ease-in-out) {
+  transition: $property $duration $easing;
+}
+
+// =============================================
+// BUTTON UTILITIES
+// =============================================
+
+/// Reset default button styles
+/// @example scss
+///   .custom-button {
+///     @include button-reset;
+///   }
+@mixin button-reset {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+
+/// Base button styles with consistent padding and appearance
+/// @param {Color} $bg - Background color
+/// @param {Color} $color - Text color
+/// @example scss
+///   .primary-button {
+///     @include button-base($color-secondary, $color-white);
+///   }
+@mixin button-base($bg, $color) {
+  @include button-reset;
+  @include keyboard-navigation;
+  @include transition(all);
+  
+  display: inline-block;
+  padding: $spacing-3 $spacing-6;
+  background: $bg;
+  color: $color;
+  border-radius: $radius-base;
+  font-weight: $font-weight-semibold;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  
+  &:hover:not(:disabled) {
+    background: color.adjust($bg, $lightness: -8%);
+  }
+  
+  &:active:not(:disabled) {
+    transform: translateY(-0.0625rem);
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+// =============================================
+// CONTAINER QUERIES
+// =============================================
+
+/// Container query mixin for intrinsic responsive design
+/// @param {String} $container-name - Container name
+/// @param {Number} $min-width - Minimum width
+/// @example scss
+///   .card {
+///     @include container-query(card-container, 25rem) {
+///       display: flex;
+///     }
+///   }
+@mixin container-query($container-name, $min-width) {
+  @container #{$container-name} (min-width: #{$min-width}) {
+    @content;
+  }
+}
+
+// =============================================
+// GRID UTILITIES
+// =============================================
+
+/// Auto-fit grid with minimum column width
+/// @param {Number} $min-width - Minimum column width (default: 15rem)
+/// @param {Number} $gap - Grid gap (default: $spacing-6)
+/// @example scss
+///   .grid-container {
+///     @include auto-grid(18rem, $spacing-8);
+///   }
+@mixin auto-grid($min-width: 15rem, $gap: $spacing-6) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax($min-width, 1fr));
+  gap: $gap;
+}
+
+/// Auto-fill grid (creates empty columns)
+/// @param {Number} $min-width - Minimum column width
+/// @param {Number} $gap - Grid gap
+@mixin auto-fill-grid($min-width: 15rem, $gap: $spacing-6) {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax($min-width, 1fr));
+  gap: $gap;
+}
+
+// =============================================
+// SHADOWS & DEPTH
+// =============================================
+
+/// Add elevation shadow (Material Design inspired)
+/// @param {Number} $level - Elevation level (1-5)
+/// @example scss
+///   .modal {
+///     @include elevation(4);
+///   }
+@mixin elevation($level: 2) {
+  @if $level == 1 {
+    box-shadow: $shadow-sm;
+  } @else if $level == 2 {
+    box-shadow: $shadow-base;
+  } @else if $level == 3 {
+    box-shadow: $shadow-md;
+  } @else if $level == 4 {
+    box-shadow: $shadow-lg;
+  } @else if $level == 5 {
+    box-shadow: $shadow-xl;
+  } @else {
+    @warn "Elevation level must be between 1 and 5";
+  }
+}
+
+// =============================================
+// OVERLAY
+// =============================================
+
+/// Full-screen overlay (for modals, dropdowns)
+/// @param {Color} $color - Overlay color (default: rgba black)
+/// @param {Number} $opacity - Opacity (default: 0.5)
+/// @example scss
+///   .modal-backdrop {
+///     @include overlay(rgba($color-primary, 0.8));
+///   }
+@mixin overlay($color: rgba($color-black, 0.5), $opacity: 1) {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: $color;
+  opacity: $opacity;
+  z-index: $z-modal-backdrop;
+}
+
+// =============================================
+// SCROLLBAR STYLING
+// =============================================
+
+/// Custom scrollbar (Webkit browsers)
+/// @param {Number} $width - Scrollbar width (default: 0.5rem)
+/// @param {Color} $track-color - Track background color
+/// @param {Color} $thumb-color - Thumb color
+/// @example scss
+///   .scrollable {
+///     @include custom-scrollbar(0.625rem, $color-neutral-light, $color-accent);
+///   }
+@mixin custom-scrollbar(
+  $width: 0.5rem,
+  $track-color: $color-neutral-light,
+  $thumb-color: $color-neutral
+) {
+  // Webkit (Chrome, Safari, Edge)
+  &::-webkit-scrollbar {
+    width: $width;
+    height: $width;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: $track-color;
+    border-radius: $radius-full;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: $thumb-color;
+    border-radius: $radius-full;
+    
+    &:hover {
+      background: color.adjust($thumb-color, $lightness: -10%);
+    }
+  }
+  
+  // Firefox
+  scrollbar-width: thin;
+  scrollbar-color: $thumb-color $track-color;
+}
