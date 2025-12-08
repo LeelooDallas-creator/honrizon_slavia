@@ -1,0 +1,646 @@
+// =============================================
+// MDX PAGES - HORIZON SLAVIA
+// Styles for MDX content pages (articles, carnets, inspirations)
+// =============================================
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// =============================================
+// MDX CONTAINER
+// Main wrapper for MDX content
+// =============================================
+
+.mdx-page {
+  max-width: $max-width-4xl; // ~896px - optimal for reading
+  margin: 0 auto;
+  padding: $spacing-8 $spacing-4;
+  
+  @include respond-to('md') {
+    padding: $spacing-12 $spacing-6;
+  }
+  
+  @include respond-to('lg') {
+    padding: $spacing-16 $spacing-8;
+  }
+}
+
+// =============================================
+// MDX HEADER
+// Title, meta info, hero image
+// =============================================
+
+.mdx-header {
+  margin-bottom: $spacing-12;
+  
+  // Hero image (if present)
+  .mdx-hero-image {
+    width: 100%;
+    height: auto;
+    max-height: 60vh;
+    object-fit: cover;
+    border-radius: $radius-xl;
+    margin-bottom: $spacing-8;
+    box-shadow: $shadow-lg;
+    
+    @include respond-to('md') {
+      border-radius: $radius-2xl;
+    }
+  }
+  
+  // Category badge
+  .mdx-category {
+    display: inline-block;
+    padding: $spacing-2 $spacing-4;
+    background: rgba($color-accent, 0.15);
+    color: $color-accent-dark;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: $radius-base;
+    margin-bottom: $spacing-4;
+  }
+  
+  // Page title
+  .mdx-title {
+    @include heading-style;
+    @include responsive-typography($font-size-4xl, $font-size-6xl);
+    margin-bottom: $spacing-4;
+    line-height: $line-height-tight;
+    color: $color-primary;
+  }
+  
+  // Excerpt/description
+  .mdx-excerpt {
+    @include responsive-typography($font-size-lg, $font-size-xl);
+    color: $color-gray-700;
+    line-height: $line-height-relaxed;
+    margin-bottom: $spacing-6;
+    max-width: 65ch;
+  }
+  
+  // Meta info (date, author, reading time, country)
+  .mdx-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-4;
+    align-items: center;
+    padding-top: $spacing-6;
+    border-top: 0.0625rem solid $color-gray-200;
+    font-size: $font-size-sm;
+    color: $color-gray-600;
+    
+    .mdx-meta-item {
+      display: flex;
+      align-items: center;
+      gap: $spacing-2;
+      
+      // Icon before text (optional)
+      &::before {
+        content: '';
+        width: 1rem;
+        height: 1rem;
+        display: inline-block;
+        background-size: contain;
+        background-repeat: no-repeat;
+      }
+    }
+    
+    .mdx-date::before {
+      content: '📅';
+    }
+    
+    .mdx-author::before {
+      content: '✍️';
+    }
+    
+    .mdx-reading-time::before {
+      content: '⏱️';
+    }
+    
+    .mdx-country {
+      display: inline-flex;
+      align-items: center;
+      gap: $spacing-2;
+      padding: $spacing-1 $spacing-3;
+      background: rgba($color-nature, 0.1);
+      color: $color-nature-dark;
+      border-radius: $radius-base;
+      font-weight: $font-weight-medium;
+    }
+  }
+}
+
+// =============================================
+// MDX CONTENT
+// Main prose content (paragraphs, headings, lists, etc.)
+// =============================================
+
+.mdx-content {
+  @include body-text;
+  max-width: 65ch; // Optimal line length (Marko persona)
+  margin: 0 auto;
+  color: $color-gray-800;
+  
+  // All direct children spacing
+  > * + * {
+    margin-top: $spacing-6;
+  }
+  
+  // ===== HEADINGS =====
+  
+  h2 {
+    @include heading-style;
+    @include responsive-typography($font-size-3xl, $font-size-4xl);
+    margin-top: $spacing-16;
+    margin-bottom: $spacing-6;
+    padding-bottom: $spacing-3;
+    border-bottom: 0.125rem solid $color-accent;
+    
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+  
+  h3 {
+    @include heading-style;
+    @include responsive-typography($font-size-2xl, $font-size-3xl);
+    margin-top: $spacing-12;
+    margin-bottom: $spacing-4;
+  }
+  
+  h4 {
+    @include heading-style;
+    @include responsive-typography($font-size-xl, $font-size-2xl);
+    margin-top: $spacing-10;
+    margin-bottom: $spacing-3;
+  }
+  
+  h5, h6 {
+    @include responsive-typography($font-size-lg, $font-size-xl);
+    margin-top: $spacing-8;
+    margin-bottom: $spacing-2;
+    font-weight: $font-weight-bold;
+    color: $color-primary-dark;
+  }
+  
+  // ===== PARAGRAPHS =====
+  
+  p {
+    line-height: $line-height-relaxed;
+    margin-bottom: $spacing-4;
+    
+    // Drop cap (first letter)
+    &.drop-cap::first-letter {
+      float: left;
+      font-family: $font-heading;
+      font-size: 4em;
+      line-height: 0.8;
+      margin: 0.1em 0.1em 0 0;
+      color: $color-accent;
+    }
+  }
+  
+  // ===== LINKS =====
+  
+  a {
+    color: $color-accent;
+    text-decoration: underline;
+    text-decoration-thickness: 0.0625rem;
+    text-underline-offset: 0.125rem;
+    font-weight: $font-weight-medium;
+    @include transition(color);
+    
+    &:hover {
+      color: $color-accent-dark;
+    }
+    
+    &:focus-visible {
+      @include keyboard-navigation;
+    }
+  }
+  
+  // ===== EMPHASIS =====
+  
+  strong, b {
+    font-weight: $font-weight-bold;
+    color: $color-primary-dark;
+  }
+  
+  em, i {
+    font-style: italic;
+    color: $color-gray-700;
+  }
+  
+  mark {
+    background: rgba($color-accent, 0.2);
+    color: $color-accent-dark;
+    padding: 0.125rem 0.375rem;
+    border-radius: $radius-sm;
+  }
+  
+  // ===== LISTS =====
+  
+  ul, ol {
+    margin-left: $spacing-6;
+    margin-bottom: $spacing-6;
+    
+    li {
+      margin-bottom: $spacing-3;
+      line-height: $line-height-relaxed;
+      
+      // Nested lists
+      ul, ol {
+        margin-top: $spacing-3;
+        margin-bottom: $spacing-3;
+      }
+    }
+  }
+  
+  ul {
+    list-style-type: disc;
+    
+    li::marker {
+      color: $color-accent;
+    }
+  }
+  
+  ol {
+    list-style-type: decimal;
+    
+    li::marker {
+      color: $color-accent;
+      font-weight: $font-weight-bold;
+    }
+  }
+  
+  // ===== BLOCKQUOTES =====
+  
+  blockquote {
+    position: relative;
+    margin: $spacing-10 0;
+    padding: $spacing-6 $spacing-8;
+    padding-left: $spacing-12;
+    border-left: 0.25rem solid $color-accent;
+    background: linear-gradient(
+      135deg,
+      rgba($color-accent, 0.05),
+      rgba($color-gray-100, 0.3)
+    );
+    border-radius: $radius-lg;
+    font-style: italic;
+    color: $color-gray-700;
+    box-shadow: $shadow-sm;
+    
+    // Quote icon
+    &::before {
+      content: '"';
+      position: absolute;
+      top: $spacing-2;
+      left: $spacing-4;
+      font-family: $font-heading;
+      font-size: 4rem;
+      line-height: 1;
+      color: $color-accent;
+      opacity: 0.3;
+    }
+    
+    p {
+      margin-bottom: $spacing-3;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+    
+    cite {
+      display: block;
+      margin-top: $spacing-4;
+      font-size: $font-size-sm;
+      font-style: normal;
+      color: $color-gray-600;
+      font-weight: $font-weight-semibold;
+      
+      &::before {
+        content: '— ';
+      }
+    }
+  }
+  
+  // ===== CODE =====
+  
+  code {
+    font-family: $font-mono;
+    font-size: 0.875em;
+    background: rgba($color-gray-200, 0.6);
+    color: $color-primary-dark;
+    padding: 0.125rem 0.375rem;
+    border-radius: $radius-sm;
+    font-weight: $font-weight-medium;
+  }
+  
+  pre {
+    font-family: $font-mono;
+    font-size: $font-size-sm;
+    background: $color-gray-900;
+    color: $color-gray-100;
+    padding: $spacing-6;
+    border-radius: $radius-lg;
+    overflow-x: auto;
+    margin: $spacing-8 0;
+    box-shadow: $shadow-md;
+    
+    code {
+      background: none;
+      color: inherit;
+      padding: 0;
+      border-radius: 0;
+      font-size: inherit;
+    }
+    
+    // Custom scrollbar
+    @include custom-scrollbar(0.5rem, $color-gray-700, $color-gray-500);
+  }
+  
+  // ===== IMAGES =====
+  
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: $radius-lg;
+    margin: $spacing-10 0;
+    box-shadow: $shadow-md;
+    @include transition(transform, $transition-base);
+    
+    &:hover {
+      transform: scale(1.02);
+      box-shadow: $shadow-lg;
+    }
+  }
+  
+  figure {
+    margin: $spacing-10 0;
+    
+    img {
+      margin-bottom: $spacing-4;
+    }
+    
+    figcaption {
+      text-align: center;
+      font-size: $font-size-sm;
+      color: $color-gray-600;
+      font-style: italic;
+      padding: 0 $spacing-4;
+    }
+  }
+  
+  // ===== HORIZONTAL RULE =====
+  
+  hr {
+    border: none;
+    height: 0.0625rem;
+    background: linear-gradient(
+      to right,
+      transparent,
+      $color-neutral,
+      transparent
+    );
+    margin: $spacing-16 0;
+  }
+  
+  // ===== TABLES =====
+  
+  table {
+    width: 100%;
+    margin: $spacing-8 0;
+    border-collapse: collapse;
+    font-size: $font-size-base;
+    box-shadow: $shadow-sm;
+    border-radius: $radius-lg;
+    overflow: hidden;
+    
+    thead {
+      background: $color-primary;
+      color: $color-white;
+      
+      th {
+        padding: $spacing-4 $spacing-6;
+        text-align: left;
+        font-weight: $font-weight-semibold;
+      }
+    }
+    
+    tbody {
+      tr {
+        border-bottom: 0.0625rem solid $color-gray-200;
+        @include transition(background-color);
+        
+        &:hover {
+          background: rgba($color-accent, 0.05);
+        }
+        
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+      
+      td {
+        padding: $spacing-4 $spacing-6;
+      }
+    }
+  }
+  
+  // ===== CALLOUTS / ADMONITIONS =====
+  
+  .callout {
+    margin: $spacing-8 0;
+    padding: $spacing-6;
+    border-left: 0.25rem solid;
+    border-radius: $radius-lg;
+    background: rgba($color-gray-100, 0.3);
+    
+    &.callout-info {
+      border-color: $color-info;
+      background: rgba($color-info, 0.05);
+      
+      .callout-title {
+        color: $color-info;
+      }
+    }
+    
+    &.callout-warning {
+      border-color: $color-warning;
+      background: rgba($color-warning, 0.05);
+      
+      .callout-title {
+        color: $color-warning-dark;
+      }
+    }
+    
+    &.callout-success {
+      border-color: $color-success;
+      background: rgba($color-success, 0.05);
+      
+      .callout-title {
+        color: $color-success-dark;
+      }
+    }
+    
+    &.callout-error {
+      border-color: $color-error;
+      background: rgba($color-error, 0.05);
+      
+      .callout-title {
+        color: $color-error-dark;
+      }
+    }
+    
+    .callout-title {
+      font-weight: $font-weight-bold;
+      margin-bottom: $spacing-3;
+      font-size: $font-size-lg;
+    }
+    
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+// =============================================
+// MDX GALLERY
+// Image galleries in articles
+// =============================================
+
+.mdx-gallery {
+  margin: $spacing-12 0;
+  
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: $spacing-4;
+    
+    @include respond-to('md') {
+      gap: $spacing-6;
+    }
+    
+    img {
+      width: 100%;
+      height: 15rem;
+      object-fit: cover;
+      border-radius: $radius-lg;
+      box-shadow: $shadow-base;
+      @include transition(transform);
+      cursor: pointer;
+      
+      &:hover {
+        transform: scale(1.05);
+        box-shadow: $shadow-lg;
+      }
+    }
+  }
+}
+
+// =============================================
+// MDX FOOTER
+// Tags, share buttons, related content
+// =============================================
+
+.mdx-footer {
+  margin-top: $spacing-16;
+  padding-top: $spacing-12;
+  border-top: 0.125rem solid $color-gray-200;
+  
+  // Tags
+  .mdx-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-3;
+    margin-bottom: $spacing-8;
+    
+    .tag {
+      display: inline-block;
+      padding: $spacing-2 $spacing-4;
+      background: rgba($color-neutral, 0.15);
+      color: $color-gray-700;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
+      border-radius: $radius-full;
+      @include transition(all);
+      
+      &:hover {
+        background: rgba($color-accent, 0.2);
+        color: $color-accent-dark;
+        transform: translateY(-0.125rem);
+      }
+    }
+  }
+  
+  // PDF download button
+  .mdx-download {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-3;
+    padding: $spacing-4 $spacing-6;
+    background: $color-secondary;
+    color: $color-white;
+    font-weight: $font-weight-semibold;
+    border-radius: $radius-lg;
+    text-decoration: none;
+    box-shadow: $shadow-base;
+    @include transition(all);
+    
+    &:hover {
+      background: $color-secondary-dark;
+      transform: translateY(-0.125rem);
+      box-shadow: $shadow-lg;
+    }
+    
+    &::before {
+      content: '📄';
+      font-size: $font-size-xl;
+    }
+  }
+}
+
+// =============================================
+// RESPONSIVE ADJUSTMENTS
+// =============================================
+
+@include respond-to('md') {
+  .mdx-content {
+    font-size: $font-size-lg;
+  }
+}
+
+// =============================================
+// PRINT STYLES
+// =============================================
+
+@media print {
+  .mdx-page {
+    max-width: 100%;
+    padding: 0;
+  }
+  
+  .mdx-header .mdx-meta,
+  .mdx-footer {
+    display: none;
+  }
+  
+  .mdx-content {
+    max-width: 100%;
+    color: #000;
+    
+    a {
+      color: #000;
+      text-decoration: underline;
+    }
+    
+    blockquote {
+      border-left: 0.125rem solid #000;
+      background: none;
+    }
+  }
+}

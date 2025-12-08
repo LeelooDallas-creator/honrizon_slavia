@@ -1,0 +1,450 @@
+// =============================================
+// FUNCTIONS - HORIZON SLAVIA
+// Utility functions for SCSS calculations
+// =============================================
+
+// NOTE: This file requires variables to be loaded first
+// Import order in main.scss:
+// 1. @use 'abstracts/variables' as *;
+// 2. @use 'abstracts/functions' as *;
+// 3. @use 'abstracts/mixins' as *;
+
+// =============================================
+// UNIT CONVERSION
+// =============================================
+
+/// Convert px to rem (16px base - browser default)
+/// Use this only for legacy designs that provide values in pixels
+/// @param {Number} $px - Pixel value to convert
+/// @return {Number} - Value in rem
+/// @example scss
+///   width: rem(320); // 20rem
+@function rem($px) {
+  @return calc($px / 16) * 1rem;
+}
+
+/// Convert viewport width percentage to vw
+/// @param {Number} $target - Target size in pixels
+/// @param {Number} $context [1920] - Design viewport width in pixels
+/// @return {Number} - Value in vw
+/// @example scss
+///   width: vw(960); // 50vw (on 1920px design)
+@function vw($target, $context: 1920) {
+  @return calc($target / $context) * 100vw;
+}
+
+/// Convert viewport height percentage to vh
+/// @param {Number} $target - Target size in pixels
+/// @param {Number} $context [1080] - Design viewport height in pixels
+/// @return {Number} - Value in vh
+/// @example scss
+///   height: vh(540); // 50vh (on 1080px design)
+@function vh($target, $context: 1080) {
+  @return calc($target / $context) * 100vh;
+}
+
+// =============================================
+// SPACING CALCULATIONS
+// =============================================
+
+/// Calculate spacing based on base unit (1rem = 16px)
+/// @param {Number} $multiplier - Multiplier for base spacing
+/// @return {Number} - Calculated spacing in rem
+/// @example scss
+///   padding: spacing(2); // 2rem
+///   margin: spacing(0.5); // 0.5rem
+@function spacing($multiplier) {
+  @return $spacing-4 * $multiplier;
+}
+
+/// Get spacing value from predefined scale
+/// @param {String|Number} $key - Spacing key (0-32)
+/// @return {Number} - Spacing value
+/// @example scss
+///   padding: get-spacing(4); // Returns $spacing-4
+///   margin: get-spacing(8); // Returns $spacing-8
+@function get-spacing($key) {
+  $spacings: (
+    0: $spacing-0,
+    1: $spacing-1,
+    2: $spacing-2,
+    3: $spacing-3,
+    4: $spacing-4,
+    5: $spacing-5,
+    6: $spacing-6,
+    8: $spacing-8,
+    10: $spacing-10,
+    12: $spacing-12,
+    16: $spacing-16,
+    20: $spacing-20,
+    24: $spacing-24,
+    32: $spacing-32
+  );
+
+  @if map-has-key($spacings, $key) {
+    @return map-get($spacings, $key);
+  } @else {
+    @warn "Spacing key '#{$key}' not found. Available keys: #{map-keys($spacings)}";
+    @return $spacing-4; // Fallback to base spacing
+  }
+}
+
+// =============================================
+// COLOR MANIPULATION
+// =============================================
+
+/// Lighten a color by a specified amount
+/// @param {Color} $color - Base color
+/// @param {Number} $amount [10%] - Amount to lighten (0-100%)
+/// @return {Color} - Lightened color
+/// @example scss
+///   background: lighten-color($color-primary, 15%);
+@function lighten-color($color, $amount: 10%) {
+  @return lighten($color, $amount);
+}
+
+/// Darken a color by a specified amount
+/// @param {Color} $color - Base color
+/// @param {Number} $amount [10%] - Amount to darken (0-100%)
+/// @return {Color} - Darkened color
+/// @example scss
+///   background: darken-color($color-secondary, 8%);
+@function darken-color($color, $amount: 10%) {
+  @return darken($color, $amount);
+}
+
+/// Add alpha channel to color (transparency)
+/// @param {Color} $color - Base color
+/// @param {Number} $opacity - Opacity value (0-1)
+/// @return {Color} - Color with alpha channel
+/// @example scss
+///   background: alpha($color-primary, 0.75);
+@function alpha($color, $opacity) {
+  @return rgba($color, $opacity);
+}
+
+/// Get color from color map (with validation)
+/// @param {String} $key - Color name
+/// @return {Color} - Color value
+/// @example scss
+///   color: color('accent'); // Returns $color-accent
+@function color($key) {
+  $colors: (
+    'primary': $color-primary,
+    'primary-dark': $color-primary-dark,
+    'primary-light': $color-primary-light,
+    'secondary': $color-secondary,
+    'secondary-dark': $color-secondary-dark,
+    'secondary-light': $color-secondary-light,
+    'accent': $color-accent,
+    'accent-dark': $color-accent-dark,
+    'accent-light': $color-accent-light,
+    'nature': $color-nature,
+    'nature-dark': $color-nature-dark,
+    'nature-light': $color-nature-light,
+    'neutral': $color-neutral,
+    'neutral-dark': $color-neutral-dark,
+    'neutral-light': $color-neutral-light,
+    'white': $color-white,
+    'black': $color-black,
+    'error': $color-error,
+    'success': $color-success,
+    'warning': $color-warning,
+    'info': $color-info
+  );
+
+  @if map-has-key($colors, $key) {
+    @return map-get($colors, $key);
+  } @else {
+    @warn "Color '#{$key}' not found in $colors map. Available colors: #{map-keys($colors)}";
+    @return $color-primary; // Fallback to primary
+  }
+}
+
+/// Mix two colors
+/// @param {Color} $color1 - First color
+/// @param {Color} $color2 - Second color
+/// @param {Number} $weight [50%] - Weight of first color (0-100%)
+/// @return {Color} - Mixed color
+/// @example scss
+///   background: mix-colors($color-primary, $color-accent, 70%);
+@function mix-colors($color1, $color2, $weight: 50%) {
+  @return mix($color1, $color2, $weight);
+}
+
+// =============================================
+// TYPOGRAPHY
+// =============================================
+
+/// Get font size from predefined scale
+/// @param {String} $size - Size key (xs, sm, base, lg, xl, 2xl, 3xl, 4xl, 5xl, 6xl, 7xl)
+/// @return {Number} - Font size value
+/// @example scss
+///   font-size: font-size('xl'); // Returns $font-size-xl
+@function font-size($size) {
+  $sizes: (
+    'xs': $font-size-xs,
+    'sm': $font-size-sm,
+    'base': $font-size-base,
+    'lg': $font-size-lg,
+    'xl': $font-size-xl,
+    '2xl': $font-size-2xl,
+    '3xl': $font-size-3xl,
+    '4xl': $font-size-4xl,
+    '5xl': $font-size-5xl,
+    '6xl': $font-size-6xl,
+    '7xl': $font-size-7xl
+  );
+
+  @if map-has-key($sizes, $size) {
+    @return map-get($sizes, $size);
+  } @else {
+    @warn "Font size '#{$size}' not found. Available sizes: #{map-keys($sizes)}";
+    @return $font-size-base; // Fallback to base
+  }
+}
+
+// =============================================
+// LAYOUT HELPERS
+// =============================================
+
+/// Calculate aspect ratio padding
+/// @param {Number} $width - Aspect ratio width
+/// @param {Number} $height - Aspect ratio height
+/// @return {Number} - Padding percentage
+/// @example scss
+///   padding-bottom: aspect-ratio(16, 9); // 56.25%
+@function aspect-ratio($width, $height) {
+  @return calc($height / $width) * 100%;
+}
+
+/// Calculate container max-width based on breakpoint
+/// @param {String} $breakpoint - Breakpoint key
+/// @param {Number} $padding [2rem] - Container horizontal padding
+/// @return {Number} - Container width
+/// @example scss
+///   max-width: container-width('lg', 4rem);
+@function container-width($breakpoint, $padding: 2rem) {
+  $breakpoint-value: map-get($breakpoints, $breakpoint);
+  @if $breakpoint-value {
+    @return calc($breakpoint-value - ($padding * 2));
+  } @else {
+    @warn "Breakpoint '#{$breakpoint}' not found. Available: #{map-keys($breakpoints)}";
+    @return 100%;
+  }
+}
+
+// =============================================
+// MATH UTILITIES
+// =============================================
+
+/// Clamp a value between min and max
+/// @param {Number} $value - Value to clamp
+/// @param {Number} $min - Minimum value
+/// @param {Number} $max - Maximum value
+/// @return {Number} - Clamped value
+/// @example scss
+///   width: clamp-value(200, 100, 300); // 200
+@function clamp-value($value, $min, $max) {
+  @return max($min, min($value, $max));
+}
+
+/// Calculate percentage
+/// @param {Number} $value - Current value
+/// @param {Number} $total - Total value
+/// @return {Number} - Percentage
+/// @example scss
+///   width: percentage(3, 12); // 25%
+@function percentage($value, $total) {
+  @return calc($value / $total) * 100%;
+}
+
+/// Strip unit from value
+/// @param {Number} $value - Value with unit
+/// @return {Number} - Unitless value
+/// @example scss
+///   $value: strip-unit(16px); // 16
+@function strip-unit($value) {
+  @return calc($value / ($value * 0 + 1));
+}
+
+// =============================================
+// RESPONSIVE HELPERS
+// =============================================
+
+/// Get breakpoint value from map
+/// @param {String} $name - Breakpoint name (sm, md, lg, xl, 2xl)
+/// @return {Number} - Breakpoint value
+/// @example scss
+///   $tablet-width: breakpoint('md'); // 48em
+@function breakpoint($name) {
+  @if map-has-key($breakpoints, $name) {
+    @return map-get($breakpoints, $name);
+  } @else {
+    @warn "Breakpoint '#{$name}' not found. Available: #{map-keys($breakpoints)}";
+    @return 0;
+  }
+}
+
+// =============================================
+// Z-INDEX MANAGEMENT
+// =============================================
+
+/// Get z-index value from scale
+/// @param {String} $layer - Layer name
+/// @return {Number} - z-index value
+/// @example scss
+///   z-index: z-index('modal'); // 1050
+@function z-index($layer) {
+  $z-layers: (
+    'dropdown': $z-dropdown,
+    'sticky': $z-sticky,
+    'fixed': $z-fixed,
+    'modal-backdrop': $z-modal-backdrop,
+    'modal': $z-modal,
+    'popover': $z-popover,
+    'tooltip': $z-tooltip
+  );
+
+  @if map-has-key($z-layers, $layer) {
+    @return map-get($z-layers, $layer);
+  } @else {
+    @warn "Z-index layer '#{$layer}' not found. Available: #{map-keys($z-layers)}";
+    @return 1;
+  }
+}
+
+// =============================================
+// BORDER RADIUS HELPERS
+// =============================================
+
+/// Get border radius value from scale
+/// @param {String} $size - Radius size key
+/// @return {Number} - Border radius value
+/// @example scss
+///   border-radius: radius('lg'); // 0.5rem
+@function radius($size) {
+  $radii: (
+    'none': $radius-none,
+    'sm': $radius-sm,
+    'base': $radius-base,
+    'md': $radius-md,
+    'lg': $radius-lg,
+    'xl': $radius-xl,
+    '2xl': $radius-2xl,
+    'full': $radius-full
+  );
+
+  @if map-has-key($radii, $size) {
+    @return map-get($radii, $size);
+  } @else {
+    @warn "Radius '#{$size}' not found. Available: #{map-keys($radii)}";
+    @return $radius-base; // Fallback
+  }
+}
+
+// =============================================
+// SHADOW HELPERS
+// =============================================
+
+/// Get shadow value from scale
+/// @param {String} $size - Shadow size key
+/// @return {String} - Box shadow value
+/// @example scss
+///   box-shadow: shadow('lg');
+@function shadow($size) {
+  $shadows: (
+    'sm': $shadow-sm,
+    'base': $shadow-base,
+    'md': $shadow-md,
+    'lg': $shadow-lg,
+    'xl': $shadow-xl
+  );
+
+  @if map-has-key($shadows, $size) {
+    @return map-get($shadows, $size);
+  } @else {
+    @warn "Shadow '#{$size}' not found. Available: #{map-keys($shadows)}";
+    @return $shadow-base; // Fallback
+  }
+}
+
+// =============================================
+// TRANSITION HELPERS
+// =============================================
+
+/// Get transition duration from scale
+/// @param {String} $speed - Speed key (fast, base, slow)
+/// @return {Number} - Transition duration
+/// @example scss
+///   transition: all transition-duration('fast');
+@function transition-duration($speed: 'base') {
+  $durations: (
+    'fast': $transition-fast,
+    'base': $transition-base,
+    'slow': $transition-slow
+  );
+
+  @if map-has-key($durations, $speed) {
+    @return map-get($durations, $speed);
+  } @else {
+    @warn "Transition speed '#{$speed}' not found. Available: #{map-keys($durations)}";
+    @return $transition-base;
+  }
+}
+
+// =============================================
+// EASING FUNCTIONS
+// =============================================
+
+/// Custom easing curves for smooth animations
+/// @param {String} $ease - Easing name
+/// @return {String} - Cubic-bezier value
+/// @example scss
+///   transition: transform 300ms ease('smooth');
+@function ease($ease) {
+  $easings: (
+    'in-quad': cubic-bezier(0.55, 0.085, 0.68, 0.53),
+    'out-quad': cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    'in-out-quad': cubic-bezier(0.455, 0.03, 0.515, 0.955),
+    'in-cubic': cubic-bezier(0.55, 0.055, 0.675, 0.19),
+    'out-cubic': cubic-bezier(0.215, 0.61, 0.355, 1),
+    'in-out-cubic': cubic-bezier(0.645, 0.045, 0.355, 1),
+    'in-quart': cubic-bezier(0.895, 0.03, 0.685, 0.22),
+    'out-quart': cubic-bezier(0.165, 0.84, 0.44, 1),
+    'in-out-quart': cubic-bezier(0.77, 0, 0.175, 1),
+    'smooth': cubic-bezier(0.4, 0, 0.2, 1), // Material Design
+    'bounce': cubic-bezier(0.68, -0.55, 0.265, 1.55)
+  );
+
+  @if map-has-key($easings, $ease) {
+    @return map-get($easings, $ease);
+  } @else {
+    @warn "Easing '#{$ease}' not found. Using ease-in-out as fallback.";
+    @return ease-in-out;
+  }
+}
+
+
+// =============================================
+// USAGE EXAMPLES
+// =============================================
+
+// .hero {
+//   max-width: rem(1280);           // Convert px to rem
+//   padding: spacing(8);            // Dynamic spacing
+//   background: alpha(color('primary'), 0.9);
+//   border-radius: radius('lg');
+//   box-shadow: shadow('xl');
+//   z-index: z-index('modal');
+//   transition: transform transition-duration('fast') ease('smooth');
+// }
+//
+// .card-image {
+//   padding-bottom: aspect-ratio(16, 9); // 56.25%
+// }
+//
+// .button {
+//   font-size: font-size('lg');
+//   background: lighten-color($color-primary, 10%);
+// }

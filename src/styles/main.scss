@@ -1,0 +1,248 @@
+// =============================================
+// MAIN.SCSS - HORIZON SLAVIA
+// Main entry point for all styles
+// =============================================
+
+// IMPORTANT: Load order matters!
+// 1. Abstracts (variables, functions, mixins) - No CSS output
+// 2. Base (reset, typography) - Foundation styles
+// 3. Layout (containers, grid) - Structural elements
+// 4. Components (buttons, cards, etc.) - Reusable UI
+// 5. Utilities (helper classes) - Single-purpose classes
+
+// =============================================
+// 1. ABSTRACTS
+// Design tokens and utilities (no CSS output)
+// =============================================
+
+@use 'abstracts' as *;
+
+// =============================================
+// 2. BASE
+// Reset and foundational typography
+// =============================================
+
+@use 'base/reset';
+@use 'base/typography';
+
+// =============================================
+// 3. LAYOUT
+// Containers and structural elements
+// =============================================
+
+@use 'layout/containers';
+
+// TODO: Add when created
+// @use 'layout/header';
+// @use 'layout/footer';
+// @use 'layout/navigation';
+
+// =============================================
+// 3.5 PAGES
+// Specific page styles
+// =============================================
+
+@use 'pages/mdx';
+
+// =============================================
+// 4. COMPONENTS
+// Reusable UI components (to be added as needed)
+// =============================================
+
+// TODO: Add your components here
+// Examples:
+// @use 'components/buttons';
+// @use 'components/cards';
+// @use 'components/hero';
+// @use 'components/article-card';
+// @use 'components/forms';
+// @use 'components/modals';
+// @use 'components/navigation';
+
+// =============================================
+// 5. UTILITIES
+// Helper classes and overrides
+// =============================================
+
+// Note: Many utilities are already defined in typography.scss
+// These are additional global utilities
+
+/// Screen reader only (already in reset.scss, but adding here for clarity)
+.sr-only {
+  @include sr-only;
+}
+
+/// Text alignment
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+// =============================================
+// FORM ELEMENTS
+// Global form styling
+// =============================================
+
+/// Text inputs and textareas
+textarea,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="url"],
+input[type="number"],
+input[type="date"] {
+  width: 100%;
+  font-size: $font-size-base;
+  font-family: $font-body;
+  padding: $spacing-3 $spacing-4;
+  border: 0.0625rem solid $color-gray-300;
+  border-radius: $radius-base;
+  background: $color-white;
+  color: $color-black;
+  @include transition(border-color);
+  
+  // Focus state (accessibility - persona Léa)
+  &:focus {
+    outline: none;
+    border-color: $color-accent;
+    box-shadow: 0 0 0 0.1875rem rgba($color-accent, 0.2);
+  }
+  
+  // Disabled state
+  &:disabled {
+    background: $color-gray-100;
+    color: $color-gray-500;
+    cursor: not-allowed;
+  }
+  
+  // Placeholder styling
+  &::placeholder {
+    color: $color-gray-400;
+    opacity: 1;
+  }
+}
+
+/// Select dropdowns
+select {
+  width: 100%;
+  font-size: $font-size-base;
+  font-family: $font-body;
+  padding: $spacing-3 $spacing-4;
+  border: 0.0625rem solid $color-gray-300;
+  border-radius: $radius-base;
+  background: $color-white;
+  cursor: pointer;
+  @include transition(border-color);
+  
+  &:focus {
+    outline: none;
+    border-color: $color-accent;
+    box-shadow: 0 0 0 0.1875rem rgba($color-accent, 0.2);
+  }
+}
+
+/// Checkboxes and radio buttons
+input[type="checkbox"],
+input[type="radio"] {
+  width: auto;
+  margin-right: $spacing-2;
+  cursor: pointer;
+  
+  &:focus-visible {
+    @include keyboard-navigation;
+  }
+}
+
+/// Labels
+label {
+  display: block;
+  margin-bottom: $spacing-2;
+  font-weight: $font-weight-medium;
+  color: $color-gray-800;
+}
+
+// =============================================
+// TABLES
+// Global table styling
+// =============================================
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: $font-size-base;
+  
+  th,
+  td {
+    padding: $spacing-3 $spacing-4;
+    text-align: left;
+    border-bottom: 0.0625rem solid $color-gray-200;
+  }
+  
+  thead th {
+    font-weight: $font-weight-semibold;
+    color: $color-primary;
+    background-color: $color-gray-50;
+    border-bottom: 0.125rem solid $color-gray-300;
+  }
+  
+  tbody tr {
+    @include transition(background-color);
+    
+    &:hover {
+      background-color: $color-gray-50;
+    }
+  }
+}
+
+// =============================================
+// IMAGES
+// Global image styling
+// =============================================
+
+img {
+  border-radius: $radius-base;
+  
+  &.rounded {
+    border-radius: $radius-full;
+  }
+  
+  &.rounded-lg {
+    border-radius: $radius-lg;
+  }
+}
+
+// =============================================
+// BUTTONS (Basic styling)
+// =============================================
+
+button,
+.button {
+  @include button-base($color-accent, $color-white);
+  
+  &.button-primary {
+    background: $color-primary;
+    color: $color-white;
+    
+    &:hover:not(:disabled) {
+      background: $color-primary-dark;
+    }
+  }
+  
+  &.button-secondary {
+    background: $color-secondary;
+    color: $color-white;
+    
+    &:hover:not(:disabled) {
+      background: $color-secondary-dark;
+    }
+  }
+}

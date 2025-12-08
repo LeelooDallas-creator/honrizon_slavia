@@ -1,0 +1,452 @@
+// =============================================
+// CONTAINERS - HORIZON SLAVIA
+// Layout container styles with container queries
+// =============================================
+
+// Load variables and mixins
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// =============================================
+// MAIN CONTENT CONTAINER
+// =============================================
+
+/// Main element - Primary content area
+main {
+  width: 100%;
+  max-width: $max-width-3xl;
+  margin-left: auto;
+  margin-right: auto;
+  padding: $spacing-4;
+  
+  // Mobile-first approach (larger padding on desktop)
+  @include respond-to('md') {
+    padding: $spacing-8 $spacing-6;
+  }
+  
+  @include respond-to('lg') {
+    padding: $spacing-12 $spacing-8;
+  }
+}
+
+// =============================================
+// CONTAINER VARIANTS
+// =============================================
+
+/// Base container with container queries support
+/// Use this for components that need intrinsic responsive design
+.container {
+  container-type: inline-size;
+  container-name: main-container;
+  width: 100%;
+  max-width: $max-width-7xl;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $container-padding;
+  padding-right: $container-padding;
+  
+  @include respond-to('lg') {
+    padding-left: $container-padding-lg;
+    padding-right: $container-padding-lg;
+  }
+}
+
+/// Small container (articles, forms)
+/// Max width: 48rem (~768px)
+.container-sm {
+  @extend .container;
+  max-width: $max-width-3xl;
+}
+
+/// Medium container (blog posts, documentation)
+/// Max width: 64rem (~1024px)
+.container-md {
+  @extend .container;
+  max-width: $max-width-5xl;
+}
+
+/// Large container (dashboards, galleries)
+/// Max width: 72rem (~1152px)
+.container-lg {
+  @extend .container;
+  max-width: $max-width-6xl;
+}
+
+/// Extra large container (full-width layouts)
+/// Max width: 80rem (~1280px)
+.container-xl {
+  @extend .container;
+  max-width: $max-width-7xl;
+}
+
+/// Fluid container (no max-width, only padding)
+.container-fluid {
+  width: 100%;
+  padding-left: $container-padding;
+  padding-right: $container-padding;
+  
+  @include respond-to('lg') {
+    padding-left: $container-padding-lg;
+    padding-right: $container-padding-lg;
+  }
+}
+
+// =============================================
+// SECTIONS
+// =============================================
+
+/// Section - Vertical spacing for page sections
+section {
+  padding-top: $spacing-8;
+  padding-bottom: $spacing-8;
+  
+  // Mobile-first: larger spacing on tablet+
+  @include respond-to('md') {
+    padding-top: $spacing-12;
+    padding-bottom: $spacing-12;
+  }
+  
+  @include respond-to('lg') {
+    padding-top: $spacing-16;
+    padding-bottom: $spacing-16;
+  }
+}
+
+/// Hero section (larger spacing)
+.section-hero {
+  padding-top: $spacing-12;
+  padding-bottom: $spacing-12;
+  
+  @include respond-to('md') {
+    padding-top: $spacing-16;
+    padding-bottom: $spacing-16;
+  }
+  
+  @include respond-to('lg') {
+    padding-top: $spacing-24;
+    padding-bottom: $spacing-24;
+  }
+}
+
+/// Compact section (reduced spacing)
+.section-compact {
+  padding-top: $spacing-6;
+  padding-bottom: $spacing-6;
+  
+  @include respond-to('md') {
+    padding-top: $spacing-8;
+    padding-bottom: $spacing-8;
+  }
+}
+
+// =============================================
+// CONTAINER QUERIES
+// =============================================
+
+/// Responsive card using container queries
+/// Adapts based on parent container width (not viewport)
+/// This is more flexible than media queries
+.responsive-card {
+  padding: $spacing-4;
+  
+  // Small container: single column
+  @container main-container (min-width: 25rem) {
+    padding: $spacing-6;
+  }
+  
+  // Medium container: 2 columns
+  @container main-container (min-width: 37.5rem) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-6;
+  }
+  
+  // Large container: 3 columns
+  @container main-container (min-width: 50rem) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: $spacing-8;
+  }
+  
+  // Extra large container: 4 columns
+  @container main-container (min-width: 68rem) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/// Responsive grid using container queries
+/// Use this pattern for card grids, galleries, etc.
+.responsive-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $spacing-4;
+  
+  @container main-container (min-width: 30rem) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-6;
+  }
+  
+  @container main-container (min-width: 48rem) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  @container main-container (min-width: 64rem) {
+    grid-template-columns: repeat(4, 1fr);
+    gap: $spacing-8;
+  }
+}
+
+// =============================================
+// LAYOUT UTILITIES
+// =============================================
+
+/// Content wrapper with optimal reading width
+/// Max 65ch for readability (persona Marko)
+.content-wrapper {
+  max-width: 65ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/// Wide content wrapper
+.content-wrapper-wide {
+  max-width: 80ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/// Narrow content wrapper (forms, login pages)
+.content-wrapper-narrow {
+  max-width: 50ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/// Full-bleed section (edge-to-edge)
+.full-bleed {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+}
+
+/// Aspect ratio containers (prevent layout shift)
+.aspect-ratio-16-9 {
+  @include aspect-ratio(16, 9);
+}
+
+.aspect-ratio-4-3 {
+  @include aspect-ratio(4, 3);
+}
+
+.aspect-ratio-1-1 {
+  @include aspect-ratio(1, 1);
+}
+
+.aspect-ratio-21-9 {
+  @include aspect-ratio(21, 9);
+}
+
+// =============================================
+// GRID SYSTEM
+// =============================================
+
+/// Auto-fit grid (responsive without media queries)
+.grid-auto {
+  @include auto-grid(15rem, $spacing-6);
+}
+
+.grid-auto-sm {
+  @include auto-grid(12rem, $spacing-4);
+}
+
+.grid-auto-lg {
+  @include auto-grid(18rem, $spacing-8);
+}
+
+/// Fixed column grids
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $spacing-6;
+  
+  @include respond-to('md') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $spacing-6;
+  
+  @include respond-to('sm') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @include respond-to('lg') {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $spacing-6;
+  
+  @include respond-to('sm') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @include respond-to('md') {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  @include respond-to('xl') {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/// Gap utilities
+.gap-4 {
+  gap: $spacing-4;
+}
+
+.gap-6 {
+  gap: $spacing-6;
+}
+
+.gap-8 {
+  gap: $spacing-8;
+}
+
+// =============================================
+// FLEXBOX UTILITIES
+// =============================================
+
+/// Flex containers
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  @include flex-column;
+}
+
+.flex-center {
+  @include flex-center;
+}
+
+.flex-between {
+  @include flex-between;
+}
+
+/// Flex wrap
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-nowrap {
+  flex-wrap: nowrap;
+}
+
+/// Flex grow/shrink
+.flex-1 {
+  flex: 1 1 0%;
+}
+
+.flex-auto {
+  flex: 1 1 auto;
+}
+
+.flex-none {
+  flex: none;
+}
+
+// =============================================
+// SPACING UTILITIES
+// =============================================
+
+/// Padding utilities
+.p-4 {
+  padding: $spacing-4;
+}
+
+.p-6 {
+  padding: $spacing-6;
+}
+
+.p-8 {
+  padding: $spacing-8;
+}
+
+.py-4 {
+  padding-top: $spacing-4;
+  padding-bottom: $spacing-4;
+}
+
+.py-6 {
+  padding-top: $spacing-6;
+  padding-bottom: $spacing-6;
+}
+
+.px-4 {
+  padding-left: $spacing-4;
+  padding-right: $spacing-4;
+}
+
+.px-6 {
+  padding-left: $spacing-6;
+  padding-right: $spacing-6;
+}
+
+/// Margin utilities
+.m-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mt-4 {
+  margin-top: $spacing-4;
+}
+
+.mt-8 {
+  margin-top: $spacing-8;
+}
+
+.mb-4 {
+  margin-bottom: $spacing-4;
+}
+
+.mb-8 {
+  margin-bottom: $spacing-8;
+}
+
+// =============================================
+// EXAMPLES & DOCUMENTATION
+// =============================================
+
+/// Example usage in HTML:
+/// 
+/// <!-- Basic container -->
+/// <div class="container">
+///   <h1>My Content</h1>
+/// </div>
+///
+/// <!-- Container with size variant -->
+/// <div class="container-sm">
+///   <article>...</article>
+/// </div>
+///
+/// <!-- Container queries example -->
+/// <div class="container">
+///   <div class="responsive-grid">
+///     <div class="card">...</div>
+///     <div class="card">...</div>
+///     <div class="card">...</div>
+///   </div>
+/// </div>
+///
+/// <!-- Auto-fit grid (no media queries needed) -->
+/// <div class="grid-auto">
+///   <div class="card">...</div>
+///   <div class="card">...</div>
+///   <div class="card">...</div>
+/// </div>
