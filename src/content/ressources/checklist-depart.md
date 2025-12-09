@@ -1,10 +1,9 @@
 ---
 title: 'Checklist de voyage'
-description: "N'oubliez plus rien grace à nos checklist exaustive ! Pour un voyage sans surprise"
+description: "N'oubliez plus rien grace à nos checklist exaustives ! Pour un voyage sans surprise"
 pubDate: 'Dec 05 2025'
-heroImage: '/blog-placeholder-3.jpg'
+heroImage: '/ressources/checklist.png'
 ---
-# CHECKLIST VOYAGE EUROPE DE L'EST
 
 ## DOCUMENTS & ADMINISTRATIF
 

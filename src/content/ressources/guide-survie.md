@@ -1,12 +1,8 @@
 ---
-title: 'Guide de survis'
+title: 'Guide de survie'
 description: 'Lorem ipsum dolor sit amet'
 pubDate: 'Jun 01 2024'
-heroImage: '/blog-placeholder-5.jpg'
----
-
-# LEXIQUES DE SURVIE - EUROPE DE L'EST
-
+heroImage: '/ressources/guide.png'
 ---
 
 ## POLONAIS

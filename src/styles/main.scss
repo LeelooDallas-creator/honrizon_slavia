@@ -193,6 +193,10 @@ table {
     background-color: $color-gray-50;
     border-bottom: 0.125rem solid $color-gray-300;
   }
+
+  thead th:first-child {
+  color: $color-white;
+}
   
   tbody tr {
     @include transition(background-color);
@@ -202,6 +206,7 @@ table {
     }
   }
 }
+
 
 // =============================================
 // IMAGES
