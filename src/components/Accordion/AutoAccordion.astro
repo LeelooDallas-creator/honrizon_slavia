@@ -1,0 +1,16 @@
+---
+/**
+ * Auto Accordion Component
+ * Wrapper that marks content for accordion transformation
+ * The actual transformation is handled by the layout script
+ */
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<div class={`ressource-with-accordions ${className}`}>
+  <slot />
+</div>

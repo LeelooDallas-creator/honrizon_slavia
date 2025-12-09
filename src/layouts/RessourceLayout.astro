@@ -1,0 +1,107 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import HeroMarkdown from '../components/Hero/HeroMarkdown.astro';
+import AutoAccordion from '../components/Accordion/AutoAccordion.astro';
+import '../styles/pages/_mdx.scss';
+
+interface Props {
+  title: string;
+  description: string;
+  pubDate?: string;
+  heroImage?: string;
+  category?: string;
+  subtitle?: string;
+  useHeroStyle?: boolean;
+  overlayOpacity?: number;
+  minHeight?: string;
+}
+
+const {
+  title,
+  description,
+  pubDate,
+  heroImage,
+  category,
+  subtitle,
+  useHeroStyle = true,
+  overlayOpacity = 0.7,
+  minHeight = '75vh'
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <BaseHead title={title} description={description} />
+  </head>
+  <body>
+    <Header />
+    {useHeroStyle ? (
+      <div class="hero-wrapper-mdx">
+        <HeroMarkdown
+          title={title}
+          subtitle={subtitle}
+          description={description}
+          heroImage={heroImage}
+          category={category}
+          pubDate={pubDate}
+          overlayOpacity={overlayOpacity}
+          minHeight={minHeight}
+        />
+      </div>
+    ) : null}
+    <main>
+      <article class="mdx-page">
+        {!useHeroStyle && (
+          <header class="mdx-header">
+            {heroImage && (
+              <img
+                src={heroImage}
+                alt={title}
+                class="mdx-hero-image"
+              />
+            )}
+
+            {category && (
+              <span class="mdx-category">{category}</span>
+            )}
+
+            <h1 class="mdx-title">{title}</h1>
+
+            {description && (
+              <p class="mdx-excerpt">{description}</p>
+            )}
+
+            {pubDate && (
+              <div class="mdx-meta">
+                <div class="mdx-meta-item mdx-date">
+                  {new Date(pubDate).toLocaleDateString('fr-FR', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  })}
+                </div>
+              </div>
+            )}
+          </header>
+        )}
+
+        <div class="mdx-content">
+          <AutoAccordion>
+            <slot />
+          </AutoAccordion>
+        </div>
+
+        <footer class="mdx-footer">
+        </footer>
+      </article>
+    </main>
+    <Footer />
+
+    <script>
+      import { initAll } from '../scripts/ressourceLayout';
+    </script>
+  </body>
+</html>

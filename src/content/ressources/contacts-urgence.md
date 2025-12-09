@@ -2,11 +2,7 @@
 title: 'Numéros et adresses importantes'
 description: 'Retrouvez tous les numéros de téléphones et toutes les adresses dont vous pourriez avoir besoin lors de vos voyages'
 pubDate: 'Dec 05 2025'
-heroImage: '/blog-placeholder-3.jpg'
----
-
-# NUMÉROS & ADRESSES IMPORTANTES - EUROPE DE L'EST
-
+heroImage: '/ressources/contact.png'
 ---
 
 ## NUMÉROS D'URGENCE UNIVERSELS
@@ -35,7 +31,7 @@ heroImage: '/blog-placeholder-3.jpg'
 - Téléphone : +48 12 424 53 00
 - Email : contact@consulfrance-cracovie.org
 
----
+ 
 
 ### RÉPUBLIQUE TCHÈQUE
 
@@ -49,7 +45,7 @@ heroImage: '/blog-placeholder-3.jpg'
 **Numéro d'urgence consulaire (24h/24) :**
 - Téléphone : +420 601 540 867
 
----
+ 
 
 ### HONGRIE
 
@@ -64,7 +60,7 @@ heroImage: '/blog-placeholder-3.jpg'
 - Téléphone : +36 1 374 11 34
 - Email : consulat@ambafrance-hu.org
 
----
+ 
 
 ### ROUMANIE
 
@@ -81,7 +77,7 @@ heroImage: '/blog-placeholder-3.jpg'
 **Urgences consulaires (24h/24) :**
 - Téléphone : +40 743 520 700
 
----
+ 
 
 ### CROATIE
 
@@ -95,7 +91,7 @@ heroImage: '/blog-placeholder-3.jpg'
 - Adresse : Put od Bosanke 2
 - Téléphone : +385 20 311 491
 
----
+ 
 
 ### BULGARIE
 
@@ -108,7 +104,7 @@ heroImage: '/blog-placeholder-3.jpg'
 **Urgences consulaires :**
 - Téléphone : +359 887 578 417
 
----
+ 
 
 ### SLOVAQUIE
 
@@ -118,7 +114,7 @@ heroImage: '/blog-placeholder-3.jpg'
 - Email : contact@ambafrance-sk.org
 - Site : https://sk.ambafrance.org
 
----
+ 
 
 ### SLOVÉNIE
 
@@ -128,7 +124,7 @@ heroImage: '/blog-placeholder-3.jpg'
 - Email : contact@ambafrance-si.org
 - Site : https://si.ambafrance.org
 
----
+ 
 
 ### SERBIE
 
@@ -141,7 +137,7 @@ heroImage: '/blog-placeholder-3.jpg'
 **Urgences consulaires (24h/24) :**
 - Téléphone : +381 63 158 54 86
 
----
+ 
 
 ### BOSNIE-HERZÉGOVINE
 
@@ -151,7 +147,7 @@ heroImage: '/blog-placeholder-3.jpg'
 - Email : contact@ambafrance-ba.org
 - Site : https://ba.ambafrance.org
 
----
+ 
 
 ### MONTÉNÉGRO
 
@@ -161,7 +157,7 @@ heroImage: '/blog-placeholder-3.jpg'
 - Email : contact@ambafrance-me.org
 - Site : https://me.ambafrance.org
 
----
+ 
 
 ### ALBANIE
 
@@ -171,7 +167,7 @@ heroImage: '/blog-placeholder-3.jpg'
 - Email : contact@ambafrance-al.org
 - Site : https://al.ambafrance.org
 
----
+ 
 
 ### MACÉDOINE DU NORD
 
@@ -181,7 +177,7 @@ heroImage: '/blog-placeholder-3.jpg'
 - Email : contact@ambafrance-mk.org
 - Site : https://mk.ambafrance.org
 
----
+ 
 
 ### KOSOVO
 
@@ -190,7 +186,7 @@ heroImage: '/blog-placeholder-3.jpg'
 - Téléphone : +383 38 224 890
 - Email : contact.pristina-amba@diplomatie.gouv.fr
 
----
+ 
 
 ### UKRAINE
 
@@ -201,7 +197,7 @@ heroImage: '/blog-placeholder-3.jpg'
 
 **Attention :** Consulter impérativement France Diplomatie avant tout voyage en Ukraine
 
----
+ 
 
 ### MOLDAVIE
 
