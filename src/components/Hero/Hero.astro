@@ -1,145 +1,133 @@
 ---
-// Composant Hero pour la page d'accueil
+// ============================================
+// HERO COMPONENT - Vidéo + Intersection
+// ============================================
+import type { HeroProps } from './Hero.types';
+
+const {
+  videoUrl = '/videos/timelapse-budapest.mp4',
+  title = "Horizon Slavia",
+  subtitle = "Découvrez l'Europe de l'Est autrement",
+} = Astro.props as HeroProps;
 ---
 
-<section class="hero">
-	<div class="hero-content">
-		<h1 class="hero-title">Horizon Slavia</h1>
-		<p class="hero-subtitle">Parcourez les sentiers des légendes oubliées</p>
-		<p class="hero-description">
-			Découvrez l'Europe de l'Est à travers ses mythes ancestraux, ses langues fascinantes
-			et ses paysages enchanteurs. Un voyage au cœur de la culture slave.
-		</p>
-		<div class="hero-cta">
-			<a href="/legendes" class="cta-primary">Découvrir les légendes</a>
-			<a href="/europe-centrale" class="cta-secondary">Explorer la région</a>
-		</div>
-	</div>
+<!-- Hero avec vidéo -->
+<section class="hero-video">
+  <div class="hero-video__background">
+    <!-- Vidéo -->
+    <video
+      class="hero-video__video"
+      src={videoUrl}
+      loop
+      muted
+      playsinline
+      preload="auto"
+      aria-hidden="true"
+    >
+      <source src={videoUrl} type="video/mp4" />
+      <!-- Fallback pour navigateurs sans support -->
+      Votre navigateur ne supporte pas la vidéo HTML5.
+    </video>
+    
+    <!-- Overlay pour assombrir la vidéo -->
+    <div class="hero-video__overlay" aria-hidden="true"></div>
+  </div>
+  
+  <!-- Contenu par-dessus la vidéo -->
+  <div class="hero-video__content">
+    <div class="hero-video__container">
+      <h1 class="hero-video__title">{title}</h1>
+      {subtitle && <p class="hero-video__subtitle">{subtitle}</p>}
+    </div>
+  </div>
+  
+  <!-- Indicateur de scroll -->
+  <div class="hero-video__scroll-indicator" aria-hidden="true">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M12 5v14m0 0l-7-7m7 7l7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
 </section>
 
-<style>
-	.hero {
-		background: transparent;
-		color: white;
-		padding-inline: 2rem;
-		padding-block-start: 6rem;
-		padding-block-end: 6rem;
-		text-align: center;
-		position: relative;
-		overflow: hidden;
-		margin-block-start: 0;
-		min-height: calc(100vh - 5rem);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.hero-content {
-		max-width: 100vw;
-		margin: 0 auto;
-		position: relative;
-		z-index: 1;
-	}
-
-	.hero-title {
-		font-size: 4rem;
-		font-weight: 700;
-		margin: 0 0 1rem 0;
-		background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 100%);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-clip: text;
-		letter-spacing: -0.02em;
-	}
-
-	.hero-subtitle {
-		font-size: 1.5rem;
-		font-weight: 400;
-		margin: 0 0 2rem 0;
-		color: #e0e7ff;
-		font-style: italic;
-	}
-
-	.hero-description {
-		font-size: 1.125rem;
-		line-height: 1.8;
-		margin: 0 0 3rem 0;
-		color: rgba(255, 255, 255, 0.9);
-		max-width: 700px;
-		margin-left: auto;
-		margin-right: auto;
-	}
-
-	.hero-cta {
-		display: flex;
-		gap: 1rem;
-		justify-content: center;
-		flex-wrap: wrap;
-	}
-
-	.cta-primary,
-	.cta-secondary {
-		padding: 1rem 2rem;
-		font-size: 1rem;
-		font-weight: 600;
-		text-decoration: none;
-		border-radius: 8px;
-		transition: all 0.3s ease;
-		display: inline-block;
-	}
-
-	.cta-primary {
-		background: var(--accent);
-		color: white;
-		box-shadow: 0 4px 16px rgba(35, 55, 255, 0.3);
-	}
-
-	.cta-primary:hover {
-		transform: translateY(-2px);
-		box-shadow: 0 6px 24px rgba(35, 55, 255, 0.4);
-	}
-
-	.cta-secondary {
-		background: rgba(255, 255, 255, 0.1);
-		color: white;
-		border: 2px solid rgba(255, 255, 255, 0.3);
-		backdrop-filter: blur(10px);
-	}
-
-	.cta-secondary:hover {
-		background: rgba(255, 255, 255, 0.2);
-		border-color: rgba(255, 255, 255, 0.5);
-		transform: translateY(-2px);
-	}
-
-	@media (max-width: 720px) {
-		.hero {
-			padding-inline: 1.5rem;
-			padding-block-start: 6rem;
-			padding-block-end: 4rem;
-			margin-block-start: 0;
-		}
-
-		.hero-title {
-			font-size: 2.5rem;
-		}
-
-		.hero-subtitle {
-			font-size: 1.125rem;
-		}
-
-		.hero-description {
-			font-size: 1rem;
-		}
-
-		.hero-cta {
-			flex-direction: column;
-			align-items: stretch;
-		}
-
-		.cta-primary,
-		.cta-secondary {
-			width: 100%;
-		}
-	}
+<style lang="scss">
+  @use './Hero.styles.scss';
 </style>
+
+<script>
+  // Gestion de la vidéo avec IntersectionObserver
+  const video = document.querySelector('.hero-video__video') as HTMLVideoElement;
+
+  if (video) {
+    // Gestion des erreurs
+    video.addEventListener('error', (e) => {
+      console.error('Erreur de chargement vidéo:', e);
+    });
+
+    // Fonction pour démarrer la vidéo
+    const playVideo = () => {
+      if (video.readyState >= 2) {
+        video.play().catch(() => {
+          // L'autoplay sera débloqué par l'interaction utilisateur
+        });
+      }
+    };
+
+    // Observer pour détecter quand la vidéo est visible
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              playVideo();
+            } else {
+              video.pause();
+            }
+          });
+        },
+        {
+          threshold: 0.25
+        }
+      );
+
+      observer.observe(video);
+    }
+
+    // Attendre que la vidéo soit chargée avant d'essayer de la lire
+    if (video.readyState >= 2) {
+      playVideo();
+    } else {
+      video.addEventListener('loadeddata', playVideo, { once: true });
+    }
+
+    // Démarrer la vidéo au premier clic/scroll/touch (interaction utilisateur)
+    const startOnInteraction = () => {
+      playVideo();
+      // Retirer les listeners après la première interaction
+      document.removeEventListener('click', startOnInteraction);
+      document.removeEventListener('scroll', startOnInteraction);
+      document.removeEventListener('touchstart', startOnInteraction);
+      document.removeEventListener('keydown', startOnInteraction);
+    };
+
+    document.addEventListener('click', startOnInteraction);
+    document.addEventListener('scroll', startOnInteraction);
+    document.addEventListener('touchstart', startOnInteraction);
+    document.addEventListener('keydown', startOnInteraction);
+  }
+
+  // Animation du scroll indicator
+  const scrollIndicator = document.querySelector('.hero-video__scroll-indicator');
+
+  if (scrollIndicator) {
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY;
+      const heroHeight = document.querySelector('.hero-video')?.clientHeight || 0;
+
+      if (scrolled > heroHeight * 0.3) {
+        scrollIndicator.classList.add('hidden');
+      } else {
+        scrollIndicator.classList.remove('hidden');
+      }
+    });
+  }
+</script>

@@ -1,0 +1,37 @@
+<!-- Intersection avec gradient et card -->
+<section class="intersection">
+  <div class="intersection__background" aria-hidden="true"></div>
+
+  <div class="intersection__container">
+    <article class="intersection__card">
+      <h3 class="intersection__card-title">
+        Le mystère du trompettiste de Cracovie
+      </h3>
+      <div class="intersection__card-content">
+        <slot name="card-content">
+          <p>
+            À Cracovie, chaque heure, un trompettiste joue une mélodie depuis la
+            tour de la basilique Sainte-Marie, sur la place du marché. La
+            mélodie s’interrompt brusquement, toujours au même moment.
+          </p>
+
+          <p><strong>Pourquoi ?</strong></p>
+          <p>
+            Parce qu’elle rend hommage à un trompettiste médiéval qui, selon la
+            légende, sonnait l’alerte lors d’une invasion mongole. Il fut tué en
+            plein appel, sa note restant inachevée… et aujourd’hui encore, les
+            Cracoviens perpétuent ce rituel en mémoire de son acte héroïque.
+          </p>
+          <p>
+            C’est l’un des symboles les plus fascinants et émouvants de la
+            culture polonaise !
+          </p>
+        </slot>
+      </div>
+    </article>
+  </div>
+</section>
+
+<style lang="scss">
+  @use "./Intersection.styles.scss";
+</style>

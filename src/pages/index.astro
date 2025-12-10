@@ -1,39 +1,53 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header/Header.astro';
-import Footer from '@components/Footer/Footer.astro';
-import Hero from '../components/Hero/Hero.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header/Header.astro";
+import Footer from "@components/Footer/Footer.astro";
+import Hero from "../components/Hero/Hero.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import Intersection from "@components/Intersection/Intersection.astro";
+import Section from "@components/Section/Section.astro";
 ---
 
 <!doctype html>
 <html lang="fr">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body class="home-page">
-		<Header />
-		<div class="hero-wrapper">
-			<Hero />
-		</div>
-		<main>
-			<!-- Le contenu de la page suivra ici -->
-		</main>
-		<Footer />
-	</body>
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body class="home-page">
+    <Header />
+    <div class="hero-wrapper">
+      <Hero />
+	</div>
+    <main>
+<Section
+      variant="default"
+      centered={true}
+      padding="large"
+    >
+      <h2>Voyagez à votre rythme avec Horizon Slavia</h2>
+      <p>
+        Horizon Slavia vous accompagne dans la découverte de l'Europe de l'Est
+        avec des itinéraires personnalisés, des carnets de voyage inspirants et
+        des ressources pratiques pour voyager en toute sérénité.
+      </p>
+    </Section>
+    <Intersection />
+    </main>
+    <Footer />
+  </body>
 </html>
 
 <style>
-	.home-page {
-		margin: 0;
-		padding: 0;
-	}
+  .home-page {
+    margin: 0;
+    padding: 0;
+  }
 
-	.hero-wrapper {
-		background: linear-gradient(135deg, #1b263b 0%, #0d1b2a 100%);
-		position: relative;
-		margin-block-start: 0;
-		padding-block-start: 0;
-		min-height: 100vh;
-	}
+  .hero-wrapper {
+    background: linear-gradient(135deg, #1b263b 0%, #0d1b2a 100%);
+    position: relative;
+    margin-block-start: 0;
+    padding-block-start: 0;
+    min-height: 100vh;
+  }
 </style>
