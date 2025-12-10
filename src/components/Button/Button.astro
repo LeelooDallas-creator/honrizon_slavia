@@ -1,20 +1,51 @@
 ---
+// ============================================
+// BUTTON COMPONENT
+// ============================================
+import type { ButtonProps } from './Button.types';
+
+const {
+  text,
+  href,
+  variant = 'primary',
+  size = 'md',
+  type = 'button',
+  disabled = false,
+  fullWidth = false,
+  ariaLabel,
+} = Astro.props as ButtonProps;
+
+// Générer les classes CSS
+const classes = [
+  'btn',
+  `btn--${variant}`,
+  `btn--${size}`,
+  fullWidth && 'btn--full-width',
+].filter(Boolean).join(' ');
 ---
-<a href="/" class="btn">Voyagez</a>
 
-<style>
-  .btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: white;
-    color: black;
-    text-decoration: none;
-    border-radius: 10px;
-    font-weight: bold;
-    transition: background 0.3s;
-  }
+{href ? (
+  <!-- Button en tant que lien -->
+  <a
+    href={href}
+    class={classes}
+    aria-label={ariaLabel || text}
+    aria-disabled={disabled}
+  >
+    {text}
+  </a>
+) : (
+  <!-- Button en tant que bouton -->
+  <button
+    type={type}
+    class={classes}
+    disabled={disabled}
+    aria-label={ariaLabel || text}
+  >
+    {text}
+  </button>
+)}
 
-  .btn:hover {
-    background-color: grey;
-  }
+<style lang="scss">
+  @use './Button.styles.scss';
 </style>

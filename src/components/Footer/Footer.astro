@@ -1,0 +1,128 @@
+---
+// ============================================
+// FOOTER COMPONENT
+// ============================================
+import { 
+  footerDescription, 
+  footerCreditText, 
+  contactLinks, 
+  informationLinks, 
+  socialLinks 
+} from './Footer.config';
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="footer__container">
+    <div class="footer__grid">
+      
+      <!-- Colonne 1 : À propos -->
+      <div class="footer__column">
+        <h3 class="footer__title">Horizon Slavia</h3>
+        <p class="footer__description">
+          {footerDescription}
+        </p>
+        
+        <!-- Réseaux sociaux -->
+        <div class="footer__social">
+          {socialLinks.map(social => (
+            <a 
+              href={social.href} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="footer__social-link"
+              aria-label={social.ariaLabel}
+            >
+              {social.name === 'Facebook' && (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                </svg>
+              )}
+              
+              {social.name === 'Instagram' && (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+              )}
+              
+              {social.name === 'YouTube' && (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+                  <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+                </svg>
+              )}
+              
+              {social.name === 'Pinterest' && (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0c-6.627 0-12 5.372-12 12 0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146 1.124.347 2.317.535 3.554.535 6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"/>
+                </svg>
+              )}
+            </a>
+          ))}
+        </div>
+      </div>
+      
+      <!-- Colonne 2 : Contact -->
+      <div class="footer__column">
+        <h3 class="footer__title">Contact</h3>
+        <ul class="footer__list">
+          {contactLinks.map(link => (
+            <li class="footer__list-item">
+              <a href={link.href} class="footer__link">
+                {link.href.includes('mailto') && (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                  </svg>
+                )}
+                {link.href.includes('tel') && (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                  </svg>
+                )}
+                {link.href.includes('contact') && !link.href.includes('@') && (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 16v-4"></path>
+                    <path d="M12 8h.01"></path>
+                  </svg>
+                )}
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+      
+      <!-- Colonne 3 : Informations -->
+      <div class="footer__column">
+        <h3 class="footer__title">Informations</h3>
+        <ul class="footer__list">
+          {informationLinks.map(link => (
+            <li class="footer__list-item">
+              <a href={link.href} class="footer__link">{link.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+      
+    </div>
+    
+    <!-- Copyright bar -->
+    <div class="footer__bottom">
+      <p class="footer__copyright">
+        © {currentYear} Horizon Slavia. Tous droits réservés.
+      </p>
+      <p class="footer__credit">
+        {footerCreditText}
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style lang="scss">
+  @use './Footer.styles.scss';
+</style>

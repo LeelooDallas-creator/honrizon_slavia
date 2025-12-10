@@ -11,19 +11,11 @@
 // =============================================
 
 .hero-wrapper-mdx {
-  background: linear-gradient(135deg, $color-primary-dark 0%, $color-primary 100%);
-  position: relative;
-  overflow: hidden;
-  margin-top: -5rem;
-  z-index: 0;
-
-  @include respond-to('md') {
-    margin-top: -6rem;
-  }
-
-  @include respond-to('lg') {
-    margin-top: -7rem;
-  }
+		background: linear-gradient(135deg, #1b263b 0%, #0d1b2a 100%);
+		position: relative;
+		margin-block-start: 0;
+		padding-block-start: 0;
+		min-height: 75vh;
 }
 
 .hero-mdx {

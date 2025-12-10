@@ -1,0 +1,68 @@
+---
+// ============================================
+// HEADER COMPONENT
+// ============================================
+import type { HeaderProps } from './Header.types';
+import Logo from "../Logo/Logo.astro";
+import Dropdown from "../Nav/Dropdown.astro";
+import { inspirationItems, carnetItems, ressourcesItems } from './Header.config';
+import Button from '@components/Button/Button.astro';
+
+const { transparent = true } = Astro.props as HeaderProps;
+---
+
+<header class="header" class:list={[{ 'header--transparent': transparent }]} data-header>
+  <div class="header__container">
+    <a href="/" class="header__logo" aria-label="Retour à l'accueil">
+      <Logo />
+    </a>
+    
+    <nav class="header__nav" aria-label="Navigation principale">
+      <div class="header__nav-dropdowns">
+        <Dropdown title="Inspirations" items={inspirationItems} />
+        <Dropdown title="Carnets" items={carnetItems} />
+        <Dropdown title="Ressources" items={ressourcesItems} />
+      </div>
+    </nav>
+    
+    <div class="header__cta">
+      <Button 
+        text="Contactez-nous !" 
+        href="/contact" 
+        variant="secondary" 
+        size="md" 
+      />
+    </div>
+    
+    <!-- Mobile menu button -->
+    <button 
+      class="header__menu-toggle" 
+      aria-label="Ouvrir le menu"
+      aria-expanded="false"
+      data-menu-toggle
+    >
+      <span class="header__menu-icon"></span>
+    </button>
+  </div>
+  
+  <!-- Mobile menu -->
+  <div class="header__mobile-menu" data-mobile-menu>
+    <nav class="header__mobile-nav" aria-label="Navigation mobile">
+      <ul class="header__mobile-list">
+        <li><a href="/legendes" class="header__mobile-link">Inspirations</a></li>
+        <li><a href="/europe-centrale" class="header__mobile-link">Carnets</a></li>
+        <li><a href="/ressources/guide-survie" class="header__mobile-link">Ressources</a></li>
+        <li><a href="/contact" class="header__mobile-link header__mobile-link--cta">Contactez-nous !</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style lang="scss">
+  @use './Header.styles.scss';
+</style>
+
+<script>
+  import { initHeader } from './Header.script';
+  initHeader();
+</script>
