@@ -1,0 +1,3 @@
+// FlipCard JS - Accessibility enhancements (flip handled by CSS :hover)
+export function initFlipCards(){const cards=document.querySelectorAll<HTMLElement>('[data-flip-card]');cards.forEach(card=>{card.addEventListener('focus',()=>card.setAttribute('data-keyboard-focus','true'));card.addEventListener('blur',()=>card.removeAttribute('data-keyboard-focus'));card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();const isFlipped=card.hasAttribute('data-keyboard-focus');isFlipped?card.removeAttribute('data-keyboard-focus'):card.setAttribute('data-keyboard-focus','true')}})})}
+if(typeof window!=='undefined'){document.readyState==='loading'?document.addEventListener('DOMContentLoaded',initFlipCards):initFlipCards()}

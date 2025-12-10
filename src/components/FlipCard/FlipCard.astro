@@ -1,87 +1,68 @@
 ---
-import type { DropdownItemProps } from "@custom-types/DropdownItemType";
-import { Picture } from "astro:assets";
+// ============================================
+// FLIPCARD COMPONENT
+// ============================================
+import type { FlipCardProps } from './FlipCard.types';
+import { Picture } from 'astro:assets';
 
-const { image, description, subtitle } = Astro.props as DropdownItemProps;
+const {
+  image,
+  subtitle,
+  description,
+  imageAlt,
+  aspectRatio = '4/3',
+  flipDirection = 'horizontal',
+  animationDuration = 600,
+  overlayGradient = 'primary'
+} = Astro.props as FlipCardProps;
+
+// Generate classes
+const containerClasses = [
+  'flipcard',
+  `flipcard--ratio-${aspectRatio.replace('/', '-')}`,
+  flipDirection === 'vertical' && 'flipcard--vertical',
+  animationDuration < 500 && 'flipcard--fast',
+  animationDuration > 700 && 'flipcard--slow',
+  `flipcard--${overlayGradient}`
+].filter(Boolean).join(' ');
 ---
 
-<div class="card-container">
-  <div class="card">
-    <div class="card-front">
+<div 
+  class={containerClasses}
+  data-flip-card
+  role="button"
+  tabindex="0"
+  aria-label={`Voir plus sur ${subtitle}`}
+>
+  <div class="flipcard__inner">
+    <!-- Front Side -->
+    <div class="flipcard__front">
       <Picture
         src={image}
-        alt={subtitle}
-        formats={["avif", "webp"]}
+        alt={imageAlt || subtitle}
+        class:list={['flipcard__image']}
+        formats={['avif', 'webp']}
         loading="lazy"
-        inferSize={true}
+        widths={[400, 600, 800]}
+        sizes="(max-width: 768px) 100vw, 400px"
       />
+      <div class="flipcard__overlay" aria-hidden="true"></div>
     </div>
-
-    <div class="card-back">
-      <p class="card-description-text">{description}</p>
+    
+    <!-- Back Side -->
+    <div class="flipcard__back">
+      <div class="flipcard__content">
+        <p class="flipcard__description">{description}</p>
+      </div>
     </div>
   </div>
 </div>
 
-<style>
-  .card-container {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    overflow: hidden;
-    border-radius: 8px;
-    perspective: 1000px;
-  }
-
-  .card {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    transform-style: preserve-3d;
-    transition: transform 0.6s ease;
-    display: flex; 
-    align-items: center;
-    justify-content: center;
-  }
-
-  .card-front,
-  .card-back {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .card-front {
-    background: #f3f4f6;
-    transform: rotateY(0deg);
-  }
-
-  .card-front img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .card-back {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    padding: 20px;
-    transform: rotateY(180deg);
-  }
-
-  .card-description-text {
-    color: white;
-    text-align: center;
-    margin: 0;
-    font-size: 14px;
-    line-height: 1.6;
-    padding: 50px;
-  }
+<style lang="scss">
+  @use './FlipCard.styles.scss';
 </style>
+
+<script>
+  import { initFlipCards } from './FlipCard.script';
+  initFlipCards();
+</script>

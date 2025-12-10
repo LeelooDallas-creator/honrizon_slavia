@@ -21,12 +21,17 @@
 	.hero {
 		background: transparent;
 		color: white;
-		padding: 8rem 2rem 6rem 2rem;
+		padding-inline: 2rem;
+		padding-block-start: 6rem;
+		padding-block-end: 6rem;
 		text-align: center;
 		position: relative;
 		overflow: hidden;
-		margin-top: 0;
-		padding-top: calc(6rem);
+		margin-block-start: 0;
+		min-height: calc(100vh - 5rem);
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 
 	.hero-content {
@@ -109,7 +114,10 @@
 
 	@media (max-width: 720px) {
 		.hero {
-			padding: 4rem 1.5rem;
+			padding-inline: 1.5rem;
+			padding-block-start: 6rem;
+			padding-block-end: 4rem;
+			margin-block-start: 0;
 		}
 
 		.hero-title {

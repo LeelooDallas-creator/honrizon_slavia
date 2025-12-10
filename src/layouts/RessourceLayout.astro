@@ -1,7 +1,7 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import Header from '@components/Header/Header.astro';
+import Footer from '../components/Footer/Footer.astro';
 import HeroMarkdown from '../components/Hero/HeroMarkdown.astro';
 import AutoAccordion from '../components/Accordion/AutoAccordion.astro';
 import '../styles/pages/_mdx.scss';
@@ -36,8 +36,8 @@ const {
   <head>
     <BaseHead title={title} description={description} />
   </head>
-  <body>
-    <Header />
+  <body class="ressource-page">
+     <Header />
     {useHeroStyle ? (
       <div class="hero-wrapper-mdx">
         <HeroMarkdown
@@ -51,7 +51,9 @@ const {
           minHeight={minHeight}
         />
       </div>
-    ) : null}
+    ) : (
+      <Header />
+    )}
     <main>
       <article class="mdx-page">
         {!useHeroStyle && (
@@ -105,3 +107,16 @@ const {
     </script>
   </body>
 </html>
+
+<style>
+  .ressource-page {
+    margin: 0;
+    padding: 0;
+  }
+
+  .hero-wrapper-mdx {
+    position: relative;
+    margin-block-start: 0;
+    padding-block-start: 0;
+  }
+</style>

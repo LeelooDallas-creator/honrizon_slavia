@@ -1,125 +1,76 @@
 ---
-import type { DropdownProps } from "@custom-types/DropdownType";
+// ============================================
+// DROPDOWN COMPONENT
+// ============================================
+import type { DropdownProps } from './Dropdown.types';
 import FlipCard from "@components/FlipCard/FlipCard.astro";
 
 const { title, items } = Astro.props as DropdownProps;
+
+// Générer un ID unique pour l'accessibilité
+const dropdownId = `dropdown-${title.toLowerCase().replace(/\s+/g, '-')}`;
 ---
 
-<ul class="menu">
-  <li class="nav-dropdown">
-    <span class="dropdown-toggle nav-dropdown-trigger">{title}</span>
+<div class="dropdown" data-dropdown>
+  <button
+    class="dropdown__trigger"
+    aria-expanded="false"
+    aria-haspopup="true"
+    aria-controls={dropdownId}
+    data-dropdown-trigger
+  >
+    <span class="dropdown__trigger-text">{title}</span>
+    <svg 
+      class="dropdown__chevron" 
+      width="16" 
+      height="16" 
+      viewBox="0 0 16 16" 
+      fill="none"
+      aria-hidden="true"
+    >
+      <path 
+        d="M4 6L8 10L12 6" 
+        stroke="currentColor" 
+        stroke-width="2" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"
+      />
+    </svg>
+  </button>
 
-    <div class="nav-dropdown-content">
-      <div class="dropdown-inner">
-        <div class="dropdown-grid">
-          {
-            items.map((item) => (
-              <a href={item.href} class="dropdown-item">
-                <h3 class="item-title">{item.subtitle}</h3>
-                <FlipCard {...item} />
-              </a>
-            ))
-          }
-        </div>
+  <div
+    class="dropdown__panel"
+    id={dropdownId}
+    role="menu"
+    aria-label={`Menu ${title}`}
+    data-dropdown-panel
+    data-items={items.length}
+  >
+    <div class="dropdown__inner">
+      <div class="dropdown__grid" data-items={items.length}>
+        {items.map((item) => (
+          <a 
+            href={item.href} 
+            class="dropdown__item"
+            role="menuitem"
+            tabindex="-1"
+          >
+            <h3 class="dropdown__item-title">{item.subtitle}</h3>
+            <div class="dropdown__card">
+              <FlipCard {...item} />
+            </div>
+          </a>
+        ))}
       </div>
     </div>
-  </li>
-</ul>
+  </div>
+</div>
 
-<style>
-  .menu {
-    list-style: none;
-    padding: 0;
-  }
-
-  .nav-dropdown {
-    position: relative;
-    display: inline-block;
-  }
-
-  .nav-dropdown:hover .nav-dropdown-content {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  .dropdown-toggle {
-    padding: 12px;
-    cursor: pointer;
-    color: white;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 500;
-    transition: all 0.2s ease;
-  }
-
-  .dropdown-toggle:hover {
-    opacity: 0.8;
-  }
-
-  .nav-dropdown-content {
-    position: fixed;
-    top: 100px;
-    left: 50%;
-    width: 60dvw;
-    height: 45dvh;
-    transform: translateX(-50%);
-    background-color: white;
-    padding-block: 24px;
-    opacity: 0;
-    visibility: hidden;
-    transition:
-      opacity 0.1s ease,
-      visibility 0.1s ease;
-    z-index: 5;
-    border-radius: 12px;
-    box-shadow: 0 0.5rem 10px 0 rgba(88, 91, 91, 0.5);
-  }
-
-  .dropdown-inner {
-    position: relative;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding-inline: 40px;
-  }
-
-  .dropdown-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 24px;
-  }
-
-  .dropdown-item {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    text-decoration: none;
-    color: inherit;
-    width: 75%;
-    height: 75%;
-  }
-
-  .item-title {
-    font-size: 16px;
-    font-weight: 600;
-    color: #111827;
-    text-decoration: underline;
-  }
-
-  .dropdown-item:hover :global(.card) {
-    transform: rotateY(180deg);
-  }
-
-  @media (max-width: 768px) {
-    .nav-dropdown-content {
-      position: absolute;
-      width: 100%;
-      left: 0;
-      transform: none;
-    }
-
-    .dropdown-grid {
-      grid-template-columns: 1fr;
-    }
-  }
+<style lang="scss">
+  @use './Dropdown.styles.scss';
 </style>
+
+<script>
+  import { initDropdowns } from './Dropdown.script';
+  initDropdowns();
+</script>

@@ -1,0 +1,283 @@
+// ============================================
+// FLIPCARD - Styles SCSS
+// ============================================
+// Carte avec effet flip 3D au hover
+
+@use '../../styles/abstracts/variables' as *;
+@use '../../styles/abstracts/mixins' as *;
+
+// ============================================
+// CONTAINER
+// ============================================
+
+.flipcard {
+  position: relative;
+  width: 100%;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  perspective: 1000px;
+  
+  // Aspect ratios
+  &--ratio-16-9 {
+    aspect-ratio: 16 / 9;
+  }
+  
+  &--ratio-4-3 {
+    aspect-ratio: 4 / 3;
+  }
+  
+  &--ratio-1-1 {
+    aspect-ratio: 1 / 1;
+  }
+  
+  &--ratio-3-2 {
+    aspect-ratio: 3 / 2;
+  }
+  
+  // Focus state for keyboard navigation
+  &:focus-visible {
+    outline: 3px solid $color-accent;
+    outline-offset: 4px;
+  }
+  
+  // Keyboard focus also flips the card
+  &[data-keyboard-focus] .flipcard__inner {
+    transform: rotateY(180deg);
+  }
+}
+
+// ============================================
+// INNER CONTAINER (for 3D transform)
+// ============================================
+
+.flipcard__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+  
+  // Flip on hover
+  .flipcard:hover & {
+    transform: rotateY(180deg);
+  }
+  
+  // Faster animation option
+  .flipcard--fast & {
+    transition-duration: 0.4s;
+  }
+  
+  // Slower animation option
+  .flipcard--slow & {
+    transition-duration: 0.8s;
+  }
+  
+  // Vertical flip
+  .flipcard--vertical & {
+    transform-origin: center center;
+  }
+  
+  .flipcard--vertical:hover & {
+    transform: rotateX(180deg);
+  }
+}
+
+// ============================================
+// CARD SIDES (Front & Back)
+// ============================================
+
+.flipcard__front,
+.flipcard__back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: $radius-lg;
+  overflow: hidden;
+}
+
+// ============================================
+// FRONT SIDE
+// ============================================
+
+.flipcard__front {
+  background: $color-neutral-light;
+  transform: rotateY(0deg);
+  z-index: 2;
+}
+
+.flipcard__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform $transition-slow;
+  
+  // Subtle zoom on hover
+  .flipcard:hover & {
+    transform: scale(1.05);
+  }
+}
+
+// Optional gradient overlay on image
+.flipcard__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba($color-black, 0) 0%,
+    rgba($color-black, 0.3) 100%
+  );
+  opacity: 0;
+  transition: opacity $transition-base;
+  pointer-events: none;
+  
+  .flipcard:hover & {
+    opacity: 1;
+  }
+}
+
+// ============================================
+// BACK SIDE
+// ============================================
+
+.flipcard__back {
+  background: linear-gradient(
+    135deg,
+    $color-accent 0%,
+    $color-accent-dark 100%
+  );
+  transform: rotateY(180deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-6;
+  
+  // Alternative gradient styles
+  .flipcard--accent & {
+    background: linear-gradient(
+      135deg,
+      $color-accent 0%,
+      $color-accent-dark 100%
+    );
+  }
+  
+  .flipcard--secondary & {
+    background: linear-gradient(
+      135deg,
+      $color-secondary 0%,
+      $color-secondary-dark 100%
+    );
+  }
+  
+  .flipcard--nature & {
+    background: linear-gradient(
+      135deg,
+      $color-nature 0%,
+      $color-nature-dark 100%
+    );
+  }
+  
+  @include respond-to('md') {
+    padding: $spacing-8;
+  }
+}
+
+.flipcard__content {
+  color: $color-white;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-4;
+}
+
+.flipcard__title {
+  font-family: $font-heading;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+  color: $color-accent;
+  margin: 0;
+  line-height: $line-height-tight;
+  
+  @include respond-to('md') {
+    font-size: $font-size-xl;
+  }
+}
+
+.flipcard__description {
+  font-size: $font-size-sm;
+  line-height: $line-height-relaxed;
+  margin: 0;
+  color: $color-primary;
+  
+  @include respond-to('md') {
+    font-size: $font-size-base;
+  }
+}
+
+// ============================================
+// LOADING STATE
+// ============================================
+
+.flipcard--loading {
+  .flipcard__front {
+    background: linear-gradient(
+      90deg,
+      $color-neutral-light 0%,
+      $color-neutral 50%,
+      $color-neutral-light 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+// ============================================
+// MOBILE OPTIMIZATION
+// ============================================
+
+@media (max-width: 768px) {
+  .flipcard {
+    // Disable hover on mobile, use touch
+    &:active .flipcard__inner {
+      transform: rotateY(180deg);
+    }
+    
+    &:hover .flipcard__inner {
+      transform: none;
+    }
+  }
+}
+
+// ============================================
+// ACCESSIBILITY - Reduced motion
+// ============================================
+
+@media (prefers-reduced-motion: reduce) {
+  .flipcard__inner {
+    transition-duration: 0.01ms !important;
+  }
+  
+  .flipcard__image {
+    transition: none !important;
+  }
+}
