@@ -1,0 +1,220 @@
+// ============================================
+// HERO VIDEO + INTERSECTION - Styles SCSS
+// ============================================
+
+@use '../../styles/abstracts/variables' as *;
+@use '../../styles/abstracts/mixins' as *;
+
+// ============================================
+// HERO VIDEO SECTION
+// ============================================
+
+.hero-video {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 600px;
+  max-height: 1080px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// ============================================
+// VIDEO BACKGROUND
+// ============================================
+
+.hero-video__background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.hero-video__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 1; 
+}
+
+.hero-video__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba($color-primary, 0.5) 0%,
+    rgba($color-primary, 0.7) 50%,
+    $color-primary 100%
+  );
+  pointer-events: none; // Permet de cliquer à travers l'overlay
+  z-index: 1; // Au-dessus de la vidéo
+}
+
+// ============================================
+// HERO CONTENT
+// ============================================
+
+.hero-video__content {
+  position: relative;
+  z-index: 2; // Au-dessus de l'overlay
+  width: 100%;
+  text-align: center;
+  color: $color-white;
+  padding: $spacing-8 $spacing-4;
+}
+
+.hero-video__container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.hero-video__title {
+  font-family: $font-heading;
+  font-size: $font-size-4xl;
+  font-weight: $font-weight-bold;
+  margin: 0 0 $spacing-6 0;
+  line-height: $line-height-tight;
+  color: $color-accent;
+  
+  @include respond-to('md') {
+    font-size: $font-size-5xl;
+  }
+  
+  @include respond-to('lg') {
+    font-size: $font-size-6xl;
+  }
+  
+  @include respond-to('xl') {
+    font-size: $font-size-7xl;
+  }
+}
+
+.hero-video__subtitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-medium;
+  margin: 0 0 $spacing-10 0;
+  line-height: $line-height-relaxed;
+  color: $color-accent;
+  opacity: 0.95;
+  
+  @include respond-to('md') {
+    font-size: $font-size-xl;
+  }
+  
+  @include respond-to('lg') {
+    font-size: $font-size-2xl;
+  }
+}
+
+// ============================================
+// SCROLL INDICATOR
+// ============================================
+
+.hero-video__scroll-indicator {
+  position: absolute;
+  bottom: $spacing-8;
+  left: 50%;
+  transform: translateX(-50%);
+  color: $color-white;
+  animation: bounce 2s infinite;
+  z-index: 2;
+  transition: opacity $transition-base;
+  
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  svg {
+    filter: drop-shadow(0 2px 4px rgba($color-black, 0.5));
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  40% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+  60% {
+    transform: translateX(-50%) translateY(-5px);
+  }
+}
+
+
+// ============================================
+// ANIMATIONS
+// ============================================
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-video__title,
+.hero-video__subtitle {
+  animation: fadeInUp 1s ease-out;
+}
+
+.hero-video__subtitle {
+  animation-delay: 0.2s;
+}
+
+// ============================================
+// MOBILE - Vidéo background fixe
+// ============================================
+
+@media (max-width: 768px) {
+  .hero-video {
+    min-height: 500px;
+  }
+  
+  .hero-video__video {
+    // Fixe sur mobile pour éviter les problèmes de performance
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+}
+
+// ============================================
+// ACCESSIBILITY - Reduced motion
+// ============================================
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-video__title,
+  .hero-video__subtitle {
+    animation: none;
+  }
+  
+  .hero-video__scroll-indicator {
+    animation: none;
+  }
+}
+
+// ============================================
+// FALLBACK - Si la vidéo ne charge pas
+// ============================================
+
+.hero-video__video:not([src]) + .hero-video__overlay {
+  background: linear-gradient(
+    135deg,
+    $color-primary 0%,
+    $color-primary-dark 100%
+  );
+}

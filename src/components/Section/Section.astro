@@ -1,0 +1,17 @@
+---
+import type { SectionProps } from "./Section.types";
+const {
+  variant = 'default',
+  padding = 'medium',
+  centered = false,
+  class: className = '',
+} = Astro.props as SectionProps
+---
+
+<section class:list={['section', `section--${variant}`, `section--${padding}`, centered && 'section--centered', className]}>
+  <slot />
+</section>
+
+<style lang="scss">
+  @use "./Section.styles.scss";
+</style>

@@ -1,0 +1,182 @@
+// ============================================
+// INTERSECTION SECTION
+// ============================================
+
+@use '../../styles/abstracts/variables' as *;
+@use '../../styles/abstracts/mixins' as *;
+
+.intersection {
+  position: relative;
+  width: 100%;
+  padding: $spacing-20 0;
+  overflow: hidden;
+
+  @include respond-to('md') {
+    padding: $spacing-24 0;
+  }
+
+  @include respond-to('lg') {
+    padding: $spacing-32 0;
+  }
+}
+
+// ============================================
+// GRADIENT BACKGROUND
+// ============================================
+
+.intersection__background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  
+  // Gradient avec coupure nette au milieu
+  background: linear-gradient(
+    180deg,
+    $color-primary 0%,
+    $color-primary 50%,
+    $color-white 50%,
+    $color-white 100%
+  );
+}
+
+// ============================================
+// CONTAINER
+// ============================================
+
+.intersection__container {
+  position: relative;
+  z-index: 1;
+  max-width: $container-max-width;
+  margin: 0 auto;
+  padding: 0 $container-padding;
+  
+  @include respond-to('lg') {
+    padding: 0 $container-padding-lg;
+  }
+}
+
+// ============================================
+// CARD GRENAT
+// ============================================
+
+.intersection__card {
+  max-width: 90vw;
+  margin: 0 auto;
+  padding: $spacing-6 $spacing-8;
+  background: linear-gradient(
+    135deg,
+    $color-secondary 0%,
+    $color-secondary-dark 100%
+  );
+  border-radius: $radius-2xl;
+  color: $color-white;
+  box-shadow:
+    0 20px 60px rgba($color-secondary-dark, 0.3),
+    0 0 0 1px rgba($color-white, 0.1) inset;
+  position: relative;
+  overflow: hidden;
+
+  // Motif décoratif
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+      circle,
+      rgba($color-white, 0.1) 0%,
+      transparent 70%
+    );
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  @include respond-to('md') {
+    max-width: 85vw;
+    padding: $spacing-8 $spacing-12;
+  }
+
+  @include respond-to('lg') {
+    max-width: 80vw;
+    padding: $spacing-10 $spacing-16;
+  }
+}
+
+.intersection__card-title {
+  font-family: $font-heading;
+  font-size: $font-size-2xl;
+  margin: 0 0 $spacing-6 0;
+  color: $color-white;
+  position: relative;
+  z-index: 1;
+  
+  @include respond-to('md') {
+    font-size: $font-size-3xl;
+  }
+  
+  @include respond-to('lg') {
+    font-size: $font-size-4xl;
+  }
+}
+
+.intersection__card-content {
+  font-size: $font-size-sm;
+  line-height: $line-height-relaxed;
+  position: relative;
+  z-index: 1;
+
+  p {
+    margin: 0 0 $spacing-4 0;
+    color: $color-white;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  strong {
+    color: $color-white;
+  }
+
+  @include respond-to('md') {
+    font-size: $font-size-lg;
+  }
+
+  @include respond-to('lg') {
+    font-size: $font-size-xl;
+  }
+}
+
+// ============================================
+// ANIMATIONS
+// ============================================
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.intersection__card {
+  animation: fadeInUp 1s ease-out;
+}
+
+// ============================================
+// ACCESSIBILITY - Reduced motion
+// ============================================
+
+@media (prefers-reduced-motion: reduce) {
+  .intersection__card {
+    animation: none;
+  }
+}

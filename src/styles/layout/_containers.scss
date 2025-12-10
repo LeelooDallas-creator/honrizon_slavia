@@ -14,19 +14,8 @@
 /// Main element - Primary content area
 main {
   width: 100%;
-  max-width: $max-width-3xl;
-  margin-left: auto;
-  margin-right: auto;
-  padding: $spacing-4;
-  
-  // Mobile-first approach (larger padding on desktop)
-  @include respond-to('md') {
-    padding: $spacing-8 $spacing-6;
-  }
-  
-  @include respond-to('lg') {
-    padding: $spacing-12 $spacing-8;
-  }
+  margin: 0;
+  padding: 0;
 }
 
 // =============================================
