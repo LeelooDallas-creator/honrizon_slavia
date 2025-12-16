@@ -1,6 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content';
-import RessourceLayout from '../../layouts/RessourceLayout.astro';
+import RessourceLayout from '@layouts/RessourceLayout.astro';
 
 export async function getStaticPaths() {
   const ressources = await getCollection('ressources');

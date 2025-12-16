@@ -1,10 +1,10 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '@components/Header/Header.astro';
-import Footer from '../components/Footer/Footer.astro';
-import HeroMarkdown from '../components/molecules/Hero/HeroMarkdown.astro';
-import AutoAccordion from '../components/Accordion/AutoAccordion.astro';
-import '../styles/pages/_mdx.scss';
+import BaseHead from '@components/BaseHead.astro';
+import Header from '@components/organisms/Header/Header.astro';
+import Footer from '@components/organisms/Footer/Footer.astro';
+import HeroMarkdown from '@components/molecules/Hero/HeroMarkdown.astro';
+import AutoAccordion from '@components/Accordion/AutoAccordion.astro';
+import '@styles/pages/_mdx.scss';
 
 interface Props {
   title: string;
@@ -103,7 +103,7 @@ const {
     <Footer />
 
     <script>
-      import { initAll } from '../scripts/ressourceLayout';
+      import { initAll } from '@scripts/ressourceLayout';
     </script>
   </body>
 </html>
