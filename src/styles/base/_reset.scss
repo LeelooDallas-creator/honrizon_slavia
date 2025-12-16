@@ -219,46 +219,6 @@ table {
 }
 
 // =============================================
-// SECTION VARIANTS
-// =============================================
-
-/// Section default - Bleu foncé avec texte doré
-.section--default {
-  background-color: $color-primary;
-
-  h1, h2, h3, h4, h5, h6, p, span, a, li, strong, em {
-    color: $color-accent;
-  }
-}
-
-/// Section golden - Doré avec texte bleu foncé
-.section--golden {
-  background-color: $color-accent;
-
-  h1, h2, h3, h4, h5, h6, p, span, a, li, strong, em {
-    color: $color-primary;
-  }
-}
-
-/// Section light - Blanc avec texte bleu foncé
-.section--light {
-  background-color: $color-white;
-
-  h1, h2, h3, h4, h5, h6, p, span, a, li, strong, em {
-    color: $color-primary;
-  }
-}
-
-/// Section red - Grenat avec texte blanc
-.section--red {
-  background-color: $color-secondary;
-
-  h1, h2, h3, h4, h5, h6, p, span, a, li, strong, em {
-    color: $color-white;
-  }
-}
-
-// =============================================
 // ACCESSIBILITY
 // =============================================
 

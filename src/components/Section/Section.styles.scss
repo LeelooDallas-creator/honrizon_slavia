@@ -6,36 +6,57 @@
 
 .section {
   width: 100%;
-}
-
-// =============================================
-// PADDING VARIANTS
-// =============================================
-
-.section--small {
-  padding: 2rem 0;
-
-  @media (min-width: 768px) {
-    padding: 3rem 0;
+  
+  // Variants - Couleurs de fond
+  &.section--blue {
+    background: $color-primary;
+    color: $color-white;
   }
-}
-
-.section--medium {
-  padding: 4rem 0;
-
-  @media (min-width: 768px) {
+  
+  &.section--golden {
+    background: $color-accent;
+    color: $color-primary;
+  }
+  
+  &.section--white {
+    background: $color-white;
+    color: $color-primary;
+  }
+  
+  &.section--red {
+    background: $color-secondary;
+    color: $color-white;
+  }
+  
+  // Padding variants
+  &.section--small {
+    padding: 2rem 0;
+    
+    @media (min-width: 768px) {
+      padding: 3rem 0;
+    }
+  }
+  
+  &.section--medium {
+    padding: 4rem 0;
+    
+    @media (min-width: 768px) {
+      padding: 5rem 0;
+    }
+  }
+  
+  &.section--large {
     padding: 6rem 0;
+    
+    @media (min-width: 768px) {
+      padding: 8rem 0;
+    }
+    
+    @media (min-width: 1024px) {
+      padding: 10rem 0;
+    }
   }
 }
-
-.section--large {
-  padding: 6rem 0;
-
-  @media (min-width: 768px) {
-    padding: 10rem 0;
-  }
-}
-
 // =============================================
 // CENTERED VARIANT
 // =============================================
@@ -46,21 +67,4 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-
-  h2 {
-    font-size: $font-size-3xl;
-    margin-bottom: $spacing-6;
-    font-weight: $font-weight-bold;
-
-    @media (min-width: $breakpoint-md) {
-      font-size: $font-size-4xl;
-    }
-  }
-
-  p {
-    font-size: $font-size-lg;
-    line-height: $line-height-relaxed;
-    max-width: 800px;
-    margin: 0 auto;
-  }
 }

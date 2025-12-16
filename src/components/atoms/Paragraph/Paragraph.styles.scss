@@ -1,0 +1,50 @@
+@use "@styles/abstracts/variables" as *;
+@use "@styles/abstracts/mixins" as *;
+
+.paragraph {
+  line-height: 1.6;
+  margin-block-end: 1.5rem;
+  margin-inline: 3rem;
+
+  // Variants
+  &.paragraph--blue {
+    color: $color-primary;
+  }
+  &.paragraph--red {
+    color: $color-secondary;
+  }
+  &.paragraph--gold {
+    color: $color-accent;
+  }
+  &.paragraph--white {
+    color: $color-white;
+  }
+  &.paragraph--black {
+    color: $color-black;
+  }
+
+  // Align
+  &.paragraph--left {
+    text-align: left;
+  }
+  &.paragraph--center {
+    text-align: center;
+  }
+  &.paragraph--right {
+    text-align: right;
+  }
+
+  // Sizes
+  &--sm {
+    font-size: 0.875rem;
+  }
+  &--base {
+    font-size: 1rem;
+  }
+  &--lg {
+    font-size: 1.125rem;
+    @media (min-width: 768px) {
+      font-size: 1.25rem;
+    }
+  }
+}

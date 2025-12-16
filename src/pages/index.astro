@@ -6,6 +6,8 @@ import Hero from "../components/Hero/Hero.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import Intersection from "@components/Intersection/Intersection.astro";
 import Section from "@components/Section/Section.astro";
+import Heading from "@components/atoms/Heading/Heading.astro";
+import Paragraph from "@components/atoms/Paragraph/Paragraph.astro";
 ---
 
 <!doctype html>
@@ -20,16 +22,16 @@ import Section from "@components/Section/Section.astro";
 	</div>
     <main>
 <Section
-      variant="default"
+      variant="blue"
       centered={true}
       padding="large"
     >
-      <h2>Voyagez à votre rythme avec Horizon Slavia</h2>
-      <p>
+      <Heading level={2} variant="gold">Voyagez à votre rythme avec Horizon Slavia</Heading>
+      <Paragraph variant="white" align="center" size="lg">
         Horizon Slavia vous accompagne dans la découverte de l'Europe de l'Est
         avec des itinéraires personnalisés, des carnets de voyage inspirants et
         des ressources pratiques pour voyager en toute sérénité.
-      </p>
+      </Paragraph>
     </Section>
     <Intersection />
     </main>

@@ -1,0 +1,37 @@
+---
+// ============================================
+// BUTTON COMPONENT
+// ============================================
+import type { AnchorProps } from './Anchor.types';
+
+const {
+  text,
+  href,
+  variant = 'primary',
+  size = 'md',
+  disabled = false,
+  fullWidth = false,
+  ariaLabel,
+} = Astro.props as AnchorProps;
+
+// Générer les classes CSS
+const classes = [
+  'anchor',
+  `anchor--${variant}`,
+  `anchor--${size}`,
+  fullWidth && 'anchor--full-width',
+].filter(Boolean).join(' ');
+---
+
+  <a
+    href={href}
+    class={classes}
+    aria-label={ariaLabel || text}
+    aria-disabled={disabled}
+  >
+    {text}
+  </a>
+
+<style lang="scss">
+  @use './Anchor.styles.scss';
+</style>
