@@ -59,26 +59,6 @@
 }
 
 // ============================================
-// CARD GRENAT
-// ============================================
-
-.intersection__card {
-  max-width: 100vw;
-  padding: $spacing-6 $spacing-8;
-  background: linear-gradient(
-    135deg,
-    $color-secondary 0%,
-    $color-secondary-dark 100%
-  );
-  border-radius: $radius-2xl;
-  box-shadow:
-    0 20px 60px rgba($color-secondary-dark, 0.3),
-    0 0 0 1px rgba($color-white, 0.1) inset;
-  position: relative;
-  overflow: hidden;
-}
-
-// ============================================
 // ANIMATIONS
 // ============================================
 
@@ -90,19 +70,5 @@
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-.intersection__card {
-  animation: fadeInUp 1s ease-out;
-}
-
-// ============================================
-// ACCESSIBILITY - Reduced motion
-// ============================================
-
-@media (prefers-reduced-motion: reduce) {
-  .intersection__card {
-    animation: none;
   }
 }

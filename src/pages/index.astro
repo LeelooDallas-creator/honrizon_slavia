@@ -1,4 +1,5 @@
 ---
+//components
 import BaseHead from "@components/BaseHead.astro";
 import Header from "@components/organisms/Header/Header.astro";
 import Footer from "@components/organisms/Footer/Footer.astro";
@@ -8,6 +9,13 @@ import Intersection from "@components/molecules/Intersection/Intersection.astro"
 import Section from "@components/molecules/Section/Section.astro";
 import Heading from "@components/atoms/Heading/Heading.astro";
 import Paragraph from "@components/atoms/Paragraph/Paragraph.astro";
+import Card from "@components/molecules/Card/Card.astro";
+
+//images
+import logo from "@assets/logo.jpg";
+import countryside from "@assets/countryside.jpg";
+import city from "@assets/city.jpg";
+import Anchor from "@components/atoms/Anchor/Anchor.astro";
 ---
 
 <!doctype html>
@@ -19,21 +27,67 @@ import Paragraph from "@components/atoms/Paragraph/Paragraph.astro";
     <Header />
     <div class="hero-wrapper">
       <Hero />
-	</div>
+    </div>
     <main>
-<Section
-      variant="blue"
-      centered={true}
-      padding="large"
-    >
-      <Heading level={2} variant="gold">Voyagez à votre rythme avec Horizon Slavia</Heading>
-      <Paragraph variant="white" align="center" size="lg">
-        Horizon Slavia vous accompagne dans la découverte de l'Europe de l'Est
-        avec des itinéraires personnalisés, des carnets de voyage inspirants et
-        des ressources pratiques pour voyager en toute sérénité.
-      </Paragraph>
-    </Section>
-    <Intersection />
+      <Section variant="blue" centered={true}>
+        <Heading level={2} variant="gold"
+          >Voyagez à votre rythme avec Horizon Slavia</Heading
+        >
+        <Paragraph variant="white" align="center" size="lg">
+          Horizon Slavia vous accompagne dans la découverte de l'Europe de l'Est
+          avec des itinéraires personnalisés, des carnets de voyage inspirants
+          et des ressources pratiques pour voyager en toute sérénité.
+        </Paragraph>
+      </Section>
+      <Intersection>
+        <Card background="secondary">
+          <Heading level={3} variant="white" align="center">
+            Le mystère du trompettiste de Cracovie
+          </Heading>
+
+          <Paragraph variant="white" align="center">
+            À Cracovie, chaque heure, un trompettiste joue une mélodie depuis la
+            tour de la basilique Sainte-Marie, sur la place du marché. La
+            mélodie s’interrompt brusquement, toujours au même moment.
+          </Paragraph>
+
+          <Paragraph variant="white" align="center">Pourquoi ?</Paragraph>
+          <Paragraph variant="white" align="center">
+            Parce qu’elle rend hommage à un trompettiste médiéval qui, selon la
+            légende, sonnait l’alerte lors d’une invasion mongole. Il fut tué en
+            plein appel, sa note restant inachevée… et aujourd’hui encore, les
+            Cracoviens perpétuent ce rituel en mémoire de son acte héroïque.
+          </Paragraph>
+          <Paragraph variant="white" align="center">
+            C’est l’un des symboles les plus fascinants et émouvants de la
+            culture polonaise !
+          </Paragraph>
+        </Card>
+      </Intersection>
+      <Section variant="white" centered={true}>
+        <Heading level={2} variant="black"> Nos propositions</Heading>
+        <Paragraph>
+          Tous nos conseils pratiques pour organiser votre séjour en Europe de
+          l'Est. Budget, transports, hébergements, culture locale : on vous dit
+          tout pour voyager sereinement.</Paragraph
+        >
+        <Card background={countryside} overlay>
+          <Anchor
+            text="Laissez vous inspirer"
+            href="/legendes"
+            variant={"red"}
+            size="md"
+          />
+        </Card>
+        <Card text="Feuilletez nos carnets" background={city} overlay>
+          <Anchor
+            text="Feuilletez nos carnets"
+            href="/europe-centrale"
+            variant={"red"}
+            size="md"
+          />
+        </Card>
+      </Section>
     </main>
     <Footer />
   </body>
