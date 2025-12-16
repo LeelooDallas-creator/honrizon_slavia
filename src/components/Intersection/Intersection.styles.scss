@@ -63,8 +63,7 @@
 // ============================================
 
 .intersection__card {
-  max-width: 90vw;
-  margin: 0 auto;
+  max-width: 100vw;
   padding: $spacing-6 $spacing-8;
   background: linear-gradient(
     135deg,
@@ -72,90 +71,11 @@
     $color-secondary-dark 100%
   );
   border-radius: $radius-2xl;
-  color: $color-white;
   box-shadow:
     0 20px 60px rgba($color-secondary-dark, 0.3),
     0 0 0 1px rgba($color-white, 0.1) inset;
   position: relative;
   overflow: hidden;
-
-  // Motif décoratif
-  &::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    right: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(
-      circle,
-      rgba($color-white, 0.1) 0%,
-      transparent 70%
-    );
-    opacity: 0.3;
-    pointer-events: none;
-  }
-
-  @include respond-to('md') {
-    max-width: 85vw;
-    padding: $spacing-8 $spacing-12;
-  }
-
-  @include respond-to('lg') {
-    max-width: 80vw;
-    padding: $spacing-10 $spacing-16;
-  }
-}
-
-.intersection__card-title {
-  font-family: $font-heading;
-  font-size: $font-size-2xl;
-  margin: 0 0 $spacing-6 0;
-  color: $color-white;
-  text-align: center;
-  position: relative;
-  z-index: 1;
-
-  @include respond-to('md') {
-    font-size: $font-size-3xl;
-  }
-
-  @include respond-to('lg') {
-    font-size: $font-size-4xl;
-  }
-}
-
-.intersection__card-content {
-  font-size: $font-size-sm;
-  line-height: $line-height-relaxed;
-  position: relative;
-  z-index: 1;
-  max-width: 70%;
-  margin: 0 auto;
-
-  p {
-    margin: 0 0 $spacing-4 0;
-    color: $color-white;
-    text-align: center;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-
-  strong {
-    color: $color-white;
-  }
-
-  @include respond-to('md') {
-    font-size: $font-size-lg;
-    max-width: 75%;
-  }
-
-  @include respond-to('lg') {
-    font-size: $font-size-xl;
-    max-width: 80%;
-  }
 }
 
 // ============================================

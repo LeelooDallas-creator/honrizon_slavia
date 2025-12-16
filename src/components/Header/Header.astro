@@ -6,7 +6,7 @@ import type { HeaderProps } from './Header.types';
 import Logo from "../Logo/Logo.astro";
 import Dropdown from "../Nav/Dropdown.astro";
 import { inspirationItems, carnetItems, ressourcesItems } from './Header.config';
-import Button from '@components/Button/Button.astro';
+import Anchor from '@components/Anchor/Anchor.astro';
 
 const { transparent = true } = Astro.props as HeaderProps;
 ---
@@ -26,7 +26,7 @@ const { transparent = true } = Astro.props as HeaderProps;
     </nav>
     
     <div class="header__cta">
-      <Button 
+      <Anchor 
         text="Contactez-nous !" 
         href="/contact" 
         variant="secondary" 

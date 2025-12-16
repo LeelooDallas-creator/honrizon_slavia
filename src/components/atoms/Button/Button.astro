@@ -6,7 +6,6 @@ import type { ButtonProps } from './Button.types';
 
 const {
   text,
-  href,
   variant = 'primary',
   size = 'md',
   type = 'button',
@@ -24,18 +23,6 @@ const classes = [
 ].filter(Boolean).join(' ');
 ---
 
-{href ? (
-  <!-- Button en tant que lien -->
-  <a
-    href={href}
-    class={classes}
-    aria-label={ariaLabel || text}
-    aria-disabled={disabled}
-  >
-    {text}
-  </a>
-) : (
-  <!-- Button en tant que bouton -->
   <button
     type={type}
     class={classes}
@@ -44,7 +31,6 @@ const classes = [
   >
     {text}
   </button>
-)}
 
 <style lang="scss">
   @use './Button.styles.scss';

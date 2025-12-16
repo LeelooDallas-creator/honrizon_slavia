@@ -76,7 +76,6 @@ h6 {
 p {
   @include body-text;
   margin-bottom: $spacing-4;
-  max-width: 65ch; // Optimal line length for readability (Marko persona)
   
   // First paragraph after heading (no top margin)
   h1 + &,
