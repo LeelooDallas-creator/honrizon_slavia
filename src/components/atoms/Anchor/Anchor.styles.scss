@@ -84,13 +84,12 @@
 }
 
 // OUTLINE - Bordure avec fond transparent
-.anchor--outline {
-  background-color: transparent;
-  color: $color-primary;
-  border-color: $color-primary;
+.anchor--red {
+  background-color: $color-secondary;
+  color: $color-white;
   
   &:hover {
-    background-color: $color-primary;
+    background-color: $color-secondary-dark;
     color: $color-white;
     transform: translateY(-2px);
   }

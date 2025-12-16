@@ -1,0 +1,56 @@
+---
+import { getImage } from 'astro:assets';
+
+import type { CardProps } from "./Card.types"
+const { 
+  overlay = false, 
+  background = 'primary'
+} = Astro.props as CardProps
+
+// Liste des variants de couleur
+const colorVariants = ['primary', 'secondary', 'gold', 'white'];
+
+// Détermine si le background est une image ou une couleur
+let isImage = false;
+let imageSrc = '';
+
+if (typeof background === 'object' && background !== null && 'src' in background) {
+  // C'est un import d'image (ImageMetadata) - on optimise l'image
+  isImage = true;
+  const optimizedImage = await getImage({ src: background });
+  imageSrc = optimizedImage.src;
+} else if (typeof background === 'string' && !colorVariants.includes(background)) {
+  // C'est un chemin d'image (string)
+  isImage = true;
+  imageSrc = background;
+}
+if (typeof background === 'object' && background !== null && 'src' in background) {
+  // C'est un import d'image (ImageMetadata) - on optimise l'image
+  isImage = true;
+  const optimizedImage = await getImage({ src: background });
+  imageSrc = optimizedImage.src;
+} else if (typeof background === 'string' && !colorVariants.includes(background)) {
+  // C'est un chemin d'image (string)
+  isImage = true;
+  imageSrc = background;
+}
+
+const cardClasses = [
+  'card',
+  overlay ? 'card--overlay' : '',
+  !isImage ? `card--${background}` : 'card--image'
+].filter(Boolean).join(' ');
+
+const cardStyle = isImage ? `background-image: url(${imageSrc});` : '';
+---
+
+<div class={cardClasses} style={cardStyle}>
+  {overlay && <div class="card__overlay"></div>}
+  <div class="card__content">
+    <slot />
+  </div>
+</div>
+
+<style lang="scss">
+@use './Card.styles.scss';
+</style>

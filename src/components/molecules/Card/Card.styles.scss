@@ -1,0 +1,71 @@
+@use "@styles/abstracts/variables" as *;
+@use "@styles/abstracts/mixins" as *;
+
+.card {
+  position: relative;
+  padding: 2rem;
+  min-height: 30vh;
+  min-width: 80vw;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-2xl;
+  margin-block-end: 4rem;
+
+  &:last-child {
+    margin-block-end: 0;
+
+  }
+
+  // Variants de couleur
+  &--primary {
+    background-color: $color-primary;
+    color: $color-white;
+  }
+
+  &--secondary {
+    background-color: $color-secondary;
+    color: $color-white;
+  }
+
+  &--gold {
+    background-color: $color-accent;
+    color: $color-primary;
+  }
+
+  &--white {
+    background-color: $color-white;
+    color: $color-primary;
+  }
+
+
+  // Overlay
+  &__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.091);
+    z-index: 1;
+  }
+
+  &--overlay &__content {
+    position: relative;
+    z-index: 2;
+    color: white;
+  }
+
+  // Contenu
+  &__content {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
