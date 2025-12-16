@@ -1465,7 +1465,7 @@ npm install -D sass
 ```astro
 ---
 // src/layouts/Layout.astro
-import '../styles/main.scss';
+import '@styles/main.scss';
 ---
 
 <!DOCTYPE html>
@@ -1505,8 +1505,8 @@ const { title, excerpt, image } = Astro.props;
 
 <style lang="scss">
   // Import variables and mixins
-  @import '../styles/abstracts/variables';
-  @import '../styles/abstracts/mixins';
+  @import '@styles/abstracts/variables';
+  @import '@styles/abstracts/mixins';
   
   // Scoped styles for this component
   .card {
@@ -1674,7 +1674,7 @@ cat dist/assets/*.css
 }
 
 // Solution
-@import '../styles/abstracts/variables';
+@import '@styles/abstracts/variables';
 
 .my-component {
   color: $color-primary; // Works
