@@ -4,9 +4,9 @@
 // ============================================
 import type { HeaderProps } from './Header.types';
 import Logo from "../Logo/Logo.astro";
-import Dropdown from "../Nav/Dropdown.astro";
+import Dropdown from "@components/molecules/Nav/Dropdown.astro";
 import { inspirationItems, carnetItems, ressourcesItems } from './Header.config';
-import Anchor from '@components/Anchor/Anchor.astro';
+import Anchor from '@components/atoms/Anchor/Anchor.astro';
 
 const { transparent = true } = Astro.props as HeaderProps;
 ---
