@@ -1,0 +1,68 @@
+<svg
+    width="80"
+    height="80"
+    viewBox="0 0 80 80"
+    xmlns="http://www.w3.org/2000/svg"
+>
+    <!-- Cercle extérieur -->
+    <circle
+        cx="40"
+        cy="40"
+        r="35"
+        fill="none"
+        stroke="#C4A000"
+        stroke-width="3"></circle>
+
+    <!-- Cercle intérieur -->
+    <circle
+        cx="40"
+        cy="40"
+        r="30"
+        fill="none"
+        stroke="#C4A000"
+        stroke-width="2"
+        opacity="0.5"></circle>
+
+    <!-- Points cardinaux -->
+    <text
+        x="40"
+        y="15"
+        text-anchor="middle"
+        font-family="serif"
+        font-size="12"
+        font-weight="bold"
+        fill="#8B0000">N</text>
+    <text
+        x="40"
+        y="70"
+        text-anchor="middle"
+        font-family="serif"
+        font-size="10"
+        fill="#1B263B">S</text>
+    <text
+        x="12"
+        y="44"
+        text-anchor="middle"
+        font-family="serif"
+        font-size="10"
+        fill="#1B263B">O</text>
+    <text
+        x="68"
+        y="44"
+        text-anchor="middle"
+        font-family="serif"
+        font-size="10"
+        fill="#1B263B">E</text>
+
+    <!-- Aiguille Nord (rouge) -->
+    <path d="M 40 40 L 38 20 L 40 15 L 42 20 Z" fill="#8B0000"
+    ></path>
+
+    <!-- Aiguille Sud (or) -->
+    <path d="M 40 40 L 38 60 L 40 65 L 42 60 Z" fill="#C4A000"
+    ></path>
+
+    <!-- Point central -->
+    <circle cx="40" cy="40" r="4" fill="#1B263B"></circle>
+    <circle cx="40" cy="40" r="2" fill="#C4A000"></circle>
+</svg>
