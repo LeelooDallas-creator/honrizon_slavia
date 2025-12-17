@@ -1,15 +1,13 @@
 ---
-import type { restoreFocus } from "astro/virtual-modules/transitions-swap-functions.js";
 import type { SectionProps } from "./Section.types";
 const {
   variant = 'white',
   padding = 'medium',
-  centered = false,
   ...rest
 } = Astro.props as SectionProps
 ---
 
-<section class:list={['section', `section--${variant}`, `section--${padding}`, centered && 'section--centered', {...rest}]}>
+<section class:list={['section', `section--${variant}`, `section--${padding}`, {...rest}]}>
   <slot />
 </section>
 

@@ -2,6 +2,7 @@
 // ============================================
 // HERO COMPONENT - Vidéo + Intersection
 // ============================================
+import Heading from '@components/atoms/Heading/Heading.astro';
 import type { HeroProps } from './Hero.types';
 
 const {
@@ -36,7 +37,7 @@ const {
   <!-- Contenu par-dessus la vidéo -->
   <div class="hero-video__content">
     <div class="hero-video__container">
-      <h1 class="hero-video__title">{title}</h1>
+      <Heading level={1} variant="gold" align="center">{title}</h1>
       {subtitle && <p class="hero-video__subtitle">{subtitle}</p>}
     </div>
   </div>

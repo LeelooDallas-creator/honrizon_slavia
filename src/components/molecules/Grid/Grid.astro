@@ -1,0 +1,46 @@
+---
+// Grid.astro
+interface Props {
+  cols: number;
+  rows: number;
+  gap?: string;
+  align?:  'left' | 'center' | 'right';
+}
+
+const { 
+  cols = 3, 
+  rows, 
+  gap = '1rem', 
+  align = 'left',
+  ...rest
+} = Astro.props;
+---
+
+<div class:list={['grid', `grid--${align}`, {...rest}]}>
+  <slot />
+</div>
+
+<style lang="scss" define:vars={{ cols, rows, gap }}>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(var(--cols), 1fr);
+    grid-template-rows: var(--rows);
+    gap: var(--gap);
+    margin-block: 1rem ;
+
+     // Align
+  &.grid--center {
+    justify-items: start;
+  }
+  &.grid--center {
+    justify-items: center;
+  }
+  &.grid--right {
+     justify-items: end;
+  }
+
+  &:last-child{
+    margin-block-end: 0;
+  }
+  }
+</style>

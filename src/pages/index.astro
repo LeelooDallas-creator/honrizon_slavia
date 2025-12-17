@@ -10,12 +10,17 @@ import Section from "@components/molecules/Section/Section.astro";
 import Heading from "@components/atoms/Heading/Heading.astro";
 import Paragraph from "@components/atoms/Paragraph/Paragraph.astro";
 import Card from "@components/molecules/Card/Card.astro";
+import Anchor from "@components/atoms/Anchor/Anchor.astro";
+import Grid from "@components/molecules/Grid/Grid.astro";
+import { Picture } from "astro:assets";
 
 //images
-import logo from "@assets/logo.jpg";
 import countryside from "@assets/countryside.jpg";
 import city from "@assets/city.jpg";
-import Anchor from "@components/atoms/Anchor/Anchor.astro";
+import boussole from "@assets/icons/boussole-hs.svg";
+import map from "@assets/icons/map-hs.svg";
+import light from "@assets/icons/light-hs.svg";
+import { lazy } from "astro:schema";
 ---
 
 <!doctype html>
@@ -29,8 +34,8 @@ import Anchor from "@components/atoms/Anchor/Anchor.astro";
       <Hero />
     </div>
     <main>
-      <Section variant="blue" centered={true}>
-        <Heading level={2} variant="gold"
+      <Section variant="blue">
+        <Heading level={2} variant="gold" align="center"
           >Voyagez à votre rythme avec Horizon Slavia</Heading
         >
         <Paragraph variant="white" align="center" size="lg">
@@ -39,6 +44,7 @@ import Anchor from "@components/atoms/Anchor/Anchor.astro";
           et des ressources pratiques pour voyager en toute sérénité.
         </Paragraph>
       </Section>
+
       <Intersection>
         <Card background="secondary">
           <Heading level={3} variant="white" align="center">
@@ -64,36 +70,95 @@ import Anchor from "@components/atoms/Anchor/Anchor.astro";
           </Paragraph>
         </Card>
       </Intersection>
-      <Section variant="white" centered={true}>
+
+      <Section variant="white">
         <Heading level={2} variant="black"> Nos propositions</Heading>
         <Paragraph>
           Tous nos conseils pratiques pour organiser votre séjour en Europe de
           l'Est. Budget, transports, hébergements, culture locale : on vous dit
           tout pour voyager sereinement.</Paragraph
         >
-        <Card background={countryside} overlay>
-          <Anchor
-            text="Laissez vous inspirer"
-            href="/legendes"
-            variant={"red"}
-            size="md"
-          />
-        </Card>
-        <Card text="Feuilletez nos carnets" background={city} overlay>
-          <Anchor
-            text="Feuilletez nos carnets"
-            href="/europe-centrale"
-            variant={"red"}
-            size="md"
-          />
-        </Card>
+        <Grid cols={1} rows={2} align="center">
+          <Card background={countryside} overlay>
+            <Anchor
+              text="Laissez vous inspirer"
+              href="/legendes"
+              variant={"red"}
+              size="md"
+            />
+          </Card>
+          <Card text="Feuilletez nos carnets" background={city} overlay>
+            <Anchor
+              text="Feuilletez nos carnets"
+              href="/europe-centrale"
+              variant={"red"}
+              size="md"
+            />
+          </Card>
+        </Grid>
+      </Section>
+
+      <Section variant="white">
+        <Heading variant="black"> Pourquoi choisir Horizon Slavia ? </Heading>
+        <Grid cols={3} rows={1} align="center">
+          <div>
+              <Picture
+                src={boussole}
+                alt="icone de boussole"
+                width={80}
+                height={80}
+                loading="lazy"
+              />
+            <Paragraph  >
+              <strong>Expertise locale approfondie</strong>
+            </Paragraph>
+            <Paragraph  
+              >Des années d'exploration en Europe de l'Est. Nos itinéraires sont
+              testés, vérifiés et régulièrement mis à jour.</Paragraph
+            >
+          </div>
+          <div>
+              <Picture
+                src={map}
+                alt="icone de carte"
+                width={80}
+                height={80}
+                loading="lazy"
+              />
+            <Paragraph  >
+              <strong>Itinéraires pour voyageurs indépendants</strong>
+            </Paragraph>
+            <Paragraph  
+              >Pas de groupes ni de packages. Nous créons des guides détaillés
+              pour ceux qui aiment voyager en toute liberté et à leur rythme.</Paragraph
+            >
+          </div>
+          <div>
+              <Picture
+                src={light}
+                alt="icone d'ampoule"
+                width={80}
+                height={80}
+                loading="lazy"
+              />
+            <Paragraph  >
+              <strong>Conseils pratiques et actualisés</strong>
+            </Paragraph>
+            <Paragraph  
+              >Budgets réels, bons plans transport, hébergements testés par nos
+              experts : toutes les infos concrètes pour préparer sereinement
+              votre voyage.</Paragraph
+            >
+          </div>
+        </Grid>
       </Section>
     </main>
     <Footer />
   </body>
 </html>
 
-<style>
+<style lang="scss">
+  @use "@styles/abstracts/variables.scss";
   .home-page {
     margin: 0;
     padding: 0;
@@ -105,5 +170,17 @@ import Anchor from "@components/atoms/Anchor/Anchor.astro";
     margin-block-start: 0;
     padding-block-start: 0;
     min-height: 100vh;
+  }
+
+  picture {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-block: 2rem;
+  }
+  img {
+    background-color: #8b0000;
+    border-radius: 9999px;
+    padding: 1rem;
   }
 </style>
