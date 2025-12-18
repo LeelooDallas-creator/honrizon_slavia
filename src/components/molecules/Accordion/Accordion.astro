@@ -1,0 +1,27 @@
+---
+const { width = "100%", center = false } = Astro.props;
+---
+
+<div class="accordeon">
+  <slot />
+</div>
+
+<style is:global define:vars={{ width }}>
+  .accordeon {
+    padding-block-start: 3rem;
+    display: grid;
+    text-align: left;
+    width: var(--width);
+    margin-inline: auto;
+  }
+
+  & details:not(:last-child) {
+    border-bottom: 1px solid #6b0000;
+  }
+
+  @container section (max-width: 978px) {
+    .accordeon {
+      width: 100%;
+    }
+  }
+</style>

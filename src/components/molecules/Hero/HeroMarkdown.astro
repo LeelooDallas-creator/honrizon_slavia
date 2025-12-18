@@ -1,7 +1,7 @@
 ---
 // Hero component for MDX pages with background image
 interface Props{title:string;subtitle?:string;description?:string;heroImage?:string;category?:string;pubDate?:string;overlayOpacity?:number;minHeight?:string}
-const{title,subtitle,description,heroImage,category,pubDate,overlayOpacity=0.7,minHeight='75vh'}=Astro.props;
+const{title,subtitle,description,heroImage,category,pubDate,overlayOpacity=0.7,minHeight='75dvh'}=Astro.props;
 ---
 <section class="hero-markdown" style={`min-height: ${minHeight}`}>
   {heroImage&&<div class="hero-background-wrapper"><img src={heroImage} alt={title} class="hero-background-image"/><div class="hero-overlay" style={`opacity: ${overlayOpacity}`}></div></div>}

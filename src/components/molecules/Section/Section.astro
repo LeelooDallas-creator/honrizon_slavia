@@ -3,11 +3,15 @@ import type { SectionProps } from "./Section.types";
 const {
   variant = 'white',
   padding = 'medium',
+  class: className = '',
   ...rest
 } = Astro.props as SectionProps
 ---
 
-<section class:list={['section', `section--${variant}`, `section--${padding}`, {...rest}]}>
+<section 
+  class:list={['section', `section--${variant}`, `section--${padding}`, className]}
+  {...rest}
+>
   <slot />
 </section>
 

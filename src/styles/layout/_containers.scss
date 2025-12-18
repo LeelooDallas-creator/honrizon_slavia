@@ -212,8 +212,8 @@ section {
 
 /// Full-bleed section (edge-to-edge)
 .full-bleed {
-  width: 100vw;
-  margin-left: calc(-50vw + 50%);
+  width: 100dvw;
+  margin-left: calc(-50dvw + 50%);
 }
 
 /// Aspect ratio containers (prevent layout shift)

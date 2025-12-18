@@ -13,6 +13,8 @@ import Card from "@components/molecules/Card/Card.astro";
 import Anchor from "@components/atoms/Anchor/Anchor.astro";
 import Grid from "@components/molecules/Grid/Grid.astro";
 import { Picture } from "astro:assets";
+import Accordion from "@components/molecules/Accordion/Accordion.astro";
+import AccordionItem from "@components/molecules/Accordion/AccordionItem.astro";
 
 
 //images
@@ -189,8 +191,120 @@ import checklist from "@assets/homepage/checklist.webp"
             />
           </Card>
         </Grid>
+      <Section variant="white" class="section--centered">
+        <Heading level={2} variant="black"> Questions fréquentes </Heading>
+        <Accordion width="70%">
+          <AccordionItem
+            title="Quand partir en Europe de l'Est ?"
+            key={0}
+            name="faq"
+            isOpen={true}
+          >
+            <Paragraph
+              >La meilleure période pour voyager en Europe de l'Est dépend de
+              vos attentes et de vos destinations.
+            </Paragraph>
+            <Paragraph>Périodes idéales : </Paragraph>
+            <Paragraph
+              ><strong>Mai à juin (printemps/début été) :</strong></Paragraph
+            >
+            <ul>
+              <li>Températures agréables (15-25°C)</li>
+              <li>Nature en fleur, paysages verdoyants</li>
+              <li>Peu de touristes</li>
+              <li>Prix modérés pour l'hébergement</li>
+            </ul>
+            <Paragraph>
+              Parfait pour : randonnées, visites culturelles, photographie
+            </Paragraph>
+            <Paragraph
+              ><strong> Septembre à octobre (automne) : </strong></Paragraph
+            >
+            <ul>
+              <li>Températures douces (12-22°C)</li>
+              <li>
+                Couleurs automnales spectaculaires dans les Carpates et les
+                Tatras
+              </li>
+              <li>Vendanges et festivals gastronomiques</li>
+              <li>Tarifs avantageux</li>
+              <li>Moins de monde sur les sites touristiques</li>
+            </ul>
+            <Paragraph
+              >Idéal pour : road trips, citytrips, gastronomie</Paragraph
+            >
+            <Paragraph
+              ><strong>Juillet-août (haute saison) : </strong></Paragraph
+            >
+            <ul>
+              <li>Chaud (25-35°C)</li>
+              <li>Tous les sites et services ouverts</li>
+              <li>Ambiance festive</li>
+              <li>Parfait pour la côte adriatique (Croatie)</li>
+            </ul>
+            <Paragraph variant="red"> Inconvénients :</Paragraph>
+            <ul>
+              <li>Foules touristiques</li>
+              <li>Prix élevés</li>
+              <li>Réservation obligatoire à l'avance</li>
+            </ul>
+            <Paragraph><strong>Novembre à mars (hiver) :</strong></Paragraph>
+            <ul>
+              <li>Froid (-5 à 5°C)</li>
+              <li>Neige fréquente</li>
+              <li>Marchés de Noël magiques (Prague, Cracovie, Budapest)</li>
+              <li>Stations de ski abordables (Zakopane, Bansko)</li>
+              <li>Ambiance authentique</li>
+              <li>Peu de touristes</li>
+            </ul>
+            <Paragraph variant="red"> Inconvénients :</Paragraph>
+            <ul>
+              <li>Certains sites fermés</li>
+              <li>Journées courtes</li>
+            </ul>
+            <Paragraph> Idéal pour : ski, marchés de Noël, thermes</Paragraph>
+            <Paragraph
+              >Par destination : Pologne : mai-septembre Roumanie/Carpates :
+              juin-septembre (randonnée), décembre-mars (ski) Croatie : mai-juin
+              et septembre (éviter juillet-août trop bondé) République Tchèque :
+              avril-octobre, décembre (Noël) Bulgarie : mai-septembre (mer),
+              décembre-mars (ski)</Paragraph
+            >
+          </AccordionItem>
+
+          <AccordionItem
+            title="Comment se déplacer entre les pays ?"
+            key={1}
+            name="faq"
+          >
+            Le prix est...
+          </AccordionItem>
+
+          <AccordionItem
+            title="Visa nécessaire pour les Français ?"
+            key={1}
+            name="faq"
+          >
+            Le prix est...
+          </AccordionItem>
+
+          <AccordionItem
+            title="Peut-on payer par carte partout ?"
+            key={1}
+            name="faq"
+          >
+            Le prix est...
+          </AccordionItem>
+
+          <AccordionItem
+            title="Quelle est la durée idéale par pays ?"
+            key={1}
+            name="faq"
+          />
+        </Accordion>
       </Section>
     </main>
+
     <Footer />
   </body>
 </html>
@@ -207,7 +321,7 @@ import checklist from "@assets/homepage/checklist.webp"
     position: relative;
     margin-block-start: 0;
     padding-block-start: 0;
-    min-height: 100vh;
+    min-height: 100dvh;
   }
 
   picture {
