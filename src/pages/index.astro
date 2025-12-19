@@ -14,13 +14,16 @@ import Anchor from "@components/atoms/Anchor/Anchor.astro";
 import Grid from "@components/molecules/Grid/Grid.astro";
 import { Picture } from "astro:assets";
 
+
 //images
-import countryside from "@assets/countryside.jpg";
-import city from "@assets/city.jpg";
+import countryside from "@assets/homepage/countryside.webp";
+import city from "@assets/homepage/city.webp";
 import boussole from "@assets/icons/boussole-hs.svg";
 import map from "@assets/icons/map-hs.svg";
 import light from "@assets/icons/light-hs.svg";
-import { lazy } from "astro:schema";
+import library from "@assets/homepage/library.webp";
+import kitchen from "@assets/homepage/kitchen.png";
+import checklist from "@assets/homepage/checklist.webp"
 ---
 
 <!doctype html>
@@ -57,7 +60,7 @@ import { lazy } from "astro:schema";
             mélodie s’interrompt brusquement, toujours au même moment.
           </Paragraph>
 
-          <Paragraph variant="white" align="center">Pourquoi ?</Paragraph>
+          <Paragraph variant="white" align="center"> Pourquoi ? </Paragraph>
           <Paragraph variant="white" align="center">
             Parce qu’elle rend hommage à un trompettiste médiéval qui, selon la
             légende, sonnait l’alerte lors d’une invasion mongole. Il fut tué en
@@ -102,54 +105,89 @@ import { lazy } from "astro:schema";
         <Heading variant="black"> Pourquoi choisir Horizon Slavia ? </Heading>
         <Grid cols={3} rows={1} align="center">
           <div>
-              <Picture
-                src={boussole}
-                alt="icone de boussole"
-                width={80}
-                height={80}
-                loading="lazy"
-              />
-            <Paragraph  >
+            <Picture
+              src={boussole}
+              alt="icone de boussole"
+              width={80}
+              height={80}
+              loading="lazy"
+            />
+            <Paragraph>
               <strong>Expertise locale approfondie</strong>
             </Paragraph>
-            <Paragraph  
+            <Paragraph
               >Des années d'exploration en Europe de l'Est. Nos itinéraires sont
               testés, vérifiés et régulièrement mis à jour.</Paragraph
             >
           </div>
           <div>
-              <Picture
-                src={map}
-                alt="icone de carte"
-                width={80}
-                height={80}
-                loading="lazy"
-              />
-            <Paragraph  >
+            <Picture
+              src={map}
+              alt="icone de carte"
+              width={80}
+              height={80}
+              loading="lazy"
+            />
+            <Paragraph>
               <strong>Itinéraires pour voyageurs indépendants</strong>
             </Paragraph>
-            <Paragraph  
+            <Paragraph
               >Pas de groupes ni de packages. Nous créons des guides détaillés
               pour ceux qui aiment voyager en toute liberté et à leur rythme.</Paragraph
             >
           </div>
           <div>
-              <Picture
-                src={light}
-                alt="icone d'ampoule"
-                width={80}
-                height={80}
-                loading="lazy"
-              />
-            <Paragraph  >
+            <Picture
+              src={light}
+              alt="icone d'ampoule"
+              width={80}
+              height={80}
+              loading="lazy"
+            />
+            <Paragraph>
               <strong>Conseils pratiques et actualisés</strong>
             </Paragraph>
-            <Paragraph  
+            <Paragraph
               >Budgets réels, bons plans transport, hébergements testés par nos
               experts : toutes les infos concrètes pour préparer sereinement
               votre voyage.</Paragraph
             >
           </div>
+        </Grid>
+      </Section>
+
+      <Section variant="blue">
+        <Heading level={2} variant="gold">Préparez votre voyage</Heading>
+        <Paragraph variant="white"
+          >Tous nos conseils pratiques pour organiser votre séjour en Europe de
+          l'Est. Budget, transports, hébergements, culture locale : on vous dit
+          tout pour voyager sereinement.</Paragraph
+        >
+        <Grid rows={1} cols={3} gap="2rem" align="center">
+           <Card text="N'oubliez rien" background={checklist} overlay>
+            <Anchor
+              text="N'oubliez rien"
+              href="/ressources/checklist-depart"
+              variant={"red"}
+              size="md"
+            />
+          </Card>
+           <Card text="Partez sereins" background={kitchen} overlay>
+            <Anchor
+              text="Partez sereins"
+              href="/ressources/contacts-urgence"
+              variant={"red"}
+              size="md"
+            />
+          </Card>
+           <Card text="Apprenez les bases" background={library} overlay>
+            <Anchor
+              text="Apprenez les bases"
+              href="/ressources/guide-survie"
+              variant={"red"}
+              size="md"
+            />
+          </Card>
         </Grid>
       </Section>
     </main>
