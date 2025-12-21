@@ -3,8 +3,6 @@
 
 .paragraph {
   line-height: 1.6;
-  margin-block-end: 1.5rem;
-  margin: 2rem 6rem;
 
   // Variants
   &.paragraph--blue {
@@ -48,10 +46,27 @@
     }
   }
 
+  // Spacing
+  &--spacing-none {
+    margin-block: 0;
+  }
+  &--spacing-xs {
+    margin-block: 0.5rem 0.25rem;
+  }
+  &--spacing-sm {
+    margin-block: 1rem 0.5rem;
+  }
+  &--spacing-base {
+    margin-block: 2rem 0.5rem;
+  }
+  &--spacing-lg {
+    margin-block: 3rem 1rem;
+  }
+
   strong {
     font-weight: bold;
   }
-  
+
   em {
     font-style: italic;
   }

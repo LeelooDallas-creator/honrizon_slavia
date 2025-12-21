@@ -6,6 +6,7 @@
 
 .section {
   width: 100%;
+  padding-inline: 6rem;
   
   // Variants - Couleurs de fond
   &.section--blue {
@@ -26,35 +27,6 @@
   &.section--red {
     background: $color-secondary;
     color: $color-white;
-  }
-  
-  // Padding variants
-  &.section--small {
-    padding: 2rem 0;
-    
-    @media (min-width: 768px) {
-      padding: 3rem 0;
-    }
-  }
-  
-  &.section--medium {
-    padding: 4rem 0;
-    
-    @media (min-width: 768px) {
-      padding: 5rem 0;
-    }
-  }
-  
-  &.section--large {
-    padding: 6rem 0;
-    
-    @media (min-width: 768px) {
-      padding: 8rem 0;
-    }
-    
-    @media (min-width: 1024px) {
-      padding: 10rem 0;
-    }
   }
 }
 // =============================================

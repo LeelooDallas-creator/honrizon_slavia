@@ -1,0 +1,27 @@
+---
+import BaseHead from "@components/BaseHead.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = "Horizon Slavia", description = "Site web Horizon Slavia" } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <BaseHead title={title} description={description} />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+  }
+</style>
