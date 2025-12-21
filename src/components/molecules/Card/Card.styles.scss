@@ -3,7 +3,7 @@
 
 .card {
   padding: 2rem;
-  min-height: 30vh;
+  min-height: 30dvh;
   width: 80%;
   background-size: cover;
   background-position: center;
@@ -12,6 +12,7 @@
   align-items: center;
   justify-content: center;
   border-radius: $radius-2xl;
+  margin-block-end: 2rem;
 
   &:last-child {
     margin-block-end: 0;

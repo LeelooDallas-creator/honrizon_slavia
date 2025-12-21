@@ -13,7 +13,8 @@ import Card from "@components/molecules/Card/Card.astro";
 import Anchor from "@components/atoms/Anchor/Anchor.astro";
 import Grid from "@components/molecules/Grid/Grid.astro";
 import { Picture } from "astro:assets";
-
+import Accordion from "@components/molecules/Accordion/Accordion.astro";
+import AccordionItem from "@components/molecules/Accordion/AccordionItem.astro";
 
 //images
 import countryside from "@assets/homepage/countryside.webp";
@@ -23,7 +24,8 @@ import map from "@assets/icons/map-hs.svg";
 import light from "@assets/icons/light-hs.svg";
 import library from "@assets/homepage/library.webp";
 import kitchen from "@assets/homepage/kitchen.png";
-import checklist from "@assets/homepage/checklist.webp"
+import checklist from "@assets/homepage/checklist.webp";
+import { ParseStatus } from "astro:schema";
 ---
 
 <!doctype html>
@@ -164,7 +166,7 @@ import checklist from "@assets/homepage/checklist.webp"
           tout pour voyager sereinement.</Paragraph
         >
         <Grid rows={1} cols={3} gap="2rem" align="center">
-           <Card text="N'oubliez rien" background={checklist} overlay>
+          <Card text="N'oubliez rien" background={checklist} overlay>
             <Anchor
               text="N'oubliez rien"
               href="/ressources/checklist-depart"
@@ -172,7 +174,7 @@ import checklist from "@assets/homepage/checklist.webp"
               size="md"
             />
           </Card>
-           <Card text="Partez sereins" background={kitchen} overlay>
+          <Card text="Partez sereins" background={kitchen} overlay>
             <Anchor
               text="Partez sereins"
               href="/ressources/contacts-urgence"
@@ -180,7 +182,7 @@ import checklist from "@assets/homepage/checklist.webp"
               size="md"
             />
           </Card>
-           <Card text="Apprenez les bases" background={library} overlay>
+          <Card text="Apprenez les bases" background={library} overlay>
             <Anchor
               text="Apprenez les bases"
               href="/ressources/guide-survie"
@@ -190,13 +192,559 @@ import checklist from "@assets/homepage/checklist.webp"
           </Card>
         </Grid>
       </Section>
+      <Section variant="white" class="section--centered">
+        <Heading level={2} variant="black"> Questions fréquentes </Heading>
+        <Accordion width="70%">
+          <AccordionItem
+            title="Quand partir en Europe de l'Est ?"
+            key={0}
+            name="faq"
+            isOpen={true}
+          >
+            <Paragraph spacing="none"
+              >La meilleure période pour voyager en Europe de l'Est dépend de
+              vos attentes et de vos destinations.
+            </Paragraph>
+            <Paragraph spacing="none">Périodes idéales : </Paragraph>
+            <Paragraph spacing="none"
+              ><strong>Mai à juin (printemps/début été) :</strong></Paragraph
+            >
+            <ul role="list">
+              <li>Températures agréables (15-25°C)</li>
+              <li>Nature en fleur, paysages verdoyants</li>
+              <li>Peu de touristes</li>
+              <li>Prix modérés pour l'hébergement</li>
+            </ul>
+            <Paragraph spacing="none">
+              Parfait pour : randonnées, visites culturelles, photographie
+            </Paragraph>
+            <Paragraph spacing="none"
+              ><strong> Septembre à octobre (automne) : </strong></Paragraph
+            >
+            <ul role="list">
+              <li>Températures douces (12-22°C)</li>
+              <li>
+                Couleurs automnales spectaculaires dans les Carpates et les
+                Tatras
+              </li>
+              <li>Vendanges et festivals gastronomiques</li>
+              <li>Tarifs avantageux</li>
+              <li>Moins de monde sur les sites touristiques</li>
+            </ul>
+            <Paragraph spacing="none"
+              >Idéal pour : road trips, citytrips, gastronomie</Paragraph
+            >
+            <Paragraph spacing="none"
+              ><strong>Juillet-août (haute saison) : </strong></Paragraph
+            >
+            <ul>
+              <li>Chaud (25-35°C)</li>
+              <li>Tous les sites et services ouverts</li>
+              <li>Ambiance festive</li>
+              <li>Parfait pour la côte adriatique (Croatie)</li>
+            </ul>
+            <p variant="red">Inconvénients :</p>
+            <ul>
+              <li>Foules touristiques</li>
+              <li>Prix élevés</li>
+              <li>Réservation obligatoire à l'avance</li>
+            </ul>
+            <p><strong>Novembre à mars (hiver) :</strong></p>
+            <ul>
+              <li>Froid (-5 à 5°C)</li>
+              <li>Neige fréquente</li>
+              <li>Marchés de Noël magiques (Prague, Cracovie, Budapest)</li>
+              <li>Stations de ski abordables (Zakopane, Bansko)</li>
+              <li>Ambiance authentique</li>
+              <li>Peu de touristes</li>
+            </ul>
+            <p variant="red">Inconvénients :</p>
+            <ul>
+              <li>Certains sites fermés</li>
+              <li>Journées courtes</li>
+            </ul>
+            <p>Idéal pour : ski, marchés de Noël, thermes</p>
+            <p>
+              Par destination : Pologne : mai-septembre Roumanie/Carpates :
+              juin-septembre (randonnée), décembre-mars (ski) Croatie : mai-juin
+              et septembre (éviter juillet-août trop bondé) République Tchèque :
+              avril-octobre, décembre (Noël) Bulgarie : mai-septembre (mer),
+              décembre-mars (ski)
+            </p>
+          </AccordionItem>
+
+          <AccordionItem
+            title="Comment se déplacer entre les pays ?"
+            key={1}
+            name="faq"
+          >
+            <Paragraph>
+              L'Europe de l'Est dispose d'un excellent réseau de transports,
+              avec plusieurs options adaptées à tous les budgets et styles de
+              voyage.
+            </Paragraph>
+            <Grid cols={2} rows={1} gap="1rem">
+              <div><Paragraph>TRAIN (Recommandé)</Paragraph></div>
+              <div>
+                <Paragraph>Avantages :</Paragraph>
+                <ul>
+                  <li>Confortable et fiable</li>
+                  <li>Vues panoramiques</li>
+                  <li>Centre-ville à centre-ville</li>
+                  <li>Espace pour bagages</li>
+                  <li>Possibilité de travailler/lire</li>
+                  <li>Écologique</li>
+                </ul>
+                <Paragraph>Inconvénients :</Paragraph>
+                <ul>
+                  <li>Plus lent que l'avion</li>
+                  <li>Plus cher que le bus</li>
+                  <li>Horaires parfois limités</li>
+                </ul>
+                <Paragraph> Compagnies principales :</Paragraph>
+                <ul>
+                  <li>PKP (Pologne)</li>
+                  <li>ČD (République Tchèque)</li>
+                  <li>CFR (Roumanie)</li>
+                  <li>MÁV (Hongrie)</li>
+                  <li>HŽ (Croatie)</li>
+                </ul>
+                <Paragraph>Exemples de trajets populaires :</Paragraph>
+                <ul>
+                  <li>Cracovie → Prague : 7h, 30-50€</li>
+                  <li>Prague → Vienne : 4h, 20-40€</li>
+                  <li>Budapest → Bratislava : 2h30, 15-25€</li>
+                  <li>Varsovie → Cracovie : 2h30, 15-30€</li>
+                </ul>
+                <Paragraph
+                  >Le Pass InterRail peut être intéressant si vous faites 4+
+                  trajets longue distance. Vous pouvez l'utilisez autant de fois
+                  que vous le souhaitez sur une période donnée. Son prix varie
+                  de 185€ (4 jours) à 500€+ (illimité)</Paragraph
+                >
+                <Paragraph
+                  >Nous vous conseillons de réserver votre pass avant de partir
+                  pour éviter les imprévus, ou la barrière de la langue.</Paragraph
+                >
+              </div>
+            </Grid>
+            <Grid cols={2} rows={1} gap="1rem">
+              <div><Paragraph>BUS (Le plus économique)</Paragraph></div>
+              <div>
+                <Paragraph>Avantages :</Paragraph>
+                <ul>
+                  <li>Très bon marché</li>
+                  <li>Nombreuses liaisons</li>
+                  <li>Horaires flexibles</li>
+                  <li>Réseau dense même villages</li>
+                  <li>WiFi gratuit généralement</li>
+                </ul>
+
+                <Paragraph>Inconvénients :</Paragraph>
+                <ul>
+                  <li>Moins confortable longue distance</li>
+                  <li>Moins d'espace jambes</li>
+                  <li>Dépendant du trafic routier</li>
+                </ul>
+                <Paragraph>Compagnies principales :</Paragraph>
+                <ul>
+                  <li>FlixBus : leader, couvre toute l'Europe de l'Est</li>
+                  <li>RegioJet : confortable, République Tchèque/Slovaquie</li>
+                  <li>PolskiBus : Pologne</li>
+                  <li>Eurolines : lignes internationales</li>
+                </ul>
+                <Paragraph> Exemples de trajets + prix :</Paragraph>
+                <ul>
+                  <li>Cracovie → Prague : 8h, 15-25€</li>
+                  <li>Budapest → Belgrade : 7h, 20-30€</li>
+                  <li>Varsovie → Vilnius : 8h, 15-35€</li>
+                  <li>Dubrovnik → Split : 4h, 10-15€</li>
+                </ul>
+                <Paragraph>
+                  Conseils bus : Arrivez 15 min avant départ Emportez coussin de
+                  voyage + bouchons oreilles Téléchargez divertissements (WiFi
+                  parfois instable)
+                </Paragraph>
+              </div>
+            </Grid>
+            <Grid cols={2} rows={1} gap="1rem">
+              <div>AVION (Le plus rapide)</div>
+              <div>
+                <Paragraph>Avantages :</Paragraph>
+                <ul>
+                  <li>Très rapide pour longues distances</li>
+                  <li>Souvent bon marché si réservé tôt</li>
+                  <li>Gain de temps considérable</li>
+                </ul>
+                <Paragraph>Inconvénients :</Paragraph>
+                <ul>
+                  <li>Aéroports souvent excentrés</li>
+                  <li>Temps perdu en enregistrement/sécurité</li>
+                  <li>Bagages limités (low-cost)</li>
+                  <li>Impact environnemental</li>
+                </ul>
+                <Paragraph>Compagnies low-cost principales :</Paragraph>
+                <ul>
+                  <li>Ryanair (réseau immense)</li>
+                  <li>Wizz Air (spécialiste Europe de l'Est)</li>
+                  <li>EasyJet</li>
+                  <li>LOT</li>
+                  <li>Polish Airlines</li>
+                </ul>
+
+                <Paragraph>Exemples de trajets + prix : </Paragraph>
+                <ul>
+                  <li>Varsovie → Bucarest : 1h30, 30-80€</li>
+                  <li>Prague → Dubrovnik : 1h45, 40-100€</li>
+                  <li>Budapest → Sofia : 1h20, 25-70€</li>
+                </ul>
+
+                <Paragraph>Astuces pour payer moins cher :</Paragraph>
+                <ul>
+                  <li>Réservez 2-3 mois à l'avance</li>
+                  <li>Voyagez avec sac à dos (éviter frais bagages)</li>
+                  <li>Soyez flexibles sur dates</li>
+                  <li>Utilisez Skyscanner, Google Flights, Momondo</li>
+                </ul>
+              </div>
+            </Grid>
+            <Grid cols={2} rows={1} gap="1rem">
+              <div>LOCATION DE VOITURE</div>
+              <div>
+                <Paragraph>Avantages :</Paragraph>
+                <ul>
+                  <li>Liberté totale</li>
+                  <li>Accès villages reculés</li>
+                  <li>Idéal pour familles/groupes</li>
+                  <li>Transporter bagages facilement</li>
+                  <li>Stops photos spontanés</li>
+                </ul>
+                <Paragraph>Inconvénients :</Paragraph>
+                <ul>
+                  <li>Coût élevé (essence + péages + location)</li>
+                  <li>Stress conduite à l'étranger</li>
+                  <li>Parking difficile en ville</li>
+                  <li>Assurance obligatoire</li>
+                  <li>
+                    Tarifs location : 25-50€/jour (voiture économique)
+                    40-80€/jour (SUV/familiale)
+                  </li>
+                  <li>
+                    Essence : 1,20-1,50€/L Péages : variables (Croatie,
+                    Slovénie)
+                  </li>
+                  <li>
+                    Documents nécessaires :<strong>Permis de conduire</strong> (français
+                    accepté) <strong>Carte de crédit</strong> (caution) <strong
+                      >Assurance</strong
+                    > (vérifier couverture)
+                  </li>
+                </ul>
+                <Paragraph> Règles de conduite importantes : </Paragraph>
+                <ul>
+                  <li>
+                    Vignette obligatoire : Slovénie, République Tchèque,
+                    Slovaquie, Hongrie, Bulgarie, Roumanie
+                  </li>
+                  <li>
+                    Alcool tolérance zéro : Roumanie, République Tchèque,
+                    Hongrie, Slovaquie
+                  </li>
+                  <li>
+                    Phares allumés jour et nuit : Pologne, République Tchèque
+                  </li>
+                  <li>
+                    Limitation vitesse : généralement 50/90/130 km/h
+                    (ville/route/autoroute)
+                  </li>
+                </ul>
+                <Paragraph>Compagnies recommandées :</Paragraph>
+                <ul>
+                  <li>Sixt</li>
+                  <li>Hertz</li>
+                </ul>
+              </div>
+            </Grid>
+            <Grid cols={2} rows={1} gap="1rem">
+              <div><Paragraph>VÉLO</Paragraph></div>
+              <div>
+                <Paragraph
+                  >Populaire en Pologne, République Tchèque, Slovénie pour
+                  courts trajets et balades.
+                </Paragraph>
+                <Paragraph>
+                  Eurovelo routes : EV11 : route de l'Europe de l'Est (Norvège →
+                  Grèce) EV13 : rideau de fer (Mer Baltique → Mer Noire)</Paragraph
+                >
+              </div>
+            </Grid>
+            <Grid cols={2} rows={1} gap="1rem">
+              <div><Paragraph>FERRY</Paragraph></div>
+              <div>
+                <Paragraph
+                  >Croatie/Grèce : liaisons régulières entre îles adriatiques</Paragraph
+                >
+                <Paragraph>
+                  Exemples : Split → Hvar, Dubrovnik → Korčula</Paragraph
+                >
+              </div>
+            </Grid>
+            <Paragraph> En résumé :</Paragraph>
+            <ul>
+              <li>Budget serré → Bus (FlixBus)</li>
+              <li>Confort + panoramas → Train (InterRail si multi-trajets)</li>
+              <li>Gain de temps → Avion (low-cost)</li>
+              <li>Flexibilité + villages → Voiture de location</li>
+              <li>Groupe/famille → Voiture (coût partagé)</li>
+              <li>Écolo → Train ou bus</li>
+            </ul>
+            <Paragraph>
+              Nos guides détaillent toutes les options transport avec liens,
+              horaires et astuces pratiques pour chaque itinéraire !</Paragraph
+            >
+          </AccordionItem>
+
+          <AccordionItem
+            title="Visa nécessaire pour les Français voyageant en Europe de l'Est ?"
+            key={2}
+            name="faq"
+          >
+            <Paragraph
+              >Bonne nouvelle : NON, aucun visa n'est nécessaire pour les
+              citoyens français dans la majorité des pays d'Europe de l'Est.</Paragraph
+            >
+            <Grid cols={2} rows={1} gap="1rem">
+              <Paragraph
+                >La carte d'identité OU le passeport (en cours de validité)
+                suffisent pour : Pays de l'Union Européenne (UE) :</Paragraph
+              >
+              <ul>
+                <li>Pologne</li>
+                <li>République Tchèque</li>
+                <li>Hongrie</li>
+                <li>Slovaquie</li>
+                <li>Slovénie</li>
+                <li>Croatie (depuis 2023)</li>
+                <li>Roumanie</li>
+                <li>Bulgarie</li>
+                <li>Estonie</li>
+                <li>Lettonie</li>
+                <li>Lituanie</li>
+              </ul>
+            </Grid>
+            <Paragraph spacing="none"
+              >Durée de séjour : Illimitée (droit de circulation UE)</Paragraph
+            >
+            <Paragraph
+              >Pays hors UE mais dans l'espace Schengen ou accords : Pas de
+              contrôle aux frontières Libre circulation
+            </Paragraph>
+
+            <Paragraph
+              >Certains pays HORS UE ne nécessitent pas de visa pour de courts
+              séjours</Paragraph
+            >
+            <Grid cols={2} rows={1} gap="1rem">
+              <Paragraph
+                >Séjours touristiques jusqu'à 90 jours sans visa :</Paragraph
+              >
+              <ul>
+                <li>Serbie</li>
+                <li>Bosnie-Herzégovine</li>
+                <li>Monténégro</li>
+                <li>Macédoine du Nord</li>
+                <li>Albanie</li>
+                <li>Kosovo</li>
+              </ul>
+            </Grid>
+            <Paragraph
+              >Attention : Ces pays requièrent toutefois quelques documents
+              comme : un passeport valide <strong
+                >minimum 6 mois après date de retour</strong
+              >, un <strong>justificatif de ressources</strong> (rarement demandé),
+              ainsi qu'une <strong>assurance voyage</strong> (recommandée)</Paragraph
+            >
+            <Paragraph
+              >Certains pays d'Europe de l'Est nécessitent toutefois un visa,
+              comme la Biélorussie et la Russie.</Paragraph
+            >
+            <Paragraph
+              >En Biélorussie, le visa est obligatoire (sauf zone frontalière
+              Grodno : 15 jours sans visa). Vous devez contacter l'ambassade
+              pour faire une demande et payer entre 80 et 100€. Votre demande
+              sera traité sous 5 à 10 jours. Une <strong
+                >assurance médicale</strong
+              > est obligatoire</Paragraph
+            >
+            <Paragraph
+              >En Russie le visa est obligatoire. La procédure est complexe (il
+              vous faut une lettre d'invitation). le coût de la demande est
+              estimé entre 35 et 150€. Le délai de réponse est de 10 à 20 jours</Paragraph
+            >
+            <Paragraph
+              >Vous pouvez séjourner en Ukraine sans visa jusqu'à 90 jours
+              (depuis 2017). Un passeport biométrique est toutefois obligatoire,
+              et une assurance voyage fortement recommandée.
+            </Paragraph>
+            <Paragraph
+              >Au vu de la situation actuelle dans la région, nous vous
+              conseillons de vérifier les conseils du Ministère des Affaires
+              Étrangères</Paragraph
+            >
+
+            <Paragraph
+              >Vous pouvez également séjourner en Moldavie sans visa jusqu'à 90
+              jours, avec uniquement un passeport valide.
+            </Paragraph>
+            <Grid rows={1} cols={2} gap="1rem">
+              <Paragraph
+                >Peu importe le pays, pensez avant le départ à :
+              </Paragraph>
+              <ul>
+                <li>Vérifier validité documents (6 mois minimum)</li>
+                <li>Faire copies/photos passeport/CNI</li>
+                <li>Stocker copies dans cloud (Google Drive, email)</li>
+                <li>Souscrire assurance voyage</li>
+                <li>
+                  Vérifier si Carte Européenne Assurance Maladie (CEAM) est
+                  nécessaire
+                </li>
+              </ul>
+            </Grid>
+          </AccordionItem>
+
+          <AccordionItem
+            title="Peut-on payer par carte partout ?"
+            key={3}
+            name="faq"
+          >
+            <Paragraph>
+              Oui de plus en plus, mais le cash reste roi dans certaines
+              situations. Voici tout ce qu'il faut savoir sur les paiements en
+              Europe de l'Est.</Paragraph
+            >
+            <Grid rows={1} cols={2} gap="1rem">
+              <Paragraph
+                >Le paiement par carte est largement accepté dans :</Paragraph
+              >
+              <ul>
+                <li>
+                  Les grandes villes (Varsovie, Prague, Budapest, Cracovie,
+                  Bucarest, etc.)
+                </li>
+                <li>Les hôtels et auberges</li>
+                <li>Les restaurants touristiques et chaînes</li>
+                <li>Les supermarchés et centres commerciaux</li>
+                <li>Les stations-service</li>
+                <li>Les musées, attractions touristiques majeures</li>
+                <li>Les transports (billets train en ligne, Uber, Bolt)</li>
+              </ul>
+            </Grid>
+            <Grid rows={1} cols={2} gap="1rem">
+              <Paragraph
+                >Certains endroits restent tout de même attachés au liquide
+                comme :</Paragraph
+              >
+              <ul>
+                <li>Les villages ruraux</li>
+                <li>Les petits restaurants familiaux</li>
+                <li>Les marchés locaux et étals de rue</li>
+                <li>Les petits commerces de quartier</li>
+                <li>Certains taxis traditionnels</li>
+                <li>Les hébergements chez l'habitant</li>
+                <li>Les Toilettes publiques payantes</li>
+                <li>Les petits musées/églises (pour les donations)</li>
+                <li>Les kiosques à journaux</li>
+              </ul>
+            </Grid>
+            <Paragraph
+              >Certains pays utilisent l'euro (€), comme : la Slovénie, la
+              Slovaquie, l'Estonie, la Lettonie, la Lituanie, la Croatie (depuis
+              2023), le Monténégro, ou encore le Kosovo (usage de fait)</Paragraph
+            >
+
+            <Grid rows={1} cols={2} gap="1rem">
+              <Paragraph
+                >Dans les autres pays, les devises sont les suivantes :</Paragraph
+              >
+              <ul>
+                <li>Zloty polonais (PLN) : 1€ ≈ 4,30 PLN</li>
+                <li>Couronne tchèque (CZK) : 1€ ≈ 25 CZK</li>
+                <li>Forint hongrois (HUF) : 1€ ≈ 395 HUF</li>
+                <li>Leu roumain (RON) : 1€ ≈ 5 RON</li>
+                <li>Lev bulgare (BGN) : 1€ ≈ 2 BGN (fixe)</li>
+                <li>Dinar serbe (RSD) : 1€ ≈ 117 RSD</li>
+              </ul>
+            </Grid>
+
+            <Paragraph
+              >Vous trouverez des distributeurs automatiques (ATM) dans toutes
+              les villes, disponibles 24h/24. Attention, les instructions
+              souvent en anglais.
+            </Paragraph>
+            <Paragraph
+              >Notre conseil pour éviter les frais : Refuser la conversion
+              dynamique (DCC) : toujours choisir "Sans conversion" ou "En devise
+              locale".</Paragraph
+            >
+            <Paragraph
+              >Exemple : on vous propose "retirer en euros" → REFUSEZ Vous
+              paierez 5-10% de frais en plus ! Choisissez TOUJOURS le paiement
+              en monnaie locale.</Paragraph
+            >
+            <Paragraph
+              >Utiliser distributeurs de banques officielles (éviter les
+              distributeurs privés type Euronet).</Paragraph
+            >
+
+            <Paragraph
+              >Ayez toujours 50-100€ en devise locale sur vous.</Paragraph
+            >
+          </AccordionItem>
+
+          <AccordionItem
+            title="Quelle est la durée idéale par pays ?"
+            key={4}
+            name="faq"
+          >
+          <Paragraph
+            >La durée idéale dépend de vos centres d'intérêt, votre rythme de
+            voyage et ce que vous souhaitez voir. Voici nos recommandations par
+            pays pour un voyage équilibré (ni trop speed, ni trop lent).</Paragraph
+          >
+          <Paragraph>Les combianaisons multi-pays sont populaires : </Paragraph>
+          <Paragraph
+            >En deux semaines, vous pouvez faire : Pologne + République Tchèque
+            (Cracovie-Prague-Varsovie) Croatie + Monténégro (côte adriatique)
+            Hongrie + Roumanie (Budapest-Transylvanie) Serbie + Bosnie (Balkans)
+          </Paragraph>
+          <Paragraph
+            >En 3 semaines : Tour Balkans : Croatie → Bosnie → Monténégro →
+            Albanie Europe centrale : Pologne → Slovaquie → Hongrie → Roumanie
+            Triangle impérial : Prague → Vienne → Budapest → Cracovie 1 mois :
+            Grand tour Europe de l'Est : Pologne → Tchéquie → Slovaquie →
+            Hongrie → Roumanie → Bulgarie</Paragraph
+          >
+          <Paragraph variant="gold"
+            >Règle d'or : Mieux vaut voir moins et profiter plus que courir
+            partout !
+          </Paragraph>
+          <Paragraph>
+            Nos itinéraires détaillent jour par jour les étapes, transports et
+            temps nécessaires pour chaque destination. Tous nos circuits sont
+            modulables selon votre durée de séjour !</Paragraph
+          >
+          </AccordionItem>
+        </Accordion>
+      </Section>
     </main>
+
     <Footer />
   </body>
 </html>
 
 <style lang="scss">
-  @use "@styles/abstracts/variables.scss";
+  @use "@styles/abstracts/variables.scss" as *;
   .home-page {
     margin: 0;
     padding: 0;
@@ -207,7 +755,7 @@ import checklist from "@assets/homepage/checklist.webp"
     position: relative;
     margin-block-start: 0;
     padding-block-start: 0;
-    min-height: 100vh;
+    min-height: 100dvh;
   }
 
   picture {
@@ -220,5 +768,30 @@ import checklist from "@assets/homepage/checklist.webp"
     background-color: #8b0000;
     border-radius: 9999px;
     padding: 1rem;
+  }
+
+  ul {
+    list-style: none;
+    margin-block: 1rem;
+    padding-inline-start: 0;
+    font-size: $font-size-sm;
+  }
+
+  li {
+    margin-block: 0.75rem;
+    line-height: 1.6;
+    padding-inline-start: 2.5rem;
+    position: relative;
+  }
+
+  li::before {
+    content: "›";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #c4a000;
+    font-weight: bold;
+    font-size: 1.2rem;
   }
 </style>

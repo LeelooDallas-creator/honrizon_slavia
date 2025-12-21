@@ -1,0 +1,83 @@
+---
+import Moins from '@assets/icons/moins-hs.svg'
+import Plus from '@assets/icons/plus-hs.svg'
+
+interface AccordeonItemProps {
+  name: string
+  title: string
+  key: number
+  isOpen: boolean
+}
+const {
+  title,
+  key,
+  name = 'item',
+  isOpen = false,
+} = Astro.props as AccordeonItemProps
+---
+
+<details name={name} data-testid={`${name}-${key}`} open={isOpen}>
+  <summary aria-controls={`content-${key}`} id={`summary-${key}`}>
+    <span>{title}</span>
+    <Plus class="icon icon-closed" />
+    <Moins class="icon icon-opened" />
+  </summary>
+  <div
+    class="slot-wrapper"
+    id={`content-${key}`}
+    role="region"
+    aria-labelledby={`summary-${key}`}
+  >
+    <slot />
+  </div>
+</details>
+
+<style>
+  details {
+    outline: none;
+  }
+
+  summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 1.5rem 1rem;
+    font-size: var(--typo-lg);
+    gap: 1.5rem;
+  }
+
+  summary span {
+    flex: 1;
+  }
+
+  .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    transition:
+      opacity 0.6s ease-in-out,
+      transform 0.6s ease-in-out;
+  }
+
+  .icon-closed {
+    display: inline;
+  }
+  .icon-opened {
+    display: none;
+  }
+
+  details[open] .icon-closed {
+    display: none;
+  }
+
+  details[open] .icon-opened {
+    display: inline;
+  }
+
+  .slot-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+    padding: 1rem 1rem 2rem 1rem;
+  }
+</style>

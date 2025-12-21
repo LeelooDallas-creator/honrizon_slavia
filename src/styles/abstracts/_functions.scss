@@ -30,7 +30,7 @@
 /// @example scss
 ///   width: vw(960); // 50vw (on 1920px design)
 @function vw($target, $context: 1920) {
-  @return calc($target / $context) * 100vw;
+  @return calc($target / $context) * 100dvw;
 }
 
 /// Convert viewport height percentage to vh
@@ -40,7 +40,7 @@
 /// @example scss
 ///   height: vh(540); // 50vh (on 1080px design)
 @function vh($target, $context: 1080) {
-  @return calc($target / $context) * 100vh;
+  @return calc($target / $context) * 100dvh;
 }
 
 // =============================================

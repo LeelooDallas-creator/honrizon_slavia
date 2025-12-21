@@ -46,7 +46,6 @@
 * {
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
 }
 
 // =============================================
@@ -93,7 +92,7 @@ body {
   }
 
   // Ensure full viewport height
-  min-height: 100vh;
+  min-height: 100dvh;
   min-height: 100svh; // Small viewport height (mobile browsers)
 }
 

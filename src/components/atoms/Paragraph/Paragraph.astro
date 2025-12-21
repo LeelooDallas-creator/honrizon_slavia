@@ -1,15 +1,16 @@
 ---
 import type { ParagraphProps } from "./Paragraph.types"
 
-const { 
+const {
   size = 'base',
   variant = 'black',
   align = 'left',
+  spacing = 'base',
   ...rest
 } = Astro.props as ParagraphProps;
 ---
 
-<p class:list={['paragraph', `paragraph--${size}`, `paragraph--${variant}`, `paragraph--${align}`, {...rest}]}>
+<p class:list={['paragraph', `paragraph--${size}`, `paragraph--${variant}`, `paragraph--${align}`, `paragraph--spacing-${spacing}`, {...rest}]}>
   <slot />
 </p>
 
