@@ -6,6 +6,7 @@ import { articles } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 import { articleSchema } from '@/lib/validations';
 import { z } from 'zod';
+import { requireAuth } from '@/lib/auth';
 
 // ========================================
 // GET /api/articles/:id
@@ -50,8 +51,7 @@ export const GET: APIRoute = async ({ params }) => {
 // ========================================
 export const PUT: APIRoute = async ({ params, request }) => {
   try {
-    // TODO: Vérifier l'authentification (Ticket 7)
-    // const session = requireAuth(cookies);
+const session = requireAuth(cookies);
 
     const body = await request.json();
     const data = articleSchema.parse(body);
@@ -111,8 +111,7 @@ export const PUT: APIRoute = async ({ params, request }) => {
 // ========================================
 export const DELETE: APIRoute = async ({ params }) => {
   try {
-    // TODO: Vérifier l'authentification (Ticket 7)
-    // const session = requireAuth(cookies);
+const session = requireAuth(cookies);
 
     const result = await db
       .delete(articles)
