@@ -1,0 +1,250 @@
+---
+// ============================================
+// CONTACT FORM COMPONENT
+// ============================================
+---
+
+<form
+  class="contact-form"
+  method="POST"
+  action="/api/contact"
+  aria-label="Formulaire de contact"
+>
+  <p class="form-legend">
+    <span class="required-indicator">*</span> Champs obligatoires
+  </p>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label for="lastname">
+        Nom <span aria-label="champ requis">*</span>
+      </label>
+      <input
+        type="text"
+        id="lastname"
+        name="lastname"
+        required
+        placeholder="Votre nom"
+        aria-required="true"
+        aria-describedby="lastname-error"
+      />
+      <span id="lastname-error" class="error-message" role="alert" aria-live="polite"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="firstname">
+        Prénom <span aria-label="champ requis">*</span>
+      </label>
+      <input
+        type="text"
+        id="firstname"
+        name="firstname"
+        required
+        placeholder="Votre prénom"
+        aria-required="true"
+        aria-describedby="firstname-error"
+      />
+      <span id="firstname-error" class="error-message" role="alert" aria-live="polite"></span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="email">
+      Email <span aria-label="champ requis">*</span>
+    </label>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      required
+      placeholder="votre@email.com"
+      aria-required="true"
+      aria-describedby="email-error"
+      autocomplete="email"
+    />
+    <span id="email-error" class="error-message" role="alert" aria-live="polite"></span>
+  </div>
+
+  <div class="form-group">
+    <label for="subject">
+      Sujet <span aria-label="champ requis">*</span>
+    </label>
+    <input
+      type="text"
+      id="subject"
+      name="subject"
+      required
+      placeholder="Sujet de votre message"
+      aria-required="true"
+      aria-describedby="subject-error"
+    />
+    <span id="subject-error" class="error-message" role="alert" aria-live="polite"></span>
+  </div>
+
+  <div class="form-group">
+    <label for="message">
+      Message <span aria-label="champ requis">*</span>
+    </label>
+    <textarea
+      id="message"
+      name="message"
+      rows="5"
+      required
+      placeholder="Votre message..."
+      aria-required="true"
+      aria-describedby="message-error"
+    ></textarea>
+    <span id="message-error" class="error-message" role="alert" aria-live="polite"></span>
+  </div>
+
+  <button
+    type="submit"
+    class="form-submit"
+    aria-label="Envoyer le formulaire de contact"
+  >
+    Envoyer
+  </button>
+</form>
+
+<style lang="scss">
+  @use '@styles/abstracts/variables' as *;
+  @use '@styles/abstracts/mixins' as *;
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+  }
+
+  .form-legend {
+    color: $color-white;
+    font-size: $font-size-xs;
+    margin: 0 0 0.5rem 0;
+    opacity: 0.9;
+
+    .required-indicator {
+      color: $color-accent;
+      font-weight: bold;
+    }
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  label {
+    color: $color-white;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+
+    span[aria-label] {
+      color: $color-accent;
+    }
+  }
+
+  input,
+  textarea {
+    padding: 0.875rem 1rem;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: $color-white;
+    font-family: inherit;
+    transition: all 0.3s ease;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $color-accent;
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 0 3px rgba(196, 160, 0, 0.1);
+    }
+
+    &:focus-visible {
+      outline: 2px solid $color-accent;
+      outline-offset: 2px;
+    }
+
+    &:hover:not(:focus) {
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    &:invalid:not(:placeholder-shown) {
+      border-color: #ff6b6b;
+    }
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  .error-message {
+    color: #ff6b6b;
+    min-height: 1rem;
+    display: block;
+  }
+
+  .form-submit {
+    padding: 1rem 2rem;
+    background: $color-accent;
+    color: $color-primary;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 0.5rem;
+
+    &:hover {
+      background: lighten($color-accent, 10%);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(196, 160, 0, 0.3);
+    }
+
+    &:focus-visible {
+      outline: 3px solid $color-white;
+      outline-offset: 3px;
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  // Support pour prefers-reduced-motion
+  @media (prefers-reduced-motion: reduce) {
+    input,
+    textarea,
+    .form-submit {
+      transition: none;
+    }
+
+    .form-submit:hover {
+      transform: none;
+    }
+  }
+</style>

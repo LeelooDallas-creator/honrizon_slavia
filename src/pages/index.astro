@@ -15,6 +15,7 @@ import Grid from "@components/molecules/Grid/Grid.astro";
 import { Picture } from "astro:assets";
 import Accordion from "@components/molecules/Accordion/Accordion.astro";
 import AccordionItem from "@components/molecules/Accordion/AccordionItem.astro";
+import Form from "@components/molecules/Form/Form.astro";
 
 //images
 import countryside from "@assets/homepage/countryside.webp";
@@ -243,7 +244,7 @@ import { ParseStatus } from "astro:schema";
               <li>Ambiance festive</li>
               <li>Parfait pour la côte adriatique (Croatie)</li>
             </ul>
-            <p variant="red">Inconvénients :</p>
+            <p >Inconvénients :</p>
             <ul>
               <li>Foules touristiques</li>
               <li>Prix élevés</li>
@@ -258,7 +259,7 @@ import { ParseStatus } from "astro:schema";
               <li>Ambiance authentique</li>
               <li>Peu de touristes</li>
             </ul>
-            <p variant="red">Inconvénients :</p>
+            <p >Inconvénients :</p>
             <ul>
               <li>Certains sites fermés</li>
               <li>Journées courtes</li>
@@ -707,35 +708,58 @@ import { ParseStatus } from "astro:schema";
             key={4}
             name="faq"
           >
-          <Paragraph
-            >La durée idéale dépend de vos centres d'intérêt, votre rythme de
-            voyage et ce que vous souhaitez voir. Voici nos recommandations par
-            pays pour un voyage équilibré (ni trop speed, ni trop lent).</Paragraph
-          >
-          <Paragraph>Les combianaisons multi-pays sont populaires : </Paragraph>
-          <Paragraph
-            >En deux semaines, vous pouvez faire : Pologne + République Tchèque
-            (Cracovie-Prague-Varsovie) Croatie + Monténégro (côte adriatique)
-            Hongrie + Roumanie (Budapest-Transylvanie) Serbie + Bosnie (Balkans)
-          </Paragraph>
-          <Paragraph
-            >En 3 semaines : Tour Balkans : Croatie → Bosnie → Monténégro →
-            Albanie Europe centrale : Pologne → Slovaquie → Hongrie → Roumanie
-            Triangle impérial : Prague → Vienne → Budapest → Cracovie 1 mois :
-            Grand tour Europe de l'Est : Pologne → Tchéquie → Slovaquie →
-            Hongrie → Roumanie → Bulgarie</Paragraph
-          >
-          <Paragraph variant="gold"
-            >Règle d'or : Mieux vaut voir moins et profiter plus que courir
-            partout !
-          </Paragraph>
-          <Paragraph>
-            Nos itinéraires détaillent jour par jour les étapes, transports et
-            temps nécessaires pour chaque destination. Tous nos circuits sont
-            modulables selon votre durée de séjour !</Paragraph
-          >
+            <Paragraph
+              >La durée idéale dépend de vos centres d'intérêt, votre rythme de
+              voyage et ce que vous souhaitez voir. Voici nos recommandations
+              par pays pour un voyage équilibré (ni trop speed, ni trop lent).</Paragraph
+            >
+            <Paragraph
+              >Les combianaisons multi-pays sont populaires :
+            </Paragraph>
+            <Paragraph
+              >En deux semaines, vous pouvez faire : Pologne + République
+              Tchèque (Cracovie-Prague-Varsovie) Croatie + Monténégro (côte
+              adriatique) Hongrie + Roumanie (Budapest-Transylvanie) Serbie +
+              Bosnie (Balkans)
+            </Paragraph>
+            <Paragraph
+              >En 3 semaines : Tour Balkans : Croatie → Bosnie → Monténégro →
+              Albanie Europe centrale : Pologne → Slovaquie → Hongrie → Roumanie
+              Triangle impérial : Prague → Vienne → Budapest → Cracovie 1 mois :
+              Grand tour Europe de l'Est : Pologne → Tchéquie → Slovaquie →
+              Hongrie → Roumanie → Bulgarie</Paragraph
+            >
+            <Paragraph variant="gold"
+              >Règle d'or : Mieux vaut voir moins et profiter plus que courir
+              partout !
+            </Paragraph>
+            <Paragraph>
+              Nos itinéraires détaillent jour par jour les étapes, transports et
+              temps nécessaires pour chaque destination. Tous nos circuits sont
+              modulables selon votre durée de séjour !</Paragraph
+            >
           </AccordionItem>
         </Accordion>
+      </Section>
+
+      <Section variant="red" class="contact-section">
+        <Grid cols={2} rows={1} gap="3rem" align="left">
+          <div class="contact-info">
+            <Heading level={2} variant="gold">Contactez-nous</Heading>
+            <Paragraph variant="white">
+              Vous avez des questions sur votre prochain voyage en Europe de l'Est ?
+              Notre équipe d'experts est là pour vous aider à planifier votre aventure.
+            </Paragraph>
+            <Paragraph variant="white">
+              Que ce soit pour des conseils d'itinéraire, des recommandations d'hébergement
+              ou simplement pour partager votre passion pour cette région fascinante,
+              n'hésitez pas à nous écrire.
+            </Paragraph>
+          </div>
+          <div class="contact-form-wrapper">
+            <Form />
+          </div>
+        </Grid>
       </Section>
     </main>
 
@@ -793,5 +817,30 @@ import { ParseStatus } from "astro:schema";
     color: #c4a000;
     font-weight: bold;
     font-size: 1.2rem;
+  }
+
+  // Section contact avec bords arrondis en haut
+  .contact-section {
+    border-radius: 3rem 3rem 0 0;
+    padding-block: 4rem;
+  }
+
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .contact-form-wrapper {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  // Responsive pour la section contact
+  @media (max-width: 768px) {
+    .contact-section {
+      border-radius: 2rem 2rem 0 0;
+      padding-block: 3rem;
+    }
   }
 </style>
