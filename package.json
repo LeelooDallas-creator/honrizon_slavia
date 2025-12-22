@@ -13,7 +13,11 @@
     "e2e-tests": "npx playwright test",
     "local-ci": "npx prettier . --write && npm run lint && npm run unit-tests && npx playwright install && npm run e2e-tests && npm run build",
     "commit": "cz",
-    "prepare": "husky"
+    "prepare": "husky",
+    "db:generate": "drizzle-kit generate",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
+    "db:seed": "tsx src/lib/db/seed.ts"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
@@ -21,17 +25,23 @@
     "@astrojs/sitemap": "^3.6.0",
     "astro": "^5.16.6",
     "astro-navbar": "^2.3.9",
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^17.2.3",
+    "drizzle-orm": "^0.45.1",
     "eslint-plugin-astro": "^1.5.0",
-    "eslint-plugin-jsx-a11y": "^6.10.2"
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "postgres": "^3.4.7"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.1.0",
     "@commitlint/config-conventional": "^20.0.0",
     "@eslint/js": "^9.39.1",
     "@playwright/test": "^1.57.0",
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^24.10.1",
     "commitizen": "^4.3.1",
-    "cz-conventional-changelog": "^3.3.0",
+    "cz-conventional-changelog": "^3.0.1",
+    "drizzle-kit": "^0.31.8",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
     "globals": "^16.5.0",
@@ -42,6 +52,7 @@
     "prettier-plugin-astro": "^0.14.1",
     "sass": "^1.94.2",
     "sass-embedded": "^1.96.0",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.48.0",
     "vitest": "^4.0.14"
