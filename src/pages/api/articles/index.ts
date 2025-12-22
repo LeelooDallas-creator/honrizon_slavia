@@ -6,6 +6,8 @@ import { articles, countries, users } from '@/lib/db/schema';
 import { desc, eq } from 'drizzle-orm';
 import { articleSchema } from '@/lib/validations';
 import { z } from 'zod';
+import { requireAuth } from '@/lib/auth';
+
 
 // ========================================
 // GET /api/articles
@@ -61,15 +63,15 @@ export const GET: APIRoute = async ({ url }) => {
 // ========================================
 export const POST: APIRoute = async ({ request, cookies }) => {
   try {
-    // TODO: Vérifier l'authentification (Ticket 7)
-    // const session = requireAuth(cookies);
+    // ✅ Vérifier l'authentification (remplace le TODO)
+    const session = requireAuth(cookies);
 
     const body = await request.json();
     const data = articleSchema.parse(body);
 
     const [newArticle] = await db.insert(articles).values({
       ...data,
-      authorId: 'd1ba2063-2a1c-4384-afe4-239c79d04c61', // TODO: session.userId
+      authorId: session.userId, // ✅ Utiliser le vrai userId de la session
       publishedAt: data.status === 'published' ? new Date() : null,
     }).returning();
 
@@ -80,6 +82,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
       },
     });
   } catch (error) {
+    // Le reste reste identique
     if (error instanceof z.ZodError) {
       return new Response(
         JSON.stringify({ 
@@ -109,4 +112,3 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     );
   }
 };
-
