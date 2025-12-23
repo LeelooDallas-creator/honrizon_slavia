@@ -1,0 +1,501 @@
+---
+export const prerender = false;
+
+import { getSession } from '@/lib/auth';
+
+// Vérifier l'authentification
+const session = getSession(Astro.cookies);
+if (!session) {
+  return Astro.redirect('/admin/login');
+}
+
+// Récupérer l'ID de l'article depuis l'URL
+const { id } = Astro.params;
+
+// Récupérer l'article depuis l'API
+let article: any = null;
+let notFound = false;
+
+try {
+  const articleResponse = await fetch(`${Astro.url.origin}/api/articles/${id}`);
+
+  if (articleResponse.ok) {
+    article = await articleResponse.json();
+  } else if (articleResponse.status === 404) {
+    notFound = true;
+  } else {
+    throw new Error('Erreur lors de la récupération de l\'article');
+  }
+} catch (error) {
+  console.error('Erreur:', error);
+  notFound = true;
+}
+
+// Si l'article n'existe pas, afficher une erreur 404
+if (notFound || !article) {
+  return new Response(null, {
+    status: 404,
+    statusText: 'Article non trouvé'
+  });
+}
+
+// Récupérer les pays pour le select
+const countriesResponse = await fetch(`${Astro.url.origin}/api/articles`);
+const articlesData = await countriesResponse.json();
+// Extraire les pays uniques
+const countries = Array.from(
+  new Map(
+    articlesData
+      .filter((item: any) => item.country)
+      .map((item: any) => [item.country.id, item.country])
+  ).values()
+);
+
+const title = `Modifier "${article.title}" - Admin`;
+
+// Gérer la soumission du formulaire
+let errors: Record<string, string> = {};
+let success = false;
+
+if (Astro.request.method === 'POST') {
+  try {
+    const formData = await Astro.request.formData();
+
+    const payload = {
+      title: formData.get('title'),
+      slug: formData.get('slug'),
+      excerpt: formData.get('excerpt') || undefined,
+      content: formData.get('content'),
+      type: formData.get('type'),
+      status: formData.get('status'),
+      countryId: formData.get('countryId') || null,
+      readingTime: formData.get('readingTime') ? parseInt(formData.get('readingTime') as string) : null,
+    };
+
+    const response = await fetch(`${Astro.url.origin}/api/articles/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Cookie': Astro.request.headers.get('cookie') || '',
+      },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      return Astro.redirect('/admin');
+    } else {
+      if (data.details) {
+        // Erreurs de validation Zod
+        data.details.forEach((err: any) => {
+          errors[err.path[0]] = err.message;
+        });
+      } else {
+        errors.general = data.error || 'Erreur lors de la modification';
+      }
+    }
+  } catch (error) {
+    errors.general = 'Erreur de connexion au serveur';
+  }
+}
+---
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title}</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f5f6fa;
+      min-height: 100vh;
+    }
+
+    .admin-header {
+      background: #1B263B;
+      color: white;
+      padding: 0 32px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 70px;
+    }
+
+    .site-name {
+      font-family: 'Georgia', serif;
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    .back-link {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .back-link:hover {
+      color: white;
+    }
+
+    .main-content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 32px;
+    }
+
+    .page-header {
+      margin-bottom: 32px;
+    }
+
+    .page-header h1 {
+      color: #1B263B;
+      font-size: 28px;
+    }
+
+    .form-container {
+      background: white;
+      padding: 32px;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    label {
+      display: block;
+      color: #333;
+      font-weight: 500;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .required {
+      color: #d32f2f;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 15px;
+      font-family: inherit;
+      transition: all 0.3s;
+    }
+
+    input[type="text"]:focus,
+    input[type="number"]:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: #8B0000;
+      box-shadow: 0 0 0 3px rgba(139, 0, 0, 0.1);
+    }
+
+    textarea {
+      resize: vertical;
+      font-family: 'Monaco', 'Courier New', monospace;
+    }
+
+    .error {
+      color: #d32f2f;
+      font-size: 13px;
+      margin-top: 4px;
+      display: block;
+    }
+
+    .input-error {
+      border-color: #d32f2f !important;
+    }
+
+    .help-text {
+      font-size: 13px;
+      color: #999;
+      margin-top: 4px;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid #f0f0f0;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-secondary {
+      background: #f5f5f5;
+      color: #666;
+      border: 1px solid #ddd;
+    }
+
+    .btn-secondary:hover {
+      background: #ececec;
+    }
+
+    .btn-primary {
+      background: #8B0000;
+      color: white;
+      border: none;
+      font-weight: 600;
+    }
+
+    .btn-primary:hover {
+      background: #6D0000;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(139, 0, 0, 0.2);
+    }
+
+    .alert {
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+      font-size: 14px;
+    }
+
+    .alert-error {
+      background: #fee;
+      color: #c00;
+      border: 1px solid #fcc;
+    }
+  </style>
+</head>
+<body>
+  <header class="admin-header">
+    <div class="header-content">
+      <div class="site-name">Horizon Slavia</div>
+      <a href="/admin" class="back-link">← Retour à la liste</a>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="page-header">
+      <h1>Modifier l'article</h1>
+    </div>
+
+    <div class="form-container">
+      {errors.general && (
+        <div class="alert alert-error">{errors.general}</div>
+      )}
+
+      <form method="POST">
+        <div class="form-group">
+          <label for="title">
+            Titre <span class="required">*</span>
+          </label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            required
+            maxlength="255"
+            value={article.title}
+            class={errors.title ? 'input-error' : ''}
+          />
+          {errors.title && <span class="error">{errors.title}</span>}
+        </div>
+
+        <div class="form-group">
+          <label for="slug">
+            Slug (URL) <span class="required">*</span>
+          </label>
+          <input
+            type="text"
+            id="slug"
+            name="slug"
+            required
+            pattern="[a-z0-9-]+"
+            value={article.slug}
+            class={errors.slug ? 'input-error' : ''}
+          />
+          <span class="help-text">Généré automatiquement depuis le titre</span>
+          {errors.slug && <span class="error">{errors.slug}</span>}
+        </div>
+
+        <div class="form-group">
+          <label for="type">
+            Type <span class="required">*</span>
+          </label>
+          <select id="type" name="type" required>
+            <option value="carnet" selected={article.type === 'carnet'}>🗺️ Carnet de voyage</option>
+            <option value="inspiration" selected={article.type === 'inspiration'}>✨ Inspiration</option>
+            <option value="ressource" selected={article.type === 'ressource'}>📚 Ressource pratique</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="excerpt">Résumé</label>
+          <textarea
+            id="excerpt"
+            name="excerpt"
+            rows="3"
+            maxlength="500"
+          >{article.excerpt || ''}</textarea>
+          <span class="help-text">Court résumé (max 500 caractères)</span>
+        </div>
+
+        <div class="form-group">
+          <label for="content">
+            Contenu (Markdown) <span class="required">*</span>
+          </label>
+          <textarea
+            id="content"
+            name="content"
+            rows="15"
+            required
+            class={errors.content ? 'input-error' : ''}
+          >{article.content}</textarea>
+          {errors.content && <span class="error">{errors.content}</span>}
+        </div>
+
+<div class="form-group">
+  <label for="pdfFile">Document PDF (optionnel)</label>
+  <input
+    type="file"
+    id="pdfFile"
+    name="pdfFile"
+    accept="application/pdf"
+  />
+  <span class="help-text">Ajouter un PDF téléchargeable (max 10 MB)</span>
+  {article.pdfUrl && (
+    <div style="margin-top: 8px; font-size: 13px; color: #2e7d32;">
+      📄 PDF actuel : <a href={article.pdfUrl} target="_blank" style="color: #8B0000;">{article.pdfUrl.split('/').pop()}</a>
+    </div>
+  )}
+  <div id="pdfUploadStatus" style="margin-top: 8px; font-size: 13px;"></div>
+  <input type="hidden" id="pdfUrl" name="pdfUrl" value={article.pdfUrl || ''} />
+</div>
+
+        <div class="form-group">
+          <label for="countryId">Pays associé</label>
+          <select id="countryId" name="countryId">
+            <option value="" selected={!article.countryId}>Aucun / Général</option>
+            {countries.map((country: any) => (
+              <option value={country.id} selected={article.countryId === country.id}>{country.name}</option>
+            ))}
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="readingTime">Temps de lecture (minutes)</label>
+          <input
+            type="number"
+            id="readingTime"
+            name="readingTime"
+            min="1"
+            max="60"
+            value={article.readingTime || ''}
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="status">
+            Statut <span class="required">*</span>
+          </label>
+          <select id="status" name="status" required>
+            <option value="draft" selected={article.status === 'draft'}>📝 Brouillon</option>
+            <option value="published" selected={article.status === 'published'}>✅ Publié</option>
+          </select>
+        </div>
+
+        <div class="form-actions">
+          <a href="/admin" class="btn btn-secondary">Annuler</a>
+          <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+        </div>
+      </form>
+    </div>
+  </main>
+<script>
+    // Auto-génération du slug depuis le titre
+    const titleInput = document.getElementById('title') as HTMLInputElement;
+    const slugInput = document.getElementById('slug') as HTMLInputElement;
+
+    titleInput?.addEventListener('input', (e) => {
+      const target = e.target as HTMLInputElement;
+      const slug = target.value
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-|-$/g, '');
+
+      if (slugInput) {
+        slugInput.value = slug;
+      }
+    });
+
+    // Upload PDF
+    const pdfFileInput = document.getElementById('pdfFile') as HTMLInputElement;
+    const pdfUrlInput = document.getElementById('pdfUrl') as HTMLInputElement;
+    const pdfUploadStatus = document.getElementById('pdfUploadStatus') as HTMLDivElement;
+
+    pdfFileInput?.addEventListener('change', async (e) => {
+      const target = e.target as HTMLInputElement;
+      const file = target.files?.[0];
+
+      if (!file) {
+        pdfUploadStatus.textContent = '';
+        return;
+      }
+
+      pdfUploadStatus.textContent = '⏳ Upload en cours...';
+      pdfUploadStatus.style.color = '#666';
+
+      const formData = new FormData();
+      formData.append('file', file);
+
+      try {
+        const response = await fetch('/api/upload', {
+          method: 'POST',
+          body: formData,
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          pdfUrlInput.value = data.url;
+          pdfUploadStatus.textContent = `✅ PDF uploadé : ${file.name}`;
+          pdfUploadStatus.style.color = '#2e7d32';
+        } else {
+          pdfUploadStatus.textContent = `❌ Erreur : ${data.error}`;
+          pdfUploadStatus.style.color = '#d32f2f';
+        }
+      } catch (error) {
+        pdfUploadStatus.textContent = '❌ Erreur de connexion';
+        pdfUploadStatus.style.color = '#d32f2f';
+      }
+    });
+  </script>
+</body>
+</html>

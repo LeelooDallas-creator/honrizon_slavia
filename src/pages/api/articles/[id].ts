@@ -49,9 +49,9 @@ export const GET: APIRoute = async ({ params }) => {
 // PUT /api/articles/:id
 // Modifier un article existant
 // ========================================
-export const PUT: APIRoute = async ({ params, request }) => {
+export const PUT: APIRoute = async ({ params, request, cookies }) => {
   try {
-const session = requireAuth(cookies);
+    const session = requireAuth(cookies);
 
     const body = await request.json();
     const data = articleSchema.parse(body);
@@ -109,9 +109,9 @@ const session = requireAuth(cookies);
 // DELETE /api/articles/:id
 // Supprimer un article
 // ========================================
-export const DELETE: APIRoute = async ({ params }) => {
+export const DELETE: APIRoute = async ({ params, cookies }) => {
   try {
-const session = requireAuth(cookies);
+    const session = requireAuth(cookies);
 
     const result = await db
       .delete(articles)
