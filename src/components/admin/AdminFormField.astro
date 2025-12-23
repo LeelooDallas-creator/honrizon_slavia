@@ -1,0 +1,187 @@
+---
+// Reusable form field component for admin forms
+
+interface Props {
+  name: string;
+  label: string;
+  type?: 'text' | 'number' | 'email' | 'password' | 'textarea' | 'select';
+  value?: string | number;
+  placeholder?: string;
+  required?: boolean;
+  disabled?: boolean;
+  error?: string;
+  helpText?: string;
+  rows?: number;
+  min?: number;
+  max?: number;
+  maxlength?: number;
+  pattern?: string;
+  options?: Array<{ value: string; label: string }>;
+}
+
+const {
+  name,
+  label,
+  type = 'text',
+  value = '',
+  placeholder = '',
+  required = false,
+  disabled = false,
+  error = '',
+  helpText = '',
+  rows = 3,
+  min,
+  max,
+  maxlength,
+  pattern,
+  options = [],
+} = Astro.props;
+
+const inputId = `field-${name}`;
+const hasError = Boolean(error);
+---
+
+<div class="form-group">
+  <label for={inputId} class="form-label">
+    {label}
+    {required && <span class="required">*</span>}
+  </label>
+
+  {type === 'textarea' ? (
+    <textarea
+      id={inputId}
+      name={name}
+      rows={rows}
+      placeholder={placeholder}
+      required={required}
+      disabled={disabled}
+      maxlength={maxlength}
+      class:list={['form-input', { 'input-error': hasError }]}
+    >{value}</textarea>
+  ) : type === 'select' ? (
+    <select
+      id={inputId}
+      name={name}
+      required={required}
+      disabled={disabled}
+      class:list={['form-input', { 'input-error': hasError }]}
+    >
+      <slot name="select-options">
+        {options.map(option => (
+          <option value={option.value} selected={option.value === value}>
+            {option.label}
+          </option>
+        ))}
+      </slot>
+    </select>
+  ) : (
+    <input
+      type={type}
+      id={inputId}
+      name={name}
+      value={value}
+      placeholder={placeholder}
+      required={required}
+      disabled={disabled}
+      min={min}
+      max={max}
+      maxlength={maxlength}
+      pattern={pattern}
+      class:list={['form-input', { 'input-error': hasError }]}
+    />
+  )}
+
+  {helpText && !error && (
+    <span class="help-text">{helpText}</span>
+  )}
+
+  {error && (
+    <span class="error-text" role="alert">{error}</span>
+  )}
+</div>
+
+<style lang="scss">
+  @use '@styles/abstracts/variables' as *;
+  @use '@styles/abstracts/mixins' as *;
+
+  .form-group {
+    margin-bottom: $spacing-6;
+  }
+
+  .form-label {
+    display: block;
+    color: $color-neutral-dark;
+    font-weight: $font-weight-medium;
+    margin-bottom: $spacing-2;
+    font-size: $font-size-sm;
+  }
+
+  .required {
+    color: $color-error;
+    margin-left: $spacing-1;
+  }
+
+  .form-input {
+    width: 100%;
+    max-width: 100%;
+    padding: $spacing-3 $spacing-4;
+    border: 2px solid $color-neutral-light;
+    border-radius: $radius-md;
+    font-size: $font-size-base;
+    font-family: inherit;
+    transition: all $transition-base;
+    box-sizing: border-box;
+
+    &:focus {
+      outline: none;
+      border-color: $color-secondary;
+      box-shadow: 0 0 0 3px rgba($color-secondary, 0.1);
+    }
+
+    &:disabled {
+      background-color: $color-neutral-light;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+  }
+
+  .form-input.input-error {
+    border-color: $color-secondary;
+  }
+
+  textarea.form-input {
+    resize: vertical;
+    font-family: 'Monaco', 'Courier New', monospace;
+    min-height: 80px;
+  }
+
+  select.form-input {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right $spacing-3 center;
+    padding-right: $spacing-8;
+  }
+
+  .help-text {
+    display: block;
+    font-size: $font-size-xs;
+    color: $color-neutral;
+    margin-top: $spacing-1;
+  }
+
+  .error-text {
+    display: block;
+    color: $color-error;
+    font-size: $font-size-xs;
+    margin-top: $spacing-1;
+    font-weight: $font-weight-medium;
+  }
+
+  @include respond-to(sm) {
+    .form-input {
+      font-size: $font-size-sm;
+    }
+  }
+</style>

@@ -1,12 +1,13 @@
 ---
 export const prerender = false;
-import { getSession } from '@/lib/auth';
+import { getSession, setCsrfToken } from '@/lib/auth';
 
-// Si déjà connecté, rediriger vers l'admin
 const session = getSession(Astro.cookies);
 if (session) {
   return Astro.redirect('/admin');
 }
+
+const csrfToken = setCsrfToken(Astro.cookies);
 
 const title = 'Connexion - Admin Horizon Slavia';
 ---
@@ -168,6 +169,8 @@ const title = 'Connexion - Admin Horizon Slavia';
     <div id="errorMessage" class="alert alert-error"></div>
 
     <form id="loginForm">
+      <input type="hidden" name="csrf_token" value={csrfToken} />
+
       <div class="form-group">
         <label for="email">Adresse e-mail</label>
         <input 
@@ -213,35 +216,32 @@ const title = 'Connexion - Admin Horizon Slavia';
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      
-      // Masquer les erreurs précédentes
+
       errorMessage.classList.remove('show');
       errorMessage.textContent = '';
-      
-      // Désactiver le bouton pendant la requête
+
       submitBtn.disabled = true;
       submitBtn.textContent = 'Connexion...';
-      
+
       try {
         const formData = new FormData(form);
         const email = formData.get('email') as string;
         const password = formData.get('password') as string;
-        
+        const csrfToken = formData.get('csrf_token') as string;
+
         const response = await fetch('/api/auth/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ email, password }),
+          body: JSON.stringify({ email, password, csrfToken }),
         });
-        
+
         const data = await response.json();
-        
+
         if (response.ok) {
-          // Connexion réussie, rediriger vers l'admin
           window.location.href = '/admin';
         } else {
-          // Afficher l'erreur
           errorMessage.textContent = data.error || 'Erreur de connexion';
           errorMessage.classList.add('show');
         }
@@ -249,7 +249,6 @@ const title = 'Connexion - Admin Horizon Slavia';
         errorMessage.textContent = 'Erreur de connexion au serveur';
         errorMessage.classList.add('show');
       } finally {
-        // Réactiver le bouton
         submitBtn.disabled = false;
         submitBtn.textContent = 'Se connecter';
       }

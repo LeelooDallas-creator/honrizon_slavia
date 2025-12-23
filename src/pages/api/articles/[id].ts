@@ -6,22 +6,23 @@ import { articles } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 import { articleSchema } from '@/lib/validations';
 import { z } from 'zod';
-import { requireAuth } from '@/lib/auth';
+import { requireAuth, verifyCsrfToken } from '@/lib/auth';
 
-// ========================================
-// GET /api/articles/:id
-// Récupérer un article spécifique
-// ========================================
-export const GET: APIRoute = async ({ params }) => {
+export const GET: APIRoute = async ({ params, cookies }) => {
   try {
+    requireAuth(cookies);
+
+    const uuidSchema = z.string().uuid();
+    const validatedId = uuidSchema.parse(params.id);
+
     const [article] = await db
       .select()
       .from(articles)
-      .where(eq(articles.id, params.id!));
+      .where(eq(articles.id, validatedId));
 
     if (!article) {
       return new Response(
-        JSON.stringify({ error: 'Article non trouvé' }), 
+        JSON.stringify({ error: 'Article non trouvé' }),
         {
           status: 404,
           headers: { 'Content-Type': 'application/json' },
@@ -36,7 +37,7 @@ export const GET: APIRoute = async ({ params }) => {
   } catch (error) {
     console.error('❌ Erreur GET /api/articles/:id:', error);
     return new Response(
-      JSON.stringify({ error: 'Erreur serveur' }), 
+      JSON.stringify({ error: 'Erreur serveur' }),
       {
         status: 500,
         headers: { 'Content-Type': 'application/json' },
@@ -45,13 +46,24 @@ export const GET: APIRoute = async ({ params }) => {
   }
 };
 
-// ========================================
-// PUT /api/articles/:id
-// Modifier un article existant
-// ========================================
 export const PUT: APIRoute = async ({ params, request, cookies }) => {
   try {
-    const session = requireAuth(cookies);
+    requireAuth(cookies);
+
+    // Verify CSRF token
+    const csrfToken = request.headers.get('x-csrf-token');
+    if (!csrfToken || !verifyCsrfToken(cookies, csrfToken)) {
+      return new Response(
+        JSON.stringify({ error: 'Token CSRF invalide' }),
+        {
+          status: 403,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+    }
+
+    const uuidSchema = z.string().uuid();
+    const validatedId = uuidSchema.parse(params.id);
 
     const body = await request.json();
     const data = articleSchema.parse(body);
@@ -63,12 +75,12 @@ export const PUT: APIRoute = async ({ params, request, cookies }) => {
         updatedAt: new Date(),
         publishedAt: data.status === 'published' ? new Date() : null,
       })
-      .where(eq(articles.id, params.id!))
+      .where(eq(articles.id, validatedId))
       .returning();
 
     if (!updated) {
       return new Response(
-        JSON.stringify({ error: 'Article non trouvé' }), 
+        JSON.stringify({ error: 'Article non trouvé' }),
         {
           status: 404,
           headers: { 'Content-Type': 'application/json' },
@@ -83,10 +95,10 @@ export const PUT: APIRoute = async ({ params, request, cookies }) => {
   } catch (error) {
     if (error instanceof z.ZodError) {
       return new Response(
-        JSON.stringify({ 
+        JSON.stringify({
           error: 'Données invalides',
-          details: error.errors 
-        }), 
+          details: error.errors
+        }),
         {
           status: 400,
           headers: { 'Content-Type': 'application/json' },
@@ -96,7 +108,7 @@ export const PUT: APIRoute = async ({ params, request, cookies }) => {
 
     console.error('❌ Erreur PUT /api/articles/:id:', error);
     return new Response(
-      JSON.stringify({ error: 'Erreur serveur' }), 
+      JSON.stringify({ error: 'Erreur serveur' }),
       {
         status: 500,
         headers: { 'Content-Type': 'application/json' },
@@ -105,22 +117,33 @@ export const PUT: APIRoute = async ({ params, request, cookies }) => {
   }
 };
 
-// ========================================
-// DELETE /api/articles/:id
-// Supprimer un article
-// ========================================
-export const DELETE: APIRoute = async ({ params, cookies }) => {
+export const DELETE: APIRoute = async ({ params, cookies, request }) => {
   try {
-    const session = requireAuth(cookies);
+    requireAuth(cookies);
+
+    // Verify CSRF token
+    const csrfToken = request.headers.get('x-csrf-token');
+    if (!csrfToken || !verifyCsrfToken(cookies, csrfToken)) {
+      return new Response(
+        JSON.stringify({ error: 'Token CSRF invalide' }),
+        {
+          status: 403,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+    }
+
+    const uuidSchema = z.string().uuid();
+    const validatedId = uuidSchema.parse(params.id);
 
     const result = await db
       .delete(articles)
-      .where(eq(articles.id, params.id!))
+      .where(eq(articles.id, validatedId))
       .returning();
 
     if (result.length === 0) {
       return new Response(
-        JSON.stringify({ error: 'Article non trouvé' }), 
+        JSON.stringify({ error: 'Article non trouvé' }),
         {
           status: 404,
           headers: { 'Content-Type': 'application/json' },
@@ -128,12 +151,12 @@ export const DELETE: APIRoute = async ({ params, cookies }) => {
       );
     }
 
-    // Status 204 = No Content (succès sans body)
+    // Status 204 = No Content (success with no body)
     return new Response(null, { status: 204 });
   } catch (error) {
     console.error('❌ Erreur DELETE /api/articles/:id:', error);
     return new Response(
-      JSON.stringify({ error: 'Erreur serveur' }), 
+      JSON.stringify({ error: 'Erreur serveur' }),
       {
         status: 500,
         headers: { 'Content-Type': 'application/json' },

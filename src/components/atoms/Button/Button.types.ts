@@ -13,4 +13,5 @@ export interface ButtonProps {
   disabled?: boolean;
   fullWidth?: boolean;
   ariaLabel?: string;
+  dataAttributes?: Record<string, string>;
 }

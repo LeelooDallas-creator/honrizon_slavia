@@ -1,0 +1,197 @@
+---
+// ============================================
+// ADMIN LAYOUT
+// ============================================
+// Layout global pour toutes les pages d'administration
+// Inclut : Header admin, Styles communs
+// NOTE: La vérification d'auth doit être faite dans chaque page, pas ici
+
+import { setCsrfToken } from '@/lib/auth';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Administration - Horizon Slavia' } = Astro.props;
+
+// Générer un token CSRF pour le logout
+const csrfToken = setCsrfToken(Astro.cookies);
+---
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>{title}</title>
+  <meta name="description" content={description}>
+</head>
+<body>
+  <!-- Admin Header -->
+  <header class="admin-header">
+    <div class="header-content">
+      <div class="site-name">Horizon Slavia</div>
+      <div class="header-right">
+        <div class="user-info">
+          <div class="avatar">LB</div>
+          <span>Admin</span>
+        </div>
+        <button type="button" class="btn-logout" id="logoutBtn">Déconnexion</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="admin-main">
+    <slot />
+  </main>
+
+  <!-- Global Admin Scripts -->
+  <script define:vars={{ csrfToken }}>
+    // Logout handler
+    document.getElementById('logoutBtn')?.addEventListener('click', async () => {
+      const formData = new FormData();
+      formData.append('csrf_token', csrfToken);
+
+      await fetch('/api/auth/logout', {
+        method: 'POST',
+        body: formData,
+      });
+      window.location.href = '/admin/login';
+    });
+  </script>
+</body>
+</html>
+
+<style lang="scss">
+  @use '@styles/abstracts/variables' as *;
+  @use '@styles/abstracts/mixins' as *;
+
+  // ============================================
+  // GLOBAL ADMIN STYLES
+  // ============================================
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f5f6fa;
+    min-height: 100vh;
+  }
+
+  // ============================================
+  // ADMIN HEADER
+  // ============================================
+
+  .admin-header {
+    background: $color-primary;
+    color: $color-white;
+    padding: 0 $spacing-8;
+    box-shadow: $shadow-md;
+    position: sticky;
+    top: 0;
+    z-index: $z-dropdown;
+  }
+
+  .header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+  }
+
+  .site-name {
+    font-family: $font-heading;
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-semibold;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: $spacing-4;
+  }
+
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: $spacing-3;
+    font-size: $font-size-sm;
+  }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: $radius-full;
+    background: $color-secondary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: $font-weight-semibold;
+  }
+
+  .btn-logout {
+    padding: $spacing-2 $spacing-4;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: $color-white;
+    border-radius: $radius-md;
+    font-size: $font-size-sm;
+    cursor: pointer;
+    transition: all $transition-base;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+  }
+
+  // ============================================
+  // MAIN CONTENT
+  // ============================================
+
+  .admin-main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: $spacing-10 $spacing-8;
+  }
+
+  // ============================================
+  // RESPONSIVE
+  // ============================================
+
+  @include respond-to(md) {
+    .admin-header {
+      padding: 0 $spacing-6;
+    }
+
+    .admin-main {
+      padding: $spacing-8 $spacing-6;
+    }
+  }
+
+  @include respond-to(sm) {
+    .header-content {
+      height: 60px;
+    }
+
+    .site-name {
+      font-size: $font-size-lg;
+    }
+
+    .user-info span {
+      display: none;
+    }
+
+    .admin-main {
+      padding: $spacing-6 $spacing-4;
+    }
+  }
+</style>
