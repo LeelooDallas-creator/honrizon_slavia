@@ -2,6 +2,7 @@
 export const prerender = false;
 
 import { getSession } from '@/lib/auth';
+import DeleteModal from '@/components/admin/DeleteModal.astro';
 
 // Vérifier l'authentification
 const session = getSession(Astro.cookies);
@@ -358,6 +359,9 @@ const title = 'Administration - Horizon Slavia';
     </div>
   </main>
 
+  <!-- Delete Modal -->
+  <DeleteModal />
+
   <script>
     // Logout
     document.getElementById('logoutBtn')?.addEventListener('click', async () => {
@@ -365,30 +369,16 @@ const title = 'Administration - Horizon Slavia';
       window.location.href = '/admin/login';
     });
 
-    // Delete article
+    // Delete article - Open modal
     document.querySelectorAll('.btn-action.delete').forEach(btn => {
-      btn.addEventListener('click', async (e) => {
+      btn.addEventListener('click', (e) => {
         const target = e.target as HTMLButtonElement;
         const articleId = target.dataset.articleId;
         const articleTitle = target.dataset.articleTitle;
 
-        if (!confirm(`Voulez-vous vraiment supprimer l'article "${articleTitle}" ?\n\nCette action est irréversible.`)) {
-          return;
-        }
-
-        try {
-          const response = await fetch(`/api/articles/${articleId}`, {
-            method: 'DELETE',
-          });
-
-          if (response.ok) {
-            // Recharger la page pour voir la liste mise à jour
-            window.location.reload();
-          } else {
-            alert('Erreur lors de la suppression');
-          }
-        } catch (error) {
-          alert('Erreur de connexion');
+        if (articleId && articleTitle) {
+          // Open the delete modal
+          (window as any).deleteModal.open(articleId, articleTitle);
         }
       });
     });
