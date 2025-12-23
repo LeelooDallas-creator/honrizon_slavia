@@ -1,375 +1,80 @@
 ---
 export const prerender = false;
 
-import { getSession } from '@/lib/auth';
+import AdminLayout from '@/layouts/admin/AdminLayout.astro';
 import DeleteModal from '@/components/admin/DeleteModal.astro';
+import Heading from '@/components/atoms/Heading/Heading.astro';
+import Paragraph from '@/components/atoms/Paragraph/Paragraph.astro';
+import { getSession, getCsrfToken } from '@/lib/auth';
 
-// Vérifier l'authentification
 const session = getSession(Astro.cookies);
 if (!session) {
   return Astro.redirect('/admin/login');
 }
 
-// Récupérer les articles depuis l'API
-const articlesResponse = await fetch(`${Astro.url.origin}/api/articles`);
+const csrfToken = getCsrfToken(Astro.cookies);
+
+const articlesResponse = await fetch(`${Astro.url.origin}/api/articles`, {
+  headers: {
+    'Cookie': Astro.request.headers.get('cookie') || '',
+  }
+});
 const articlesData = await articlesResponse.json();
 
 const title = 'Administration - Horizon Slavia';
 ---
 
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{title}</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<AdminLayout title={title}>
+  <div class="page-header">
+    <Heading level={1}>Administration</Heading>
+    <a href="/admin/articles/new" class="btn-admin btn-new">+ Nouvel article</a>
+  </div>
 
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f5f6fa;
-      min-height: 100vh;
-    }
-
-    /* Header */
-    .admin-header {
-      background: #1B263B;
-      color: white;
-      padding: 0 32px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .header-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      height: 70px;
-    }
-
-    .site-name {
-      font-family: 'Georgia', serif;
-      font-size: 22px;
-      font-weight: 600;
-    }
-
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .user-info {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 14px;
-    }
-
-    .avatar {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: #8B0000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 600;
-    }
-
-    .btn-logout {
-      padding: 8px 16px;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: white;
-      border-radius: 6px;
-      font-size: 13px;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    .btn-logout:hover {
-      background: rgba(255, 255, 255, 0.15);
-    }
-
-    /* Main content */
-    .main-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 40px 32px;
-    }
-
-    .page-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 32px;
-    }
-
-    .page-header h1 {
-      color: #1B263B;
-      font-size: 28px;
-    }
-
-    .btn-new {
-      padding: 12px 24px;
-      background: #8B0000;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-      transition: all 0.3s;
-    }
-
-    .btn-new:hover {
-      background: #6D0000;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(139, 0, 0, 0.2);
-    }
-
-    /* Articles list */
-    .articles-container {
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
-    }
-
-    .articles-list {
-      list-style: none;
-    }
-
-    .article-item {
-      border-bottom: 1px solid #f0f0f0;
-      padding: 20px 24px;
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      transition: background 0.2s;
-    }
-
-    .article-item:last-child {
-      border-bottom: none;
-    }
-
-    .article-item:hover {
-      background: #f8f9fa;
-    }
-
-    .article-info {
-      flex: 1;
-    }
-
-    .article-title {
-      font-size: 16px;
-      font-weight: 600;
-      color: #1B263B;
-      margin-bottom: 6px;
-    }
-
-    .article-meta {
-      display: flex;
-      gap: 16px;
-      font-size: 13px;
-      color: #999;
-    }
-
-    .article-meta span {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 4px 10px;
-      border-radius: 12px;
-      font-size: 12px;
-      font-weight: 500;
-    }
-
-    .badge-carnet {
-      background: #e3f2fd;
-      color: #1976d2;
-    }
-
-    .badge-inspiration {
-      background: #f3e5f5;
-      color: #7b1fa2;
-    }
-
-    .badge-ressource {
-      background: #e8f5e9;
-      color: #388e3c;
-    }
-
-    .badge-draft {
-      background: #fff3e0;
-      color: #f57c00;
-    }
-
-    .badge-published {
-      background: #e8f5e9;
-      color: #2e7d32;
-    }
-
-    .article-actions {
-      display: flex;
-      gap: 8px;
-    }
-
-    .btn-action {
-      padding: 8px 16px;
-      border: 1px solid #ddd;
-      background: white;
-      border-radius: 6px;
-      font-size: 13px;
-      cursor: pointer;
-      transition: all 0.2s;
-      color: #666;
-      text-decoration: none;
-      display: inline-block;
-      font-weight: 500;
-    }
-
-    .btn-action:hover {
-      border-color: #8B0000;
-      color: #8B0000;
-      background: #fff5f5;
-    }
-
-    .btn-action.delete {
-      color: #d32f2f;
-      border-color: #ffcdd2;
-    }
-
-    .btn-action.delete:hover {
-      border-color: #d32f2f;
-      background: #ffebee;
-    }
-
-    .empty-state {
-      text-align: center;
-      padding: 80px 20px;
-    }
-
-    .empty-state-icon {
-      font-size: 64px;
-      margin-bottom: 16px;
-      opacity: 0.3;
-    }
-
-    .empty-state h3 {
-      font-size: 18px;
-      color: #666;
-      margin-bottom: 8px;
-    }
-
-    .empty-state p {
-      font-size: 14px;
-      color: #999;
-      margin-bottom: 24px;
-    }
-
-    @media (max-width: 768px) {
-      .article-item {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .article-actions {
-        width: 100%;
-      }
-
-      .btn-action {
-        flex: 1;
-      }
-    }
-  </style>
-</head>
-<body>
-  <!-- Header -->
-  <header class="admin-header">
-    <div class="header-content">
-      <div class="site-name">Horizon Slavia</div>
-      <div class="header-right">
-        <div class="user-info">
-          <div class="avatar">LB</div>
-          <span>Admin</span>
-        </div>
-        <button class="btn-logout" id="logoutBtn">Déconnexion</button>
+  <div class="admin-container">
+    {articlesData.length === 0 ? (
+      <div class="empty-state">
+        <Heading level={2}>Aucun article pour le moment</Heading>
+        <Paragraph>Commencez par créer votre premier article</Paragraph>
+        <a href="/admin/articles/new" class="btn-admin btn-new">+ Créer un article</a>
       </div>
-    </div>
-  </header>
-
-  <!-- Main content -->
-  <main class="main-content">
-    <div class="page-header">
-      <h1>Administration</h1>
-      <a href="/admin/articles/new" class="btn-new">+ Nouvel article</a>
-    </div>
-
-    <div class="articles-container">
-      {articlesData.length === 0 ? (
-        <div class="empty-state">
-          <div class="empty-state-icon">📝</div>
-          <h3>Aucun article pour le moment</h3>
-          <p>Commencez par créer votre premier article</p>
-          <a href="/admin/articles/new" class="btn-new">+ Créer un article</a>
-        </div>
-      ) : (
-        <ul class="articles-list">
-          {articlesData.map(({ article, country }: any) => (
-            <li class="article-item">
-              <div class="article-info">
-                <div class="article-title">{article.title}</div>
-                <div class="article-meta">
-                  <span class={`badge badge-${article.type}`}>{article.type}</span>
-                  <span>{country ? `🏳️ ${country.name}` : '—'}</span>
-                  <span class={`badge badge-${article.status}`}>
-                    {article.status === 'published' ? 'Publié' : 'Brouillon'}
-                  </span>
-                  <span>Modifié le {new Date(article.updatedAt).toLocaleDateString('fr-FR')}</span>
-                </div>
+    ) : (
+      <ul class="articles-list">
+        {articlesData.map(({ article, country }: any) => (
+          <li class="article-item">
+            <div class="article-info">
+              <Heading level={3} class="article-title">{article.title}</Heading>
+              <div class="article-meta">
+                <span class={`badge badge-${article.type}`}>{article.type}</span>
+                <span>{country ? country.name : '—'}</span>
+                <span class={`badge badge-${article.status}`}>
+                  {article.status === 'published' ? 'Publié' : 'Brouillon'}
+                </span>
+                <span>Modifié le {new Date(article.updatedAt).toLocaleDateString('fr-FR')}</span>
               </div>
-              <div class="article-actions">
-                <a href={`/admin/articles/${article.id}/edit`} class="btn-action">Modifier</a>
-                <button 
-                  class="btn-action delete" 
-                  data-article-id={article.id}
-                  data-article-title={article.title}
-                >
-                  Supprimer
-                </button>
-              </div>
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
-  </main>
+            </div>
+            <div class="article-actions">
+              <a href={`/admin/articles/${article.id}/edit`} class="btn-action">Modifier</a>
+              <button
+                type="button"
+                class="btn-action delete"
+                data-article-id={article.id}
+                data-article-title={article.title}
+              >
+                Supprimer
+              </button>
+            </div>
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
 
-  <!-- Delete Modal -->
   <DeleteModal />
 
-  <script>
-    // Logout
-    document.getElementById('logoutBtn')?.addEventListener('click', async () => {
-      await fetch('/api/auth/logout', { method: 'POST' });
-      window.location.href = '/admin/login';
-    });
+  <input type="hidden" id="csrf-token" value={csrfToken} />
 
-    // Delete article - Open modal
+  <script>
+    // Handle article deletion - open modal
     document.querySelectorAll('.btn-action.delete').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const target = e.target as HTMLButtonElement;
@@ -377,11 +82,13 @@ const title = 'Administration - Horizon Slavia';
         const articleTitle = target.dataset.articleTitle;
 
         if (articleId && articleTitle) {
-          // Open the delete modal
           (window as any).deleteModal.open(articleId, articleTitle);
         }
       });
     });
   </script>
-</body>
-</html>
+</AdminLayout>
+
+<style lang="scss">
+  @use '@styles/admin/admin-components';
+</style>

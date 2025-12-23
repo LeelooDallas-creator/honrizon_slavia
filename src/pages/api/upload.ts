@@ -1,14 +1,25 @@
 export const prerender = false;
 
 import type { APIRoute } from 'astro';
-import { requireAuth } from '@/lib/auth';
-import { writeFile } from 'node:fs/promises';
-import { join } from 'node:path';
+import { requireAuth, verifyCsrfToken } from '@/lib/auth';
+import { writeFile, mkdir } from 'node:fs/promises';
+import { join, basename, extname } from 'node:path';
 
 export const POST: APIRoute = async ({ request, cookies }) => {
   try {
-    // Vérifier l'authentification
     requireAuth(cookies);
+
+    // Verify CSRF token
+    const csrfToken = request.headers.get('x-csrf-token');
+    if (!csrfToken || !verifyCsrfToken(cookies, csrfToken)) {
+      return new Response(
+        JSON.stringify({ error: 'Token CSRF invalide' }),
+        {
+          status: 403,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+    }
 
     const formData = await request.formData();
     const file = formData.get('file') as File;
@@ -20,7 +31,6 @@ export const POST: APIRoute = async ({ request, cookies }) => {
       );
     }
 
-    // Vérifier que c'est bien un PDF
     if (file.type !== 'application/pdf') {
       return new Response(
         JSON.stringify({ error: 'Seuls les fichiers PDF sont acceptés' }),
@@ -28,8 +38,8 @@ export const POST: APIRoute = async ({ request, cookies }) => {
       );
     }
 
-    // Limiter la taille à 10 MB
-    const maxSize = 10 * 1024 * 1024; // 10 MB
+    // Limit size to 10 MB
+    const maxSize = 10 * 1024 * 1024;
     if (file.size > maxSize) {
       return new Response(
         JSON.stringify({ error: 'Le fichier est trop volumineux (max 10 MB)' }),
@@ -37,23 +47,46 @@ export const POST: APIRoute = async ({ request, cookies }) => {
       );
     }
 
-    // Générer un nom de fichier unique
-    const timestamp = Date.now();
-    const sanitizedName = file.name
+    const ext = extname(file.name).toLowerCase();
+    const nameWithoutExt = basename(file.name, ext);
+
+    if (ext !== '.pdf') {
+      return new Response(
+        JSON.stringify({ error: 'Extension de fichier invalide' }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // Sanitize filename - remove dangerous characters
+    const safeName = nameWithoutExt
       .toLowerCase()
       .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/[^a-z0-9.]/g, '-');
-    
-    const filename = `${timestamp}-${sanitizedName}`;
-    const filepath = join(process.cwd(), 'public', 'uploads', 'pdfs', filename);
+      .replace(/[\u0300-\u036f]/g, '') // Remove accents
+      .replace(/[^a-z0-9]/gi, '-')     // Replace non-alphanumeric with dashes
+      .replace(/-+/g, '-')              // Merge multiple dashes
+      .replace(/^-|-$/g, '')            // Remove leading/trailing dashes
+      .substring(0, 50);                // Limit length
 
-    // Sauvegarder le fichier
+    const timestamp = Date.now();
+    const filename = `${timestamp}-${safeName}${ext}`;
+
+    const uploadsDir = join(process.cwd(), 'public', 'uploads', 'pdfs');
+    const filepath = join(uploadsDir, filename);
+
+    // Verify final path is within uploads directory
+    if (!filepath.startsWith(uploadsDir)) {
+      return new Response(
+        JSON.stringify({ error: 'Chemin de fichier invalide' }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
+    await mkdir(uploadsDir, { recursive: true });
+
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
     await writeFile(filepath, buffer);
 
-    // Retourner l'URL publique
     const url = `/uploads/pdfs/${filename}`;
 
     return new Response(

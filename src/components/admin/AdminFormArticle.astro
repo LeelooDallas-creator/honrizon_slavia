@@ -1,0 +1,302 @@
+---
+// Reusable form component for creating/editing articles
+
+import AdminFormField from './AdminFormField.astro';
+
+interface Props {
+  article?: {
+    id: string;
+    title: string;
+    slug: string;
+    excerpt?: string;
+    content: string;
+    type: string;
+    status: string;
+    countryId?: string;
+    readingTime?: number;
+    pdfUrl?: string;
+  };
+  countries: Array<{ id: string; name: string }>;
+  errors?: Record<string, string>;
+  mode: 'create' | 'edit';
+  csrfToken: string;
+}
+
+const {
+  article,
+  countries = [],
+  errors = {},
+  mode,
+  csrfToken,
+} = Astro.props;
+
+// Valeurs par défaut
+const formData = {
+  title: article?.title || '',
+  slug: article?.slug || '',
+  excerpt: article?.excerpt || '',
+  content: article?.content || '',
+  type: article?.type || 'carnet',
+  status: article?.status || 'draft',
+  countryId: article?.countryId || '',
+  readingTime: article?.readingTime || '',
+  pdfUrl: article?.pdfUrl || '',
+};
+
+const submitLabel = mode === 'create' ? 'Créer l\'article' : 'Enregistrer les modifications';
+---
+
+<div class="form-container">
+  {errors.general && (
+    <div class="alert alert-error">{errors.general}</div>
+  )}
+
+  <form method="POST">
+    <!-- CSRF Token -->
+    <input type="hidden" name="csrf_token" value={csrfToken} />
+
+    <!-- Titre -->
+    <AdminFormField
+      name="title"
+      label="Titre"
+      type="text"
+      value={formData.title}
+      required={true}
+      maxlength={255}
+      error={errors.title}
+    />
+
+    <!-- Slug -->
+    <AdminFormField
+      name="slug"
+      label="Slug (URL)"
+      type="text"
+      value={formData.slug}
+      required={true}
+      pattern="[a-z0-9-]+"
+      error={errors.slug}
+      helpText="Généré automatiquement depuis le titre"
+    />
+
+    <!-- Type -->
+    <AdminFormField
+      name="type"
+      label="Type"
+      type="select"
+      value={formData.type}
+      required={true}
+      options={[
+        { value: 'carnet', label: 'Carnet de voyage' },
+        { value: 'inspiration', label: 'Inspiration' },
+        { value: 'ressource', label: 'Ressource pratique' },
+      ]}
+    />
+
+    <!-- Résumé -->
+    <AdminFormField
+      name="excerpt"
+      label="Résumé"
+      type="textarea"
+      value={formData.excerpt}
+      rows={3}
+      maxlength={500}
+      helpText="Court résumé (max 500 caractères)"
+    />
+
+    <!-- Contenu -->
+    <AdminFormField
+      name="content"
+      label="Contenu (Markdown)"
+      type="textarea"
+      value={formData.content}
+      rows={15}
+      required={true}
+      error={errors.content}
+    />
+
+    <!-- PDF Upload -->
+    <div class="form-group">
+      <label for="pdfFile" class="form-label">Document PDF (optionnel)</label>
+      <input
+        type="file"
+        id="pdfFile"
+        name="pdfFile"
+        accept="application/pdf"
+        class="form-input file-input"
+      />
+      <span class="help-text">Ajouter un PDF téléchargeable (max 10 MB)</span>
+
+      {mode === 'edit' && formData.pdfUrl && (
+        <div class="current-file">
+          📄 PDF actuel : <a href={formData.pdfUrl} target="_blank" rel="noopener noreferrer">{formData.pdfUrl.split('/').pop()}</a>
+        </div>
+      )}
+
+      <div id="pdfUploadStatus" class="upload-status"></div>
+      <input type="hidden" id="pdfUrl" name="pdfUrl" value={formData.pdfUrl} />
+    </div>
+
+    <!-- Pays associé -->
+    <AdminFormField
+      name="countryId"
+      label="Pays associé"
+      type="select"
+      value={formData.countryId}
+    >
+      <Fragment slot="select-options">
+        <option value="">Aucun / Général</option>
+        {countries.map((country) => (
+          <option value={country.id} selected={country.id === formData.countryId}>
+            {country.name}
+          </option>
+        ))}
+      </Fragment>
+    </AdminFormField>
+
+    <!-- Temps de lecture -->
+    <AdminFormField
+      name="readingTime"
+      label="Temps de lecture (minutes)"
+      type="number"
+      value={formData.readingTime}
+      min={1}
+      max={60}
+    />
+
+    <!-- Statut -->
+    <AdminFormField
+      name="status"
+      label="Statut"
+      type="select"
+      value={formData.status}
+      required={true}
+      options={[
+        { value: 'draft', label: 'Brouillon' },
+        { value: 'published', label: 'Publié' },
+      ]}
+    />
+
+    <!-- Actions -->
+    <div class="form-actions">
+      <a href="/admin" class="btn-admin btn-secondary">Annuler</a>
+      <button type="submit" class="btn-admin btn-primary">{submitLabel}</button>
+    </div>
+  </form>
+</div>
+
+<script>
+  // Auto-generate slug from title
+  const titleInput = document.getElementById('field-title') as HTMLInputElement;
+  const slugInput = document.getElementById('field-slug') as HTMLInputElement;
+
+  titleInput?.addEventListener('input', (e) => {
+    const target = e.target as HTMLInputElement;
+    const slug = target.value
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '');
+
+    if (slugInput) {
+      slugInput.value = slug;
+    }
+  });
+
+  // Handle PDF upload
+  const pdfFileInput = document.getElementById('pdfFile') as HTMLInputElement;
+  const pdfUrlInput = document.getElementById('pdfUrl') as HTMLInputElement;
+  const pdfUploadStatus = document.getElementById('pdfUploadStatus') as HTMLDivElement;
+
+  pdfFileInput?.addEventListener('change', async (e) => {
+    const target = e.target as HTMLInputElement;
+    const file = target.files?.[0];
+
+    if (!file) {
+      pdfUploadStatus.textContent = '';
+      return;
+    }
+
+    pdfUploadStatus.textContent = '⏳ Upload en cours...';
+    pdfUploadStatus.className = 'upload-status upload-status--loading';
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const csrfTokenInput = document.querySelector('input[name="csrf_token"]') as HTMLInputElement;
+    const csrfToken = csrfTokenInput?.value;
+
+    try {
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        headers: {
+          'X-CSRF-Token': csrfToken || '',
+        },
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        pdfUrlInput.value = data.url;
+        pdfUploadStatus.textContent = `✅ PDF uploadé : ${file.name}`;
+        pdfUploadStatus.className = 'upload-status upload-status--success';
+      } else {
+        pdfUploadStatus.textContent = `❌ Erreur : ${data.error}`;
+        pdfUploadStatus.className = 'upload-status upload-status--error';
+      }
+    } catch (error) {
+      pdfUploadStatus.textContent = '❌ Erreur de connexion';
+      pdfUploadStatus.className = 'upload-status upload-status--error';
+    }
+  });
+</script>
+
+<style lang="scss">
+  @use '@styles/abstracts/variables' as *;
+  @use '@styles/admin/admin-components';
+
+  .form-group .file-input.form-input {
+    padding: $spacing-2;
+    border: 2px dashed $color-neutral-light;
+    cursor: pointer;
+
+    &:hover {
+      border-color: $color-secondary;
+    }
+  }
+
+  .upload-status {
+    &--loading {
+      color: $color-neutral-dark;
+    }
+
+    &--success {
+      color: $color-nature;
+    }
+
+    &--error {
+      color: $color-secondary;
+    }
+  }
+
+  .current-file {
+    margin-top: $spacing-2;
+    font-size: $font-size-xs;
+    color: $color-success;
+
+    a {
+      color: $color-secondary;
+      text-decoration: underline;
+
+      &:hover {
+        color: $color-secondary-dark;
+      }
+    }
+  }
+
+  .upload-status {
+    margin-top: $spacing-2;
+    font-size: $font-size-xs;
+  }
+</style>

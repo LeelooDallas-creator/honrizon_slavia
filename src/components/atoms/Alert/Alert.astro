@@ -1,0 +1,121 @@
+---
+// ============================================
+// ALERT COMPONENT
+// ============================================
+import type { AlertProps } from './Alert.types';
+
+const {
+  variant,
+  message,
+  dismissible = false,
+} = Astro.props as AlertProps;
+
+const classes = [
+  'alert',
+  `alert--${variant}`,
+].filter(Boolean).join(' ');
+---
+
+<div class={classes} role="alert">
+  <span class="alert__message">{message}</span>
+  {dismissible && (
+    <button class="alert__dismiss" aria-label="Fermer">×</button>
+  )}
+</div>
+
+<style lang="scss">
+  @use '@styles/abstracts/variables' as *;
+  @use '@styles/abstracts/mixins' as *;
+
+  // ============================================
+  // ALERT - Base
+  // ============================================
+
+  .alert {
+    display: flex;
+    align-items: center;
+    gap: $spacing-3;
+    padding: $spacing-3 $spacing-4;
+    border-radius: $radius-md;
+    font-size: $font-size-sm;
+    border: 1px solid transparent;
+    transition: all $transition-base;
+
+    &__message {
+      flex: 1;
+      line-height: 1.5;
+    }
+
+    &__dismiss {
+      background: none;
+      border: none;
+      font-size: $font-size-2xl;
+      line-height: 1;
+      cursor: pointer;
+      opacity: 0.6;
+      transition: opacity $transition-fast;
+      padding: 0;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  // ============================================
+  // VARIANTS
+  // ============================================
+
+  .alert--error {
+    background: #fee;
+    color: #c62828;
+    border-color: #ffcdd2;
+  }
+
+  .alert--success {
+    background: #e8f5e9;
+    color: $color-success;
+    border-color: #c8e6c9;
+  }
+
+  .alert--warning {
+    background: #fff3e0;
+    color: #f57c00;
+    border-color: #ffe0b2;
+  }
+
+  .alert--info {
+    background: #e3f2fd;
+    color: #1976d2;
+    border-color: #bbdefb;
+  }
+
+  // ============================================
+  // RESPONSIVE
+  // ============================================
+
+  @include respond-to(sm) {
+    .alert {
+      font-size: $font-size-xs;
+      padding: $spacing-2 $spacing-3;
+    }
+  }
+</style>
+
+<script>
+  // Dismiss functionality
+  document.querySelectorAll('.alert__dismiss').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const alert = (e.target as HTMLElement).closest('.alert');
+      if (alert) {
+        alert.remove();
+      }
+    });
+  });
+</script>

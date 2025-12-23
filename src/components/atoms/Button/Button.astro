@@ -12,6 +12,7 @@ const {
   disabled = false,
   fullWidth = false,
   ariaLabel,
+  dataAttributes,
 } = Astro.props as ButtonProps;
 
 // Générer les classes CSS
@@ -28,6 +29,7 @@ const classes = [
     class={classes}
     disabled={disabled}
     aria-label={ariaLabel || text}
+    {...dataAttributes}
   >
     {text}
   </button>

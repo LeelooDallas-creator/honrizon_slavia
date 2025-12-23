@@ -6,15 +6,12 @@ import { articles, countries, users } from '@/lib/db/schema';
 import { desc, eq } from 'drizzle-orm';
 import { articleSchema } from '@/lib/validations';
 import { z } from 'zod';
-import { requireAuth } from '@/lib/auth';
+import { requireAuth, verifyCsrfToken } from '@/lib/auth';
 
-
-// ========================================
-// GET /api/articles
-// Liste tous les articles avec leurs relations
-// ========================================
-export const GET: APIRoute = async ({ url }) => {
+export const GET: APIRoute = async ({ url, cookies }) => {
   try {
+    requireAuth(cookies);
+
     const type = url.searchParams.get('type');
     const status = url.searchParams.get('status');
 
@@ -42,11 +39,11 @@ export const GET: APIRoute = async ({ url }) => {
     });
   } catch (error) {
     console.error('❌ Erreur GET /api/articles:', error);
-    
+
     return new Response(
-      JSON.stringify({ 
-        error: 'Erreur serveur lors de la récupération des articles' 
-      }), 
+      JSON.stringify({
+        error: 'Erreur serveur lors de la récupération des articles'
+      }),
       {
         status: 500,
         headers: {
@@ -57,21 +54,28 @@ export const GET: APIRoute = async ({ url }) => {
   }
 };
 
-// ========================================
-// POST /api/articles
-// Créer un nouvel article
-// ========================================
 export const POST: APIRoute = async ({ request, cookies }) => {
   try {
-    // ✅ Vérifier l'authentification (remplace le TODO)
     const session = requireAuth(cookies);
+
+    // Verify CSRF token
+    const csrfToken = request.headers.get('x-csrf-token');
+    if (!csrfToken || !verifyCsrfToken(cookies, csrfToken)) {
+      return new Response(
+        JSON.stringify({ error: 'Token CSRF invalide' }),
+        {
+          status: 403,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+    }
 
     const body = await request.json();
     const data = articleSchema.parse(body);
 
     const [newArticle] = await db.insert(articles).values({
       ...data,
-      authorId: session.userId, // ✅ Utiliser le vrai userId de la session
+      authorId: session.userId,
       publishedAt: data.status === 'published' ? new Date() : null,
     }).returning();
 
@@ -82,13 +86,12 @@ export const POST: APIRoute = async ({ request, cookies }) => {
       },
     });
   } catch (error) {
-    // Le reste reste identique
     if (error instanceof z.ZodError) {
       return new Response(
-        JSON.stringify({ 
+        JSON.stringify({
           error: 'Données invalides',
-          details: error.errors 
-        }), 
+          details: error.errors
+        }),
         {
           status: 400,
           headers: {
@@ -100,9 +103,9 @@ export const POST: APIRoute = async ({ request, cookies }) => {
 
     console.error('❌ Erreur POST /api/articles:', error);
     return new Response(
-      JSON.stringify({ 
-        error: 'Erreur serveur lors de la création de l\'article' 
-      }), 
+      JSON.stringify({
+        error: 'Erreur serveur lors de la création de l\'article'
+      }),
       {
         status: 500,
         headers: {
