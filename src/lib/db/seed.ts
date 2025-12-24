@@ -6,13 +6,13 @@ import { users, countries, articles } from './schema';
 import bcrypt from 'bcryptjs';
 
 async function seed() {
-  console.log('🌱 Début du seed...');
+  console.log('Début du seed...');
 
   try {
     // ========================================
     // 1. CRÉER UN UTILISATEUR ADMIN
     // ========================================
-    console.log('👤 Création de l\'utilisateur admin...');
+    console.log('Création de l\'utilisateur admin...');
     
     const [admin] = await db.insert(users).values({
       email: 'admin@horizon-slavia.fr',
@@ -21,12 +21,12 @@ async function seed() {
       lastName: 'Barbey',
     }).returning();
 
-    console.log(`✅ Admin créé : ${admin.email}`);
+    console.log(`Admin créé : ${admin.email}`);
 
     // ========================================
     // 2. CRÉER LES PAYS D'EUROPE DE L'EST
     // ========================================
-    console.log('🌍 Création des pays...');
+    console.log('Création des pays...');
 
     const countriesData = [
       { name: 'Pologne', slug: 'pologne' },
@@ -40,7 +40,7 @@ async function seed() {
     ];
 
     const createdCountries = await db.insert(countries).values(countriesData).returning();
-    console.log(`✅ ${createdCountries.length} pays créés`);
+    console.log(`${createdCountries.length} pays créés`);
 
     const pologne = createdCountries.find(c => c.slug === 'pologne')!;
     const tcheque = createdCountries.find(c => c.slug === 'republique-tcheque')!;
@@ -50,7 +50,7 @@ async function seed() {
     // ========================================
     // 3. CRÉER DES ARTICLES DE TEST
     // ========================================
-    console.log('📝 Création des articles de test...');
+    console.log('Création des articles de test...');
 
     const articlesData = [
       {
@@ -145,21 +145,21 @@ Un mélange d'influences turques, hongroises et slaves.
     ];
 
     const createdArticles = await db.insert(articles).values(articlesData).returning();
-    console.log(`✅ ${createdArticles.length} articles créés`);
+    console.log(`${createdArticles.length} articles créés`);
 
-    console.log('\n🎉 Seed terminé avec succès !');
-    console.log('\n�� Résumé :');
+    console.log('\nSeed terminé avec succès !');
+    console.log('\nRésumé :');
     console.log(`- ${createdCountries.length} pays créés`);
     console.log(`- ${createdArticles.length} articles créés`);
     console.log(`- 1 utilisateur admin`);
-    console.log('\n🔐 Identifiants admin :');
+    console.log('\nIdentifiants admin :');
     console.log(`Email : admin@horizon-slavia.fr`);
     console.log(`Mot de passe : Admin123!`);
-    console.log('\n👉 Tu peux maintenant te connecter sur /admin/login');
+    console.log('\nTu peux maintenant te connecter sur /admin/login');
 
     process.exit(0);
   } catch (error) {
-    console.error('❌ Erreur lors du seed :', error);
+    console.error('Erreur lors du seed :', error);
     process.exit(1);
   }
 }

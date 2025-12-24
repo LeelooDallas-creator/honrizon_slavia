@@ -72,7 +72,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
       );
     }
 
-    console.error('❌ Erreur POST /api/auth/login:', error);
+    console.error('Erreur POST /api/auth/login:', error);
     return new Response(
       JSON.stringify({ error: 'Erreur serveur' }),
       {

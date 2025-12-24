@@ -17,7 +17,7 @@ import * as schema from './schema';
 const connectionString = process.env.DATABASE_URL;
 
 if (!connectionString) {
-  console.error('❌ Erreur : DATABASE_URL non trouvée');
+  console.error('Erreur : DATABASE_URL non trouvée');
   console.error('Chemin .env cherché :', envPath);
   console.error('Variables disponibles :', Object.keys(process.env).filter(k => k.includes('DATA')));
   throw new Error('DATABASE_URL n\'est pas définie dans le fichier .env');

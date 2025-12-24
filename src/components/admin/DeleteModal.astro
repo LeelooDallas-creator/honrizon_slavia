@@ -27,7 +27,7 @@ import Paragraph from '@components/atoms/Paragraph/Paragraph.astro';
 
     <div id="modalError" class="delete-modal__message" style="display: none;"></div>
     <div id="modalSuccess" class="delete-modal__message delete-modal__message--success" style="display: none;">
-      ✅ Article supprimé avec succès !
+      Article supprimé avec succès !
     </div>
   </div>
 
@@ -40,7 +40,7 @@ import Paragraph from '@components/atoms/Paragraph/Paragraph.astro';
     />
     <button class="btn--danger" id="modalDeleteBtn" disabled>
       <span id="btnText">Supprimer définitivement</span>
-      <span id="btnLoader" style="display: none;">⏳ Suppression...</span>
+      <span id="btnLoader" style="display: none;">Suppression...</span>
     </button>
   </div>
 </Modal>
@@ -235,7 +235,7 @@ import Paragraph from '@components/atoms/Paragraph/Paragraph.astro';
     }
 
     private showError(message: string): void {
-      this.elements.error.textContent = `❌ ${message}`;
+      this.elements.error.textContent = message;
       this.elements.error.style.display = 'block';
     }
   }

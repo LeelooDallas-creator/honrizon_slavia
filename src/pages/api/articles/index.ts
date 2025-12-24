@@ -38,7 +38,11 @@ export const GET: APIRoute = async ({ url, cookies }) => {
       },
     });
   } catch (error) {
-    console.error('❌ Erreur GET /api/articles:', error);
+    if (error instanceof Response) {
+      return error;
+    }
+
+    console.error('Erreur GET /api/articles:', error);
 
     return new Response(
       JSON.stringify({
@@ -86,6 +90,10 @@ export const POST: APIRoute = async ({ request, cookies }) => {
       },
     });
   } catch (error) {
+    if (error instanceof Response) {
+      return error;
+    }
+
     if (error instanceof z.ZodError) {
       return new Response(
         JSON.stringify({
@@ -101,7 +109,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
       );
     }
 
-    console.error('❌ Erreur POST /api/articles:', error);
+    console.error('Erreur POST /api/articles:', error);
     return new Response(
       JSON.stringify({
         error: 'Erreur serveur lors de la création de l\'article'

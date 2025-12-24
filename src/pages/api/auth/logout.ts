@@ -5,10 +5,9 @@ import { deleteSessionCookie, verifyCsrfToken } from '@/lib/auth';
 
 export const POST: APIRoute = async ({ cookies, request }) => {
   try {
-    const formData = await request.formData();
-    const csrfToken = formData.get('csrf_token') as string;
+    const body = await request.json();
+    const csrfToken = body.csrfToken;
 
-    // Verify CSRF token
     if (!verifyCsrfToken(cookies, csrfToken)) {
       return new Response(
         JSON.stringify({ error: 'Token CSRF invalide' }),

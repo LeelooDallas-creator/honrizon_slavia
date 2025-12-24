@@ -35,7 +35,11 @@ export const GET: APIRoute = async ({ params, cookies }) => {
       headers: { 'Content-Type': 'application/json' },
     });
   } catch (error) {
-    console.error('❌ Erreur GET /api/articles/:id:', error);
+    if (error instanceof Response) {
+      return error;
+    }
+
+    console.error('Erreur GET /api/articles/:id:', error);
     return new Response(
       JSON.stringify({ error: 'Erreur serveur' }),
       {
@@ -93,6 +97,10 @@ export const PUT: APIRoute = async ({ params, request, cookies }) => {
       headers: { 'Content-Type': 'application/json' },
     });
   } catch (error) {
+    if (error instanceof Response) {
+      return error;
+    }
+
     if (error instanceof z.ZodError) {
       return new Response(
         JSON.stringify({
@@ -106,7 +114,7 @@ export const PUT: APIRoute = async ({ params, request, cookies }) => {
       );
     }
 
-    console.error('❌ Erreur PUT /api/articles/:id:', error);
+    console.error('Erreur PUT /api/articles/:id:', error);
     return new Response(
       JSON.stringify({ error: 'Erreur serveur' }),
       {
@@ -154,7 +162,11 @@ export const DELETE: APIRoute = async ({ params, cookies, request }) => {
     // Status 204 = No Content (success with no body)
     return new Response(null, { status: 204 });
   } catch (error) {
-    console.error('❌ Erreur DELETE /api/articles/:id:', error);
+    if (error instanceof Response) {
+      return error;
+    }
+
+    console.error('Erreur DELETE /api/articles/:id:', error);
     return new Response(
       JSON.stringify({ error: 'Erreur serveur' }),
       {
