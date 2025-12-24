@@ -5,10 +5,21 @@
 import type { HeaderProps } from './Header.types';
 import Logo from "@components/atoms/Logo/Logo.astro";
 import Dropdown from "@components/molecules/Nav/Dropdown.astro";
-import { inspirationItems, carnetItems, ressourcesItems } from './Header.config';
 import Anchor from '@components/atoms/Anchor/Anchor.astro';
+import { getPublishedArticlesByType, articlesToDropdownItems } from '@/lib/articles';
+import defaultImage from "@assets/logo.jpg";
 
 const { transparent = true } = Astro.props as HeaderProps;
+
+// Fetch published articles for each type
+const inspirationArticles = await getPublishedArticlesByType('inspiration');
+const carnetArticles = await getPublishedArticlesByType('carnet');
+const ressourceArticles = await getPublishedArticlesByType('ressource');
+
+// Convert to dropdown items
+const inspirationItems = articlesToDropdownItems(inspirationArticles, defaultImage);
+const carnetItems = articlesToDropdownItems(carnetArticles, defaultImage);
+const ressourcesItems = articlesToDropdownItems(ressourceArticles, defaultImage);
 ---
 
 <header class="header" class:list={[{ 'header--transparent': transparent }]} data-header>

@@ -62,6 +62,53 @@ export const loginSchema = z.object({
 
 export type LoginInput = z.infer<typeof loginSchema>;
 
+export const registerSchema = z.object({
+  email: z.string()
+    .email('L\'adresse email n\'est pas valide'),
+
+  password: z.string()
+    .min(8, 'Le mot de passe doit contenir au moins 8 caractères')
+    .regex(/[A-Z]/, 'Le mot de passe doit contenir au moins une majuscule')
+    .regex(/[a-z]/, 'Le mot de passe doit contenir au moins une minuscule')
+    .regex(/[0-9]/, 'Le mot de passe doit contenir au moins un chiffre'),
+
+  confirmPassword: z.string(),
+
+  firstName: z.string()
+    .min(2, 'Le prénom doit contenir au moins 2 caractères')
+    .max(100, 'Le prénom ne peut pas dépasser 100 caractères'),
+
+  lastName: z.string()
+    .min(2, 'Le nom doit contenir au moins 2 caractères')
+    .max(100, 'Le nom ne peut pas dépasser 100 caractères'),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: 'Les mots de passe ne correspondent pas',
+  path: ['confirmPassword'],
+});
+
+export type RegisterInput = z.infer<typeof registerSchema>;
+
+export const changePasswordSchema = z.object({
+  currentPassword: z.string()
+    .min(1, 'Le mot de passe actuel est requis'),
+
+  newPassword: z.string()
+    .min(8, 'Le nouveau mot de passe doit contenir au moins 8 caractères')
+    .regex(/[A-Z]/, 'Le nouveau mot de passe doit contenir au moins une majuscule')
+    .regex(/[a-z]/, 'Le nouveau mot de passe doit contenir au moins une minuscule')
+    .regex(/[0-9]/, 'Le nouveau mot de passe doit contenir au moins un chiffre'),
+
+  confirmNewPassword: z.string(),
+}).refine((data) => data.newPassword === data.confirmNewPassword, {
+  message: 'Les nouveaux mots de passe ne correspondent pas',
+  path: ['confirmNewPassword'],
+}).refine((data) => data.currentPassword !== data.newPassword, {
+  message: 'Le nouveau mot de passe doit être différent de l\'ancien',
+  path: ['newPassword'],
+});
+
+export type ChangePasswordInput = z.infer<typeof changePasswordSchema>;
+
 // Allows updating only certain article fields
 export const articleUpdateSchema = articleSchema.partial();
 
