@@ -50,14 +50,13 @@ const csrfToken = setCsrfToken(Astro.cookies);
 
   <!-- Global Admin Scripts -->
   <script define:vars={{ csrfToken }}>
-    // Logout handler
     document.getElementById('logoutBtn')?.addEventListener('click', async () => {
-      const formData = new FormData();
-      formData.append('csrf_token', csrfToken);
-
       await fetch('/api/auth/logout', {
         method: 'POST',
-        body: formData,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ csrfToken }),
       });
       window.location.href = '/admin/login';
     });

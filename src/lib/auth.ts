@@ -172,6 +172,12 @@ export function generateCsrfToken(): string {
  * Create and store a CSRF token in cookies
  */
 export function setCsrfToken(cookies: AstroCookies): string {
+  const existingToken = getCsrfToken(cookies);
+
+  if (existingToken) {
+    return existingToken;
+  }
+
   const token = generateCsrfToken();
 
   cookies.set(CSRF_COOKIE_NAME, token, {
