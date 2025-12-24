@@ -7,6 +7,8 @@
 // NOTE: La vérification d'auth doit être faite dans chaque page, pas ici
 
 import { setCsrfToken } from '@/lib/auth';
+import { Picture } from 'astro:assets';
+import logo from '@/assets/logo.png';
 
 interface Props {
   title: string;
@@ -32,12 +34,19 @@ const csrfToken = setCsrfToken(Astro.cookies);
   <!-- Admin Header -->
   <header class="admin-header">
     <div class="header-content">
-      <div class="site-name">Horizon Slavia</div>
+      <a href="/admin" class="logo-link">
+        <Picture src={logo} alt="Horizon Slavia" formats={["avif", "webp"]} class="site-logo" />
+      </a>
       <div class="header-right">
         <div class="user-info">
           <div class="avatar">LB</div>
           <span>Admin</span>
         </div>
+        <a href="/admin/change-password" class="btn-change-password" title="Changer mon mot de passe">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11 5V3.5C11 2.11929 9.88071 1 8.5 1C7.11929 1 6 2.11929 6 3.5V5M4.5 5H12.5C13.0523 5 13.5 5.44772 13.5 6V13C13.5 13.5523 13.0523 14 12.5 14H4.5C3.94772 14 3.5 13.5523 3.5 13V6C3.5 5.44772 3.94772 5 4.5 5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
         <button type="button" class="btn-logout" id="logoutBtn">Déconnexion</button>
       </div>
     </div>
@@ -104,13 +113,26 @@ const csrfToken = setCsrfToken(Astro.cookies);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 70px;
+    min-height: 90px;
+    padding: $spacing-3 0;
   }
 
-  .site-name {
-    font-family: $font-heading;
-    font-size: $font-size-2xl;
-    font-weight: $font-weight-semibold;
+  .logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: opacity $transition-base;
+
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+
+  .site-logo {
+    height: 70px;
+    width: auto;
+    max-width: 200px;
+    object-fit: contain;
   }
 
   .header-right {
@@ -135,6 +157,24 @@ const csrfToken = setCsrfToken(Astro.cookies);
     align-items: center;
     justify-content: center;
     font-weight: $font-weight-semibold;
+  }
+
+  .btn-change-password {
+    padding: $spacing-2;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: $color-white;
+    border-radius: $radius-md;
+    cursor: pointer;
+    transition: all $transition-base;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
   }
 
   .btn-logout {
@@ -178,11 +218,13 @@ const csrfToken = setCsrfToken(Astro.cookies);
 
   @include respond-to(sm) {
     .header-content {
-      height: 60px;
+      min-height: 70px;
+      padding: $spacing-2 0;
     }
 
-    .site-name {
-      font-size: $font-size-lg;
+    .site-logo {
+      height: 50px;
+      max-width: 150px;
     }
 
     .user-info span {
