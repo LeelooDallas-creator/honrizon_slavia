@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 import { z } from "zod";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 const contactSchema = z.object({
   firstname: z
@@ -24,8 +25,25 @@ const contactSchema = z.object({
 
 export const prerender = false;
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, clientAddress }) => {
   try {
+    const clientIP = clientAddress || "unknown";
+    const rateLimitResult = checkRateLimit(clientIP, "contact", 10, 60 * 60 * 1000);
+
+    if (!rateLimitResult.allowed) {
+      const waitMinutes = Math.ceil((rateLimitResult.resetAt - Date.now()) / 60000);
+      return new Response(
+        JSON.stringify({
+          success: false,
+          message: `Trop de soumissions. Réessayez dans ${waitMinutes} minute${waitMinutes > 1 ? "s" : ""}.`,
+        }),
+        {
+          status: 429,
+          headers: { "Content-Type": "application/json" },
+        },
+      );
+    }
+
     const body = await request.json();
     const validatedData = contactSchema.parse(body);
 
@@ -38,7 +56,7 @@ export const POST: APIRoute = async ({ request }) => {
       timestamp: new Date().toISOString(),
     };
 
-    console.log("📧 Contact form submission:", emailData);
+    console.log("Contact form submission:", emailData);
 
     return new Response(
       JSON.stringify({
@@ -52,15 +70,15 @@ export const POST: APIRoute = async ({ request }) => {
         },
       },
     );
-  } catch {
-    console.error("❌ Contact form error:", error);
+  } catch (error) {
+    console.error("Contact form error:", error);
 
     if (error instanceof z.ZodError) {
       return new Response(
         JSON.stringify({
           success: false,
           message: "Données invalides",
-          errors: error.errors.map((e) => ({
+          errors: error.errors.map((e: z.ZodIssue) => ({
             field: e.path.join("."),
             message: e.message,
           })),

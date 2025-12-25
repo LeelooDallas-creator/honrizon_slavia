@@ -1,14 +1,15 @@
 import * as dotenv from "dotenv";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
+import { existsSync } from "fs";
 
-// Obtenir le chemin absolu du fichier .env à la racine du projet
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const envPath = join(__dirname, "../../../.env");
 
-// Charger le .env avec le chemin absolu
-dotenv.config({ path: envPath });
+if (existsSync(envPath)) {
+  dotenv.config({ path: envPath });
+}
 
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";

@@ -6,14 +6,30 @@ import { users } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { loginSchema } from "@/lib/validations";
 import { verifyPassword, setSessionCookie, verifyCsrfToken } from "@/lib/auth";
+import { checkRateLimit, resetRateLimit } from "@/lib/rate-limit";
 import { z } from "zod";
 
-export const POST: APIRoute = async ({ request, cookies }) => {
+export const POST: APIRoute = async ({ request, cookies, clientAddress }) => {
   try {
     const body = await request.json();
     const { email, password, csrfToken } = body;
 
-    // Verify CSRF token
+    const clientIP = clientAddress || "unknown";
+    const rateLimitResult = checkRateLimit(clientIP, "login", 5, 15 * 60 * 1000);
+
+    if (!rateLimitResult.allowed) {
+      const waitMinutes = Math.ceil((rateLimitResult.resetAt - Date.now()) / 60000);
+      return new Response(
+        JSON.stringify({
+          error: `Trop de tentatives. Réessayez dans ${waitMinutes} minute${waitMinutes > 1 ? "s" : ""}.`,
+        }),
+        {
+          status: 429,
+          headers: { "Content-Type": "application/json" },
+        },
+      );
+    }
+
     if (!verifyCsrfToken(cookies, csrfToken)) {
       return new Response(JSON.stringify({ error: "Token CSRF invalide" }), {
         status: 403,
@@ -32,6 +48,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
       });
     }
 
+    resetRateLimit(clientIP, "login");
     setSessionCookie(cookies, user.id);
 
     return new Response(

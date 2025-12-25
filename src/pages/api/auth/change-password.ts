@@ -11,12 +11,29 @@ import {
   requireAuth,
   verifyCsrfToken,
 } from "@/lib/auth";
+import { checkRateLimit, resetRateLimit } from "@/lib/rate-limit";
 import { z } from "zod";
 
 export const POST: APIRoute = async ({ request, cookies }) => {
   try {
     // Verify authentication
     const { userId } = requireAuth(cookies);
+
+    // Rate limiting per user (3 attempts per hour)
+    const rateLimitResult = checkRateLimit(userId, "login", 3, 60 * 60 * 1000);
+
+    if (!rateLimitResult.allowed) {
+      const waitMinutes = Math.ceil((rateLimitResult.resetAt - Date.now()) / 60000);
+      return new Response(
+        JSON.stringify({
+          error: `Trop de tentatives. Réessayez dans ${waitMinutes} minute${waitMinutes > 1 ? "s" : ""}.`,
+        }),
+        {
+          status: 429,
+          headers: { "Content-Type": "application/json" },
+        },
+      );
+    }
 
     const body = await request.json();
     const { currentPassword, newPassword, confirmNewPassword, csrfToken } =
@@ -75,6 +92,9 @@ export const POST: APIRoute = async ({ request, cookies }) => {
       })
       .where(eq(users.id, userId));
 
+    // Reset rate limit on successful password change
+    resetRateLimit(userId, "login");
+
     return new Response(
       JSON.stringify({
         success: true,
@@ -85,7 +105,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
         headers: { "Content-Type": "application/json" },
       },
     );
-  } catch {
+  } catch (error) {
     if (error instanceof z.ZodError) {
       return new Response(
         JSON.stringify({
