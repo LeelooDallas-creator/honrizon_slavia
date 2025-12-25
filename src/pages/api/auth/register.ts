@@ -1,6 +1,6 @@
 export const prerender = false;
 
-import type { APIRoute } from 'astro';
+import type { APIRoute } from "astro";
 
 /**
  * Registration endpoint - DISABLED
@@ -16,11 +16,11 @@ import type { APIRoute } from 'astro';
 export const POST: APIRoute = async () => {
   return new Response(
     JSON.stringify({
-      error: 'L\'inscription est désactivée. Un administrateur existe déjà.'
+      error: "L'inscription est désactivée. Un administrateur existe déjà.",
     }),
     {
       status: 403,
-      headers: { 'Content-Type': 'application/json' },
-    }
+      headers: { "Content-Type": "application/json" },
+    },
   );
 };

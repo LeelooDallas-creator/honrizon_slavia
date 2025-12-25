@@ -97,6 +97,33 @@
     <span id="message-error" class="error-message" role="alert" aria-live="polite"></span>
   </div>
 
+  <!-- RGPD Compliance -->
+  <div class="form-group consent-group">
+    <label class="checkbox-label">
+      <input
+        type="checkbox"
+        id="consent"
+        name="consent"
+        required
+        aria-required="true"
+        aria-describedby="consent-description"
+      />
+      <span>
+        J'accepte que mes données personnelles soient traitées conformément à la
+        <a href="/mentions-legales" target="_blank" rel="noopener noreferrer" class="consent-link">
+          politique de confidentialité
+        </a>
+        <span aria-label="champ requis">*</span>
+      </span>
+    </label>
+    <p id="consent-description" class="consent-description">
+      Vos données seront utilisées uniquement pour répondre à votre demande et ne seront pas partagées avec des tiers.
+    </p>
+    <span id="consent-error" class="error-message" role="alert" aria-live="polite"></span>
+  </div>
+
+  <div class="form-status" role="status" aria-live="polite" aria-atomic="true"></div>
+
   <button
     type="submit"
     class="form-submit"
@@ -105,6 +132,130 @@
     Envoyer
   </button>
 </form>
+
+<script>
+  // ============================================
+  // CLIENT-SIDE VALIDATION & FORM HANDLING
+  // ============================================
+
+  const form = document.querySelector('.contact-form') as HTMLFormElement;
+  const submitButton = form?.querySelector('.form-submit') as HTMLButtonElement;
+  const statusDiv = form?.querySelector('.form-status') as HTMLDivElement;
+
+  if (form) {
+    // Real-time validation
+    const inputs = form.querySelectorAll('input, textarea');
+    inputs.forEach(input => {
+      input.addEventListener('blur', (e) => {
+        const target = e.target as HTMLInputElement | HTMLTextAreaElement;
+        validateField(target);
+      });
+
+      input.addEventListener('input', (e) => {
+        const target = e.target as HTMLInputElement | HTMLTextAreaElement;
+        if (target.getAttribute('aria-invalid') === 'true') {
+          validateField(target);
+        }
+      });
+    });
+
+    // Form submission
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Validate all fields
+      let isValid = true;
+      inputs.forEach(input => {
+        if (!validateField(input as HTMLInputElement | HTMLTextAreaElement)) {
+          isValid = false;
+        }
+      });
+
+      if (!isValid) {
+        statusDiv.textContent = 'Veuillez corriger les erreurs avant de soumettre le formulaire.';
+        statusDiv.className = 'form-status error';
+        return;
+      }
+
+      // Disable submit button
+      submitButton.disabled = true;
+      submitButton.textContent = 'Envoi en cours...';
+      statusDiv.textContent = '';
+
+      try {
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+
+        if (response.ok) {
+          statusDiv.textContent = 'Message envoyé avec succès ! Nous vous répondrons dans les plus brefs délais.';
+          statusDiv.className = 'form-status success';
+          form.reset();
+
+          // Reset ARIA attributes
+          inputs.forEach(input => {
+            const inputEl = input as HTMLInputElement | HTMLTextAreaElement;
+            inputEl.setAttribute('aria-invalid', 'false');
+            const errorSpan = document.getElementById(`${inputEl.id}-error`);
+            if (errorSpan) errorSpan.textContent = '';
+          });
+        } else {
+          const error = await response.json();
+          throw new Error(error.message || 'Erreur lors de l\'envoi du message');
+        }
+      } catch {
+        statusDiv.textContent = error instanceof Error ? error.message : 'Une erreur est survenue. Veuillez réessayer.';
+        statusDiv.className = 'form-status error';
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Envoyer';
+      }
+    });
+  }
+
+  function validateField(field: HTMLInputElement | HTMLTextAreaElement): boolean {
+    const errorSpan = document.getElementById(`${field.id}-error`);
+    if (!errorSpan) return true;
+
+    let errorMessage = '';
+
+    // Required field check
+    if (field.hasAttribute('required') && !field.value.trim()) {
+      errorMessage = 'Ce champ est obligatoire.';
+    }
+    // Email validation
+    else if (field.type === 'email' && field.value) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(field.value)) {
+        errorMessage = 'Veuillez saisir une adresse email valide.';
+      }
+    }
+    // Checkbox validation (consent)
+    else if (field.type === 'checkbox' && field.hasAttribute('required')) {
+      if (!(field as HTMLInputElement).checked) {
+        errorMessage = 'Vous devez accepter la politique de confidentialité.';
+      }
+    }
+
+    // Update UI
+    if (errorMessage) {
+      errorSpan.textContent = errorMessage;
+      field.setAttribute('aria-invalid', 'true');
+      return false;
+    } else {
+      errorSpan.textContent = '';
+      field.setAttribute('aria-invalid', 'false');
+      return true;
+    }
+  }
+</script>
 
 <style lang="scss">
   @use '@styles/abstracts/variables' as *;
@@ -235,11 +386,91 @@
     }
   }
 
+  // RGPD Consent Checkbox Styles
+  .consent-group {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    cursor: pointer;
+    font-weight: 400;
+
+    input[type="checkbox"] {
+      margin-top: 0.25rem;
+      width: 1.25rem;
+      height: 1.25rem;
+      cursor: pointer;
+      accent-color: $color-accent;
+      flex-shrink: 0;
+
+      &:focus-visible {
+        outline: 2px solid $color-accent;
+        outline-offset: 2px;
+      }
+    }
+
+    span {
+      color: $color-white;
+      line-height: 1.6;
+    }
+  }
+
+  .consent-link {
+    color: $color-accent;
+    text-decoration: underline;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: lighten($color-accent, 15%);
+    }
+
+    &:focus-visible {
+      outline: 2px solid $color-accent;
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+  }
+
+  .consent-description {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: $font-size-xs;
+    margin: 0.5rem 0 0 2rem;
+    line-height: 1.5;
+  }
+
+  // Form Status Messages
+  .form-status {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    font-weight: 600;
+    min-height: 1rem;
+
+    &.success {
+      background: rgba(76, 175, 80, 0.2);
+      border: 1px solid rgba(76, 175, 80, 0.5);
+      color: #4caf50;
+    }
+
+    &.error {
+      background: rgba(255, 107, 107, 0.2);
+      border: 1px solid rgba(255, 107, 107, 0.5);
+      color: #ff6b6b;
+    }
+  }
+
   // Support pour prefers-reduced-motion
   @media (prefers-reduced-motion: reduce) {
     input,
     textarea,
-    .form-submit {
+    .form-submit,
+    .consent-link {
       transition: none;
     }
 

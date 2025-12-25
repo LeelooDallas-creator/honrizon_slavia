@@ -21,6 +21,18 @@ export default [
   {
     rules: {
       "@typescript-eslint/triple-slash-reference": "off",
+      "@typescript-eslint/no-explicit-any": "warn",
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          caughtErrorsIgnorePattern: "^_|error",
+        },
+      ],
+      "no-useless-escape": "warn",
+      "no-case-declarations": "warn",
+      "@typescript-eslint/no-unused-expressions": "warn",
     },
   },
   ...eslintPluginAstro.configs.recommended,

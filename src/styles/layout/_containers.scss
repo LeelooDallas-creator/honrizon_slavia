@@ -4,8 +4,8 @@
 // =============================================
 
 // Load variables and mixins
-@use '../abstracts/variables' as *;
-@use '../abstracts/mixins' as *;
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
 
 // =============================================
 // MAIN CONTENT CONTAINER
@@ -33,8 +33,8 @@ main {
   margin-right: auto;
   padding-left: $container-padding;
   padding-right: $container-padding;
-  
-  @include respond-to('lg') {
+
+  @include respond-to("lg") {
     padding-left: $container-padding-lg;
     padding-right: $container-padding-lg;
   }
@@ -73,8 +73,8 @@ main {
   width: 100%;
   padding-left: $container-padding;
   padding-right: $container-padding;
-  
-  @include respond-to('lg') {
+
+  @include respond-to("lg") {
     padding-left: $container-padding-lg;
     padding-right: $container-padding-lg;
   }
@@ -88,14 +88,14 @@ main {
 section {
   padding-top: $spacing-8;
   padding-bottom: $spacing-8;
-  
+
   // Mobile-first: larger spacing on tablet+
-  @include respond-to('md') {
+  @include respond-to("md") {
     padding-top: $spacing-12;
     padding-bottom: $spacing-12;
   }
-  
-  @include respond-to('lg') {
+
+  @include respond-to("lg") {
     padding-top: $spacing-16;
     padding-bottom: $spacing-16;
   }
@@ -105,13 +105,13 @@ section {
 .section-hero {
   padding-top: $spacing-12;
   padding-bottom: $spacing-12;
-  
-  @include respond-to('md') {
+
+  @include respond-to("md") {
     padding-top: $spacing-16;
     padding-bottom: $spacing-16;
   }
-  
-  @include respond-to('lg') {
+
+  @include respond-to("lg") {
     padding-top: $spacing-24;
     padding-bottom: $spacing-24;
   }
@@ -121,8 +121,8 @@ section {
 .section-compact {
   padding-top: $spacing-6;
   padding-bottom: $spacing-6;
-  
-  @include respond-to('md') {
+
+  @include respond-to("md") {
     padding-top: $spacing-8;
     padding-bottom: $spacing-8;
   }
@@ -137,25 +137,25 @@ section {
 /// This is more flexible than media queries
 .responsive-card {
   padding: $spacing-4;
-  
+
   // Small container: single column
   @container main-container (min-width: 25rem) {
     padding: $spacing-6;
   }
-  
+
   // Medium container: 2 columns
   @container main-container (min-width: 37.5rem) {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: $spacing-6;
   }
-  
+
   // Large container: 3 columns
   @container main-container (min-width: 50rem) {
     grid-template-columns: repeat(3, 1fr);
     gap: $spacing-8;
   }
-  
+
   // Extra large container: 4 columns
   @container main-container (min-width: 68rem) {
     grid-template-columns: repeat(4, 1fr);
@@ -168,16 +168,16 @@ section {
   display: grid;
   grid-template-columns: 1fr;
   gap: $spacing-4;
-  
+
   @container main-container (min-width: 30rem) {
     grid-template-columns: repeat(2, 1fr);
     gap: $spacing-6;
   }
-  
+
   @container main-container (min-width: 48rem) {
     grid-template-columns: repeat(3, 1fr);
   }
-  
+
   @container main-container (min-width: 64rem) {
     grid-template-columns: repeat(4, 1fr);
     gap: $spacing-8;
@@ -255,8 +255,8 @@ section {
   display: grid;
   grid-template-columns: 1fr;
   gap: $spacing-6;
-  
-  @include respond-to('md') {
+
+  @include respond-to("md") {
     grid-template-columns: repeat(2, 1fr);
   }
 }
@@ -265,12 +265,12 @@ section {
   display: grid;
   grid-template-columns: 1fr;
   gap: $spacing-6;
-  
-  @include respond-to('sm') {
+
+  @include respond-to("sm") {
     grid-template-columns: repeat(2, 1fr);
   }
-  
-  @include respond-to('lg') {
+
+  @include respond-to("lg") {
     grid-template-columns: repeat(3, 1fr);
   }
 }
@@ -279,16 +279,16 @@ section {
   display: grid;
   grid-template-columns: 1fr;
   gap: $spacing-6;
-  
-  @include respond-to('sm') {
+
+  @include respond-to("sm") {
     grid-template-columns: repeat(2, 1fr);
   }
-  
-  @include respond-to('md') {
+
+  @include respond-to("md") {
     grid-template-columns: repeat(3, 1fr);
   }
-  
-  @include respond-to('xl') {
+
+  @include respond-to("xl") {
     grid-template-columns: repeat(4, 1fr);
   }
 }
@@ -413,7 +413,7 @@ section {
 // =============================================
 
 /// Example usage in HTML:
-/// 
+///
 /// <!-- Basic container -->
 /// <div class="container">
 ///   <h1>My Content</h1>

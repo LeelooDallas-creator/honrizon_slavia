@@ -245,7 +245,7 @@ const submitLabel = mode === 'create' ? 'Créer l\'article' : 'Enregistrer les m
         pdfUploadStatus.textContent = `Erreur : ${data.error}`;
         pdfUploadStatus.className = 'upload-status upload-status--error';
       }
-    } catch (error) {
+    } catch {
       pdfUploadStatus.textContent = 'Erreur de connexion';
       pdfUploadStatus.className = 'upload-status upload-status--error';
     }

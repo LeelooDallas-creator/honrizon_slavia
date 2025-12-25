@@ -214,7 +214,7 @@ import Paragraph from '@components/atoms/Paragraph/Paragraph.astro';
           this.state.isLoading = false;
           this.setLoadingState(false);
         }
-      } catch (error) {
+      } catch {
         this.showError('Erreur de connexion au serveur');
         this.state.isLoading = false;
         this.setLoadingState(false);

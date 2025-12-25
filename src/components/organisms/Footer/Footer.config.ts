@@ -87,7 +87,7 @@ export const socialLinks: SocialLink[] = [
 // ============================================
 // FOOTER CONTENT
 // ============================================
-export const footerDescription = 
+export const footerDescription =
   "Explorez l'Europe de l'Est authentique à travers nos carnets de voyage, inspirations culturelles et ressources pratiques. Votre guide pour des aventures mémorables dans les pays slaves.";
 
 export const footerCreditText = "Conçu avec passion pour l'Europe de l'Est";

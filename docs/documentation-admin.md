@@ -1,6 +1,7 @@
 # Documentation Technique - Horizon Slavia
 
 ## Table des matières
+
 1. [Architecture de la Base de Données](#1-architecture-de-la-base-de-données)
 2. [Routes API et Endpoints](#2-routes-api-et-endpoints)
 3. [Processus d'Authentification](#3-processus-dauthentification)
@@ -14,6 +15,7 @@
 ## 1. Architecture de la Base de Données
 
 ### 1.1 Technologies Utilisées
+
 - **SGBD** : PostgreSQL
 - **ORM** : Drizzle ORM v0.45.1
 - **Gestion des Migrations** : Drizzle Kit
@@ -67,11 +69,14 @@
 ```
 
 ### 1.3 Relations
+
 - **ARTICLES → USERS** : Many-to-One (un article a un seul auteur)
 - **ARTICLES → COUNTRIES** : Many-to-One (un article peut être associé à un pays)
 
 ### 1.4 Données Pré-remplies (Seeding)
+
 Le fichier [src/lib/db/seed.ts](../src/lib/db/seed.ts) initialise :
+
 - **8 pays** d'Europe de l'Est : Pologne, République tchèque, Slovaquie, Hongrie, Roumanie, Bulgarie, Croatie, Serbie
 - **1 utilisateur admin** par défaut :
   - Email : `admin@horizon-slavia.fr`
@@ -79,6 +84,7 @@ Le fichier [src/lib/db/seed.ts](../src/lib/db/seed.ts) initialise :
 - **5 articles exemples** avec statuts variés (draft/published)
 
 ### 1.5 Fichiers Clés
+
 - Schéma : [src/lib/db/schema.ts](../src/lib/db/schema.ts)
 - Configuration : [drizzle.config.ts](../drizzle.config.ts)
 - Seeding : [src/lib/db/seed.ts](../src/lib/db/seed.ts)
@@ -93,11 +99,13 @@ Toutes les routes API utilisent le mode SSR (`prerender = false`) et sont situé
 ### 2.1 Authentification
 
 #### POST `/api/auth/login`
+
 **Fichier** : [src/pages/api/auth/login.ts](../src/pages/api/auth/login.ts)
 
 **Description** : Authentifie un utilisateur et crée une session sécurisée.
 
 **Body** :
+
 ```json
 {
   "email": "admin@horizon-slavia.fr",
@@ -107,6 +115,7 @@ Toutes les routes API utilisent le mode SSR (`prerender = false`) et sont situé
 ```
 
 **Réponse Succès (200)** :
+
 ```json
 {
   "user": {
@@ -119,6 +128,7 @@ Toutes les routes API utilisent le mode SSR (`prerender = false`) et sont situé
 ```
 
 **Réponse Erreur (401)** :
+
 ```json
 {
   "error": "Email ou mot de passe incorrect"
@@ -126,6 +136,7 @@ Toutes les routes API utilisent le mode SSR (`prerender = false`) et sont situé
 ```
 
 **Sécurité** :
+
 - Validation Zod des entrées
 - Vérification du token CSRF
 - Hachage bcrypt (cost factor 12)
@@ -135,11 +146,13 @@ Toutes les routes API utilisent le mode SSR (`prerender = false`) et sont situé
 ---
 
 #### POST `/api/auth/logout`
+
 **Fichier** : [src/pages/api/auth/logout.ts](../src/pages/api/auth/logout.ts)
 
 **Description** : Déconnecte l'utilisateur et supprime la session.
 
 **Body** :
+
 ```json
 {
   "csrfToken": "..."
@@ -147,6 +160,7 @@ Toutes les routes API utilisent le mode SSR (`prerender = false`) et sont situé
 ```
 
 **Réponse Succès (200)** :
+
 ```json
 {
   "success": true
@@ -154,6 +168,7 @@ Toutes les routes API utilisent le mode SSR (`prerender = false`) et sont situé
 ```
 
 **Sécurité** :
+
 - Vérification du token CSRF
 - Suppression du cookie de session
 
@@ -162,6 +177,7 @@ Toutes les routes API utilisent le mode SSR (`prerender = false`) et sont situé
 ### 2.2 Gestion des Articles
 
 #### GET `/api/articles`
+
 **Fichier** : [src/pages/api/articles/index.ts](../src/pages/api/articles/index.ts)
 
 **Description** : Récupère tous les articles avec informations pays/auteur.
@@ -169,10 +185,12 @@ Toutes les routes API utilisent le mode SSR (`prerender = false`) et sont situé
 **Authentification** : Requise
 
 **Query Parameters** (optionnels) :
+
 - `type` : 'inspiration' | 'carnet' | 'ressource'
 - `status` : 'draft' | 'published'
 
 **Réponse Succès (200)** :
+
 ```json
 [
   {
@@ -207,6 +225,7 @@ Toutes les routes API utilisent le mode SSR (`prerender = false`) et sont situé
 ---
 
 #### POST `/api/articles`
+
 **Fichier** : [src/pages/api/articles/index.ts](../src/pages/api/articles/index.ts)
 
 **Description** : Crée un nouvel article.
@@ -214,6 +233,7 @@ Toutes les routes API utilisent le mode SSR (`prerender = false`) et sont situé
 **Authentification** : Requise
 
 **Body** :
+
 ```json
 {
   "title": "Nouveau Guide",
@@ -231,6 +251,7 @@ Toutes les routes API utilisent le mode SSR (`prerender = false`) et sont situé
 ```
 
 **Réponse Succès (201)** :
+
 ```json
 {
   "id": "uuid",
@@ -240,6 +261,7 @@ Toutes les routes API utilisent le mode SSR (`prerender = false`) et sont situé
 ```
 
 **Sécurité** :
+
 - Validation Zod complète
 - Vérification CSRF
 - `authorId` automatiquement défini depuis la session
@@ -248,6 +270,7 @@ Toutes les routes API utilisent le mode SSR (`prerender = false`) et sont situé
 ---
 
 #### GET `/api/articles/[id]`
+
 **Fichier** : [src/pages/api/articles/[id].ts](../src/pages/api/articles/[id].ts)
 
 **Description** : Récupère un article par son ID.
@@ -257,6 +280,7 @@ Toutes les routes API utilisent le mode SSR (`prerender = false`) et sont situé
 **Réponse Succès (200)** : Objet article complet
 
 **Réponse Erreur (404)** :
+
 ```json
 {
   "error": "Article non trouvé"
@@ -266,6 +290,7 @@ Toutes les routes API utilisent le mode SSR (`prerender = false`) et sont situé
 ---
 
 #### PUT `/api/articles/[id]`
+
 **Fichier** : [src/pages/api/articles/[id].ts](../src/pages/api/articles/[id].ts)
 
 **Description** : Met à jour un article existant.
@@ -277,6 +302,7 @@ Toutes les routes API utilisent le mode SSR (`prerender = false`) et sont situé
 **Réponse Succès (200)** : Article mis à jour
 
 **Sécurité** :
+
 - Validation UUID
 - Validation Zod
 - Vérification CSRF
@@ -286,6 +312,7 @@ Toutes les routes API utilisent le mode SSR (`prerender = false`) et sont situé
 ---
 
 #### DELETE `/api/articles/[id]`
+
 **Fichier** : [src/pages/api/articles/[id].ts](../src/pages/api/articles/[id].ts)
 
 **Description** : Supprime définitivement un article.
@@ -295,6 +322,7 @@ Toutes les routes API utilisent le mode SSR (`prerender = false`) et sont situé
 **Réponse Succès (204)** : No Content
 
 **Sécurité** :
+
 - Validation UUID
 - Vérification CSRF
 - Suppression permanente (pas de soft delete)
@@ -304,6 +332,7 @@ Toutes les routes API utilisent le mode SSR (`prerender = false`) et sont situé
 ### 2.3 Upload de Fichiers
 
 #### POST `/api/upload`
+
 **Fichier** : [src/pages/api/upload.ts](../src/pages/api/upload.ts)
 
 **Description** : Upload de fichiers PDF sécurisé.
@@ -313,6 +342,7 @@ Toutes les routes API utilisent le mode SSR (`prerender = false`) et sont situé
 **Body** : FormData avec fichier PDF (max 10MB)
 
 **Réponse Succès (200)** :
+
 ```json
 {
   "url": "/uploads/pdfs/1705320000000-guide-sanitized.pdf"
@@ -320,6 +350,7 @@ Toutes les routes API utilisent le mode SSR (`prerender = false`) et sont situé
 ```
 
 **Sécurité** :
+
 - Validation du type MIME (`application/pdf`)
 - Validation de l'extension (`.pdf` uniquement)
 - Limite de taille : 10MB
@@ -408,6 +439,7 @@ Toutes les routes API utilisent le mode SSR (`prerender = false`) et sont situé
 **Format** : `{base64_payload}.{hmac_signature}`
 
 **Payload** (JSON encodé en Base64) :
+
 ```json
 {
   "userId": "uuid",
@@ -436,6 +468,7 @@ Toutes les routes API utilisent le mode SSR (`prerender = false`) et sont situé
 **Middleware** : `requireAuth(cookies)` - utilisé dans toutes les routes protégées
 
 **Processus** :
+
 1. Extraction du cookie `session`
 2. Parsing du token (`payload.signature`)
 3. Recalcul de la signature HMAC
@@ -446,11 +479,13 @@ Toutes les routes API utilisent le mode SSR (`prerender = false`) et sont situé
 ### 3.6 Protection CSRF
 
 **Génération** :
+
 - Token aléatoire de 32 octets (cryptographiquement sécurisé)
 - Stocké dans cookie HTTP-only (durée : 1 heure)
 - Généré au chargement de la page de login et des pages admin
 
 **Vérification** :
+
 - Extraction du cookie `csrfToken`
 - Extraction du token depuis :
   - Corps de la requête (`body.csrfToken`) pour login
@@ -458,6 +493,7 @@ Toutes les routes API utilisent le mode SSR (`prerender = false`) et sont situé
 - **Comparaison timing-safe**
 
 **Endpoints protégés** :
+
 - POST `/api/auth/login`
 - POST `/api/auth/logout`
 - POST `/api/articles`
@@ -470,10 +506,12 @@ Toutes les routes API utilisent le mode SSR (`prerender = false`) et sont situé
 **Hachage** : bcryptjs avec cost factor 12
 
 **Fonctions** :
+
 - `hashPassword(plain)` : Crée le hash pour stockage
 - `verifyPassword(plain, hash)` : Vérification en temps constant
 
 **Politique** :
+
 - Minimum 8 caractères
 - Validation côté serveur (Zod schema)
 
@@ -504,22 +542,24 @@ Toutes les routes API utilisent le mode SSR (`prerender = false`) et sont situé
 ### 3.9 Gestion des Redirections
 
 **Page Login** ([/admin/login](../src/pages/admin/login.astro)) :
+
 - Si session valide → redirection vers `/admin`
 - Sinon → affichage du formulaire
 
 **Pages Admin** :
+
 - Si session invalide → redirection vers `/admin/login`
 - Sinon → accès autorisé
 
 ### 3.10 Fonctions d'Authentification
 
-| Fonction | Usage | Comportement si échec |
-|----------|-------|----------------------|
-| `requireAuth(cookies)` | Routes API protégées | Throw Response 401 |
-| `getSession(cookies)` | Pages admin (redirections) | Return null |
-| `createSession(userId)` | Login réussi | N/A |
-| `verifyCsrfToken(cookies, token)` | Toutes mutations | Return false |
-| `generateCsrfToken()` | Pages login/admin | N/A |
+| Fonction                          | Usage                      | Comportement si échec |
+| --------------------------------- | -------------------------- | --------------------- |
+| `requireAuth(cookies)`            | Routes API protégées       | Throw Response 401    |
+| `getSession(cookies)`             | Pages admin (redirections) | Return null           |
+| `createSession(userId)`           | Login réussi               | N/A                   |
+| `verifyCsrfToken(cookies, token)` | Toutes mutations           | Return false          |
+| `generateCsrfToken()`             | Pages login/admin          | N/A                   |
 
 ---
 
@@ -669,26 +709,29 @@ Toutes les routes API utilisent le mode SSR (`prerender = false`) et sont situé
 
 ### 4.2 Points de Décision Clés
 
-| Étape | Vérification | Action si Échec | Action si Succès |
-|-------|--------------|-----------------|------------------|
-| Accès `/admin` | Session valide ? | Redirect `/admin/login` | Affichage Dashboard |
-| Login | Credentials + CSRF | Erreur affichée | Session créée, redirect `/admin` |
-| Création article | Validation Zod + CSRF | Erreurs par champ | Article créé, redirect Dashboard |
-| Édition article | Article existe + CSRF | 404 | Formulaire pré-rempli |
-| Suppression | Confirmation + CSRF | Modal reste ouverte | Suppression + refresh |
-| Upload PDF | Type/taille valides | Erreur affichée | URL retournée |
+| Étape            | Vérification          | Action si Échec         | Action si Succès                 |
+| ---------------- | --------------------- | ----------------------- | -------------------------------- |
+| Accès `/admin`   | Session valide ?      | Redirect `/admin/login` | Affichage Dashboard              |
+| Login            | Credentials + CSRF    | Erreur affichée         | Session créée, redirect `/admin` |
+| Création article | Validation Zod + CSRF | Erreurs par champ       | Article créé, redirect Dashboard |
+| Édition article  | Article existe + CSRF | 404                     | Formulaire pré-rempli            |
+| Suppression      | Confirmation + CSRF   | Modal reste ouverte     | Suppression + refresh            |
+| Upload PDF       | Type/taille valides   | Erreur affichée         | URL retournée                    |
 
 ### 4.3 États de Chargement
 
 **Formulaire d'article** :
+
 - Upload PDF : Indicateur de progression + spinner
 - Soumission : Bouton désactivé + texte "Envoi..."
 
 **Modal de suppression** :
+
 - Confirmation requise : Bouton désactivé jusqu'à checkbox
 - Suppression en cours : Spinner + "Suppression..."
 
 **Dashboard** :
+
 - Liste articles : Skeleton loaders (si implémenté)
 - Messages flash : Succès (vert) / Erreur (rouge)
 
@@ -702,17 +745,18 @@ Le projet implémente une **approche de sécurité en profondeur** avec 10 couch
 
 ### 5.2 Sécurité de l'Authentification
 
-| Mesure | Implémentation | Fichier |
-|--------|----------------|---------|
-| **Hachage bcrypt** | Cost factor 12 | [src/lib/auth.ts](../src/lib/auth.ts) |
-| **Sessions signées** | HMAC-SHA256 | [src/lib/auth.ts](../src/lib/auth.ts) |
-| **Expiration courte** | 30 minutes | [src/lib/auth.ts](../src/lib/auth.ts) |
-| **Cookies HTTP-only** | Inaccessible JS | Tous les endpoints auth |
-| **Secure flag** | HTTPS uniquement (prod) | Configuration cookies |
-| **SameSite strict** | Anti-CSRF | Configuration cookies |
+| Mesure                      | Implémentation            | Fichier                               |
+| --------------------------- | ------------------------- | ------------------------------------- |
+| **Hachage bcrypt**          | Cost factor 12            | [src/lib/auth.ts](../src/lib/auth.ts) |
+| **Sessions signées**        | HMAC-SHA256               | [src/lib/auth.ts](../src/lib/auth.ts) |
+| **Expiration courte**       | 30 minutes                | [src/lib/auth.ts](../src/lib/auth.ts) |
+| **Cookies HTTP-only**       | Inaccessible JS           | Tous les endpoints auth               |
+| **Secure flag**             | HTTPS uniquement (prod)   | Configuration cookies                 |
+| **SameSite strict**         | Anti-CSRF                 | Configuration cookies                 |
 | **Comparaison timing-safe** | Prévention timing attacks | [src/lib/auth.ts](../src/lib/auth.ts) |
 
 **Protection contre** :
+
 - Rainbow tables (bcrypt salt automatique)
 - Brute force (cost factor élevé)
 - XSS (HTTP-only cookies)
@@ -725,26 +769,28 @@ Le projet implémente une **approche de sécurité en profondeur** avec 10 couch
 
 **Type** : Double Submit Cookie Pattern
 
-| Aspect | Détail |
-|--------|--------|
-| **Génération** | Crypto.randomBytes(32) |
-| **Stockage** | Cookie HTTP-only (1h) |
-| **Transmission** | Body (login) + Header (API) |
-| **Vérification** | Timing-safe comparison |
+| Aspect           | Détail                         |
+| ---------------- | ------------------------------ |
+| **Génération**   | Crypto.randomBytes(32)         |
+| **Stockage**     | Cookie HTTP-only (1h)          |
+| **Transmission** | Body (login) + Header (API)    |
+| **Vérification** | Timing-safe comparison         |
 | **Régénération** | À chaque chargement page admin |
 
 **Endpoints protégés** :
+
 - Tous les POST/PUT/DELETE
 - Login/Logout
 - Upload de fichiers
 
 **Code de vérification** :
+
 ```typescript
 // src/lib/auth.ts
 export function verifyCsrfToken(cookies: AstroCookies, token: string): boolean {
-  const storedToken = cookies.get('csrfToken')?.value
-  if (!storedToken || !token) return false
-  return timingSafeEqual(Buffer.from(storedToken), Buffer.from(token))
+  const storedToken = cookies.get("csrfToken")?.value;
+  if (!storedToken || !token) return false;
+  return timingSafeEqual(Buffer.from(storedToken), Buffer.from(token));
 }
 ```
 
@@ -757,6 +803,7 @@ export function verifyCsrfToken(cookies: AstroCookies, token: string): boolean {
 **Schémas définis** :
 
 #### Login Schema
+
 ```typescript
 {
   email: z.string().email(),
@@ -765,6 +812,7 @@ export function verifyCsrfToken(cookies: AstroCookies, token: string): boolean {
 ```
 
 #### Article Schema
+
 ```typescript
 {
   title: z.string().min(1).max(255),
@@ -781,9 +829,11 @@ export function verifyCsrfToken(cookies: AstroCookies, token: string): boolean {
 ```
 
 **Validations UUID** :
+
 - Tous les paramètres d'URL `[id]` : validation via Zod avant requête BDD
 
 **Protection contre** :
+
 - Injection SQL (via ORM paramétré)
 - XSS (validation format)
 - Overflow (limites de longueur)
@@ -795,17 +845,18 @@ export function verifyCsrfToken(cookies: AstroCookies, token: string): boolean {
 
 **Endpoint** : [POST /api/upload](../src/pages/api/upload.ts)
 
-| Contrôle | Implémentation |
-|----------|----------------|
-| **Type MIME** | Whitelist : `application/pdf` uniquement |
-| **Extension** | Validation `.pdf` |
-| **Taille** | 10 MB max |
-| **Nom de fichier** | Sanitization complète |
-| **Path traversal** | Vérification destination |
-| **Authentification** | Session requise |
-| **CSRF** | Token requis |
+| Contrôle             | Implémentation                           |
+| -------------------- | ---------------------------------------- |
+| **Type MIME**        | Whitelist : `application/pdf` uniquement |
+| **Extension**        | Validation `.pdf`                        |
+| **Taille**           | 10 MB max                                |
+| **Nom de fichier**   | Sanitization complète                    |
+| **Path traversal**   | Vérification destination                 |
+| **Authentification** | Session requise                          |
+| **CSRF**             | Token requis                             |
 
 **Sanitization du nom** :
+
 ```typescript
 // Exemple : "Rapport d'activité 2024 (final).pdf"
 // Devient : "1705320000000-rapport-dactivite-2024-final.pdf"
@@ -825,16 +876,17 @@ export function verifyCsrfToken(cookies: AstroCookies, token: string): boolean {
 
 ### 5.6 Sécurité de la Base de Données
 
-| Mesure | Implémentation |
-|--------|----------------|
-| **ORM** | Drizzle (requêtes paramétrées) |
-| **Pas de SQL brut** | 100% du code via ORM |
-| **Contraintes UNIQUE** | email, slug |
-| **Contraintes FK** | Intégrité référentielle |
-| **Connection string** | Variable d'environnement |
-| **Validation avant insertion** | Schémas Zod |
+| Mesure                         | Implémentation                 |
+| ------------------------------ | ------------------------------ |
+| **ORM**                        | Drizzle (requêtes paramétrées) |
+| **Pas de SQL brut**            | 100% du code via ORM           |
+| **Contraintes UNIQUE**         | email, slug                    |
+| **Contraintes FK**             | Intégrité référentielle        |
+| **Connection string**          | Variable d'environnement       |
+| **Validation avant insertion** | Schémas Zod                    |
 
 **Protection contre** :
+
 - Injection SQL (paramétrage automatique)
 - Duplication (contraintes UNIQUE)
 - Orphelins (foreign keys)
@@ -844,28 +896,30 @@ export function verifyCsrfToken(cookies: AstroCookies, token: string): boolean {
 
 ### 5.7 Autorisation et Contrôle d'Accès
 
-| Route/Action | Contrôle |
-|--------------|----------|
-| **Toutes pages `/admin/*`** | Session valide |
-| **Toutes API `/api/*`** | Session valide (sauf login) |
-| **Création article** | `authorId` = `session.userId` |
-| **Édition/Suppression** | Session valide (pas de vérif ownership) |
+| Route/Action                | Contrôle                                |
+| --------------------------- | --------------------------------------- |
+| **Toutes pages `/admin/*`** | Session valide                          |
+| **Toutes API `/api/*`**     | Session valide (sauf login)             |
+| **Création article**        | `authorId` = `session.userId`           |
+| **Édition/Suppression**     | Session valide (pas de vérif ownership) |
 
 **Note** : Le système actuel ne vérifie pas si l'auteur modifie son propre article (admin unique).
 
 **Implémentation** :
+
 ```typescript
 // Middleware requireAuth
-const { userId } = requireAuth(request.cookies) // Throw 401 si échec
+const { userId } = requireAuth(request.cookies); // Throw 401 si échec
 
 // Auto-attribution auteur
 const article = await db.insert(articles).values({
   ...data,
-  authorId: userId // Depuis session, pas depuis body
-})
+  authorId: userId, // Depuis session, pas depuis body
+});
 ```
 
 **Protection contre** :
+
 - Accès non authentifié (middleware)
 - Usurpation d'identité auteur (authorId forcé)
 - Élévation de privilèges (validation session)
@@ -874,15 +928,16 @@ const article = await db.insert(articles).values({
 
 ### 5.8 Sécurité Frontend
 
-| Aspect | Mesure | Implémentation |
-|--------|--------|----------------|
-| **XSS** | Pas de `dangerouslySetInnerHTML` | Tous les templates Astro |
-| **CSP-friendly** | Scripts via `define:vars` | [src/pages/admin/*.astro](../src/pages/admin/) |
-| **Secrets** | Token CSRF en input hidden | Formulaires |
-| **Validation UX** | Client-side (non sécuritaire) | Serveur révalide toujours |
+| Aspect            | Mesure                           | Implémentation                                                 |
+| ----------------- | -------------------------------- | -------------------------------------------------------------- |
+| **XSS**           | Pas de `dangerouslySetInnerHTML` | Tous les templates Astro                                       |
+| **CSP-friendly**  | Scripts via `define:vars`        | [src/pages/admin/\*.astro](../src/pages/admin/)                |
+| **Secrets**       | Token CSRF en input hidden       | Formulaires                                                    |
+| **Validation UX** | Client-side (non sécuritaire)    | Serveur révalide toujours                                      |
 | **Confirmations** | Modals pour actions destructives | [DeleteModal.astro](../src/components/admin/DeleteModal.astro) |
 
 **Pas de données sensibles** :
+
 - Password jamais envoyé côté client
 - Session token uniquement en cookie HTTP-only
 - CSRF token non exposé en variable globale JS
@@ -893,24 +948,25 @@ const article = await db.insert(articles).values({
 
 **Principe** : Ne jamais divulguer d'informations système
 
-| Scénario | Message Utilisateur | Log Serveur |
-|----------|---------------------|-------------|
-| **Credentials invalides** | "Email ou mot de passe incorrect" | Email + tentative |
-| **Article non trouvé** | "Article non trouvé" | ID + requête |
-| **Erreur BDD** | "Erreur serveur" | Stack trace complète |
-| **Token CSRF invalide** | "Token de sécurité invalide" | IP + timestamp |
-| **Validation échouée** | Détails par champ (Zod) | Données soumises |
+| Scénario                  | Message Utilisateur               | Log Serveur          |
+| ------------------------- | --------------------------------- | -------------------- |
+| **Credentials invalides** | "Email ou mot de passe incorrect" | Email + tentative    |
+| **Article non trouvé**    | "Article non trouvé"              | ID + requête         |
+| **Erreur BDD**            | "Erreur serveur"                  | Stack trace complète |
+| **Token CSRF invalide**   | "Token de sécurité invalide"      | IP + timestamp       |
+| **Validation échouée**    | Détails par champ (Zod)           | Données soumises     |
 
 **Try-catch** dans toutes les routes API :
+
 ```typescript
 try {
   // Logique métier
 } catch (error) {
-  console.error('[API Error]', error) // Log serveur
+  console.error("[API Error]", error); // Log serveur
   return new Response(
-    JSON.stringify({ error: 'Erreur serveur' }), // Message générique
-    { status: 500 }
-  )
+    JSON.stringify({ error: "Erreur serveur" }), // Message générique
+    { status: 500 },
+  );
 }
 ```
 
@@ -921,6 +977,7 @@ try {
 **Fichier** : `.env` (gitignored)
 
 **Variables requises** :
+
 ```env
 DATABASE_URL=postgresql://user:pass@localhost:5432/horizon_slavia
 SESSION_SECRET=random-32-char-string-minimum
@@ -928,10 +985,12 @@ PUBLIC_SITE_URL=https://horizon-slavia.fr
 ```
 
 **Validation au démarrage** :
+
 - `SESSION_SECRET` doit être défini (sinon erreur)
 - `DATABASE_URL` testée lors de la première connexion
 
 **Bonnes pratiques** :
+
 - Secrets jamais commités (`.gitignore`)
 - Rotation régulière du `SESSION_SECRET`
 - Différents secrets dev/prod
@@ -940,13 +999,13 @@ PUBLIC_SITE_URL=https://horizon-slavia.fr
 
 ### 5.11 Mesures Additionnelles
 
-| Mesure | Implémentation |
-|--------|----------------|
-| **Meta robots** | `<meta name="robots" content="noindex, nofollow">` sur pages admin |
-| **Stack traces** | Désactivées en production |
-| **Rate limiting** | Via reverse proxy (Nginx/Cloudflare) |
-| **HTTPS** | Cookie Secure flag en prod |
-| **Hooks qualité** | Husky + lint-staged (pre-commit) |
+| Mesure            | Implémentation                                                     |
+| ----------------- | ------------------------------------------------------------------ |
+| **Meta robots**   | `<meta name="robots" content="noindex, nofollow">` sur pages admin |
+| **Stack traces**  | Désactivées en production                                          |
+| **Rate limiting** | Via reverse proxy (Nginx/Cloudflare)                               |
+| **HTTPS**         | Cookie Secure flag en prod                                         |
+| **Hooks qualité** | Husky + lint-staged (pre-commit)                                   |
 
 ---
 
@@ -955,6 +1014,7 @@ PUBLIC_SITE_URL=https://horizon-slavia.fr
 **Framework** : Playwright (E2E)
 
 **Scénarios testés** :
+
 - Accès admin sans session → redirection login
 - Login credentials invalides → erreur
 - Login credentials valides → session créée
@@ -962,6 +1022,7 @@ PUBLIC_SITE_URL=https://horizon-slavia.fr
 - Upload fichier non-PDF → rejet
 
 **Fichiers** :
+
 - [e2e-tests/admin-auth.spec.ts](../e2e-tests/admin-auth.spec.ts) (si existe)
 
 ---
@@ -982,6 +1043,7 @@ PUBLIC_SITE_URL=https://horizon-slavia.fr
 ---
 
 **Contact support** :
+
 - Documentation complète : [docs/DOCUMENTATION_TECHNIQUE.md](./DOCUMENTATION_TECHNIQUE.md)
 - Code source : [GitHub - honrizon_slavia](../)
 

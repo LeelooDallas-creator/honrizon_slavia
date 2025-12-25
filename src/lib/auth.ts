@@ -1,14 +1,14 @@
-import bcrypt from 'bcryptjs';
-import type { AstroCookies } from 'astro';
-import { createHmac, timingSafeEqual } from 'node:crypto';
+import bcrypt from "bcryptjs";
+import type { AstroCookies } from "astro";
+import { createHmac, timingSafeEqual } from "node:crypto";
 
-const SESSION_COOKIE_NAME = 'session';
+const SESSION_COOKIE_NAME = "session";
 const SESSION_DURATION = 30 * 60 * 1000; // 30 minutes in milliseconds
 
 const SESSION_SECRET = import.meta.env.SESSION_SECRET;
 
 if (!SESSION_SECRET) {
-  throw new Error('SESSION_SECRET must be defined in environment variables');
+  throw new Error("SESSION_SECRET must be defined in environment variables");
 }
 
 /**
@@ -23,7 +23,7 @@ export async function hashPassword(password: string): Promise<string> {
  */
 export async function verifyPassword(
   password: string,
-  hash: string
+  hash: string,
 ): Promise<boolean> {
   return bcrypt.compare(password, hash);
 }
@@ -37,9 +37,7 @@ interface SessionPayload {
  * Create an HMAC signature for a payload
  */
 function createSignature(data: string): string {
-  return createHmac('sha256', SESSION_SECRET)
-    .update(data)
-    .digest('hex');
+  return createHmac("sha256", SESSION_SECRET).update(data).digest("hex");
 }
 
 /**
@@ -51,8 +49,8 @@ function verifySignature(data: string, signature: string): boolean {
   // Protection against timing attacks
   try {
     return timingSafeEqual(
-      Buffer.from(signature, 'hex'),
-      Buffer.from(expected, 'hex')
+      Buffer.from(signature, "hex"),
+      Buffer.from(expected, "hex"),
     );
   } catch {
     return false;
@@ -68,7 +66,7 @@ export function createSession(userId: string): string {
     exp: Date.now() + SESSION_DURATION,
   };
 
-  const data = Buffer.from(JSON.stringify(payload)).toString('base64');
+  const data = Buffer.from(JSON.stringify(payload)).toString("base64");
   const signature = createSignature(data);
 
   return `${data}.${signature}`;
@@ -79,7 +77,7 @@ export function createSession(userId: string): string {
  */
 export function verifySession(token: string): { userId: string } | null {
   try {
-    const parts = token.split('.');
+    const parts = token.split(".");
     if (parts.length !== 2) {
       return null;
     }
@@ -90,7 +88,7 @@ export function verifySession(token: string): { userId: string } | null {
       return null;
     }
 
-    const decoded = Buffer.from(data, 'base64').toString('utf-8');
+    const decoded = Buffer.from(data, "base64").toString("utf-8");
     const payload: SessionPayload = JSON.parse(decoded);
 
     // Verify expiration
@@ -99,7 +97,7 @@ export function verifySession(token: string): { userId: string } | null {
     }
 
     return { userId: payload.userId };
-  } catch (error) {
+  } catch {
     return null;
   }
 }
@@ -124,13 +122,10 @@ export function requireAuth(cookies: AstroCookies): { userId: string } {
   const session = getSession(cookies);
 
   if (!session) {
-    throw new Response(
-      JSON.stringify({ error: 'Non authentifié' }),
-      {
-        status: 401,
-        headers: { 'Content-Type': 'application/json' },
-      }
-    );
+    throw new Response(JSON.stringify({ error: "Non authentifié" }), {
+      status: 401,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 
   return session;
@@ -145,9 +140,9 @@ export function setSessionCookie(cookies: AstroCookies, userId: string): void {
   cookies.set(SESSION_COOKIE_NAME, token, {
     httpOnly: true, // Not accessible via JavaScript (XSS protection)
     secure: import.meta.env.PROD, // HTTPS only in production
-    sameSite: 'strict', // CSRF protection
+    sameSite: "strict", // CSRF protection
     maxAge: 30 * 60, // 30 minutes in seconds
-    path: '/',
+    path: "/",
   });
 }
 
@@ -155,17 +150,17 @@ export function setSessionCookie(cookies: AstroCookies, userId: string): void {
  * Delete session cookie
  */
 export function deleteSessionCookie(cookies: AstroCookies): void {
-  cookies.delete(SESSION_COOKIE_NAME, { path: '/' });
+  cookies.delete(SESSION_COOKIE_NAME, { path: "/" });
 }
 
-const CSRF_COOKIE_NAME = 'csrf_token';
+const CSRF_COOKIE_NAME = "csrf_token";
 
 /**
  * Generate a random CSRF token
  */
 export function generateCsrfToken(): string {
   const randomBytes = crypto.getRandomValues(new Uint8Array(32));
-  return Buffer.from(randomBytes).toString('hex');
+  return Buffer.from(randomBytes).toString("hex");
 }
 
 /**
@@ -183,9 +178,9 @@ export function setCsrfToken(cookies: AstroCookies): string {
   cookies.set(CSRF_COOKIE_NAME, token, {
     httpOnly: true,
     secure: import.meta.env.PROD,
-    sameSite: 'strict',
+    sameSite: "strict",
     maxAge: 60 * 60, // 1 hour
-    path: '/',
+    path: "/",
   });
 
   return token;
@@ -201,7 +196,10 @@ export function getCsrfToken(cookies: AstroCookies): string | null {
 /**
  * Verify that a CSRF token is valid (timing-safe)
  */
-export function verifyCsrfToken(cookies: AstroCookies, submittedToken: string): boolean {
+export function verifyCsrfToken(
+  cookies: AstroCookies,
+  submittedToken: string,
+): boolean {
   const storedToken = getCsrfToken(cookies);
 
   if (!storedToken || !submittedToken) {
@@ -211,7 +209,7 @@ export function verifyCsrfToken(cookies: AstroCookies, submittedToken: string): 
   try {
     return timingSafeEqual(
       Buffer.from(storedToken),
-      Buffer.from(submittedToken)
+      Buffer.from(submittedToken),
     );
   } catch {
     return false;

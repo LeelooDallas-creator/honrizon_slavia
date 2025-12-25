@@ -4,18 +4,23 @@
 // =============================================
 
 // Load variables and mixins
-@use '../abstracts/variables' as *;
-@use '../abstracts/mixins' as *;
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
 
 // =============================================
 // HEADINGS
 // =============================================
 
 /// Base heading styles (Uncial Antiqua font)
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   @include heading-style;
   margin-bottom: $spacing-4;
-  
+
   // Slightly tighter tracking for large headings
   letter-spacing: -0.02em;
 }
@@ -24,7 +29,7 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
   @include responsive-typography($font-size-4xl, $font-size-6xl);
   margin-bottom: $spacing-6;
-  
+
   // Optional: Add text shadow for hero sections
   &.hero-title {
     text-shadow: 0 0.125rem 0.25rem rgba($color-black, 0.1);
@@ -76,7 +81,7 @@ h6 {
 p {
   @include body-text;
   margin-bottom: $spacing-4;
-  
+
   // First paragraph after heading (no top margin)
   h1 + &,
   h2 + &,
@@ -86,7 +91,7 @@ p {
   h6 + & {
     margin-top: 0;
   }
-  
+
   // Last paragraph (no bottom margin)
   &:last-child {
     margin-bottom: 0;
@@ -112,19 +117,19 @@ a {
   text-decoration-thickness: 0.0625rem;
   text-underline-offset: 0.125rem;
   @include transition(color);
-  
+
   &:hover {
     color: $color-accent-dark;
   }
-  
+
   &:focus-visible {
     @include focus-visible;
   }
-  
+
   // Links in navigation (different style)
   nav & {
     text-decoration: none;
-    
+
     &:hover {
       text-decoration: underline;
     }
@@ -196,7 +201,7 @@ blockquote {
   border-radius: $radius-base;
   font-style: italic;
   color: $color-gray-700;
-  
+
   // Opening quote mark
   &::before {
     content: '"';
@@ -209,15 +214,15 @@ blockquote {
     color: $color-accent;
     opacity: 0.3;
   }
-  
+
   p {
     margin-bottom: $spacing-2;
-    
+
     &:last-child {
       margin-bottom: 0;
     }
   }
-  
+
   // Citation
   cite {
     display: block;
@@ -225,9 +230,9 @@ blockquote {
     font-size: $font-size-sm;
     font-style: normal;
     color: $color-gray-600;
-    
+
     &::before {
-      content: '— ';
+      content: "— ";
     }
   }
 }
@@ -257,7 +262,7 @@ pre {
   border-radius: $radius-lg;
   overflow-x: auto;
   margin: $spacing-6 0;
-  
+
   // Inline code inside pre (remove double styling)
   code {
     background: none;
@@ -276,15 +281,15 @@ pre {
 ul.styled-list {
   list-style: none;
   margin-bottom: $spacing-4;
-  
+
   li {
     position: relative;
     padding-left: $spacing-6;
     margin-bottom: $spacing-2;
-    
+
     // Custom bullet (accent color)
     &::before {
-      content: '•';
+      content: "•";
       position: absolute;
       left: $spacing-2;
       color: $color-accent;
@@ -298,13 +303,13 @@ ol.styled-list {
   list-style: none;
   counter-reset: styled-counter;
   margin-bottom: $spacing-4;
-  
+
   li {
     position: relative;
     padding-left: $spacing-8;
     margin-bottom: $spacing-2;
     counter-increment: styled-counter;
-    
+
     // Custom number (accent color, circled)
     &::before {
       content: counter(styled-counter);
@@ -327,14 +332,14 @@ ol.styled-list {
 /// Definition lists
 dl {
   margin-bottom: $spacing-6;
-  
+
   dt {
     font-weight: $font-weight-bold;
     color: $color-primary;
     margin-top: $spacing-4;
     margin-bottom: $spacing-1;
   }
-  
+
   dd {
     margin-left: $spacing-6;
     margin-bottom: $spacing-3;
@@ -487,52 +492,58 @@ hr {
 .prose {
   max-width: 65ch;
   color: $color-gray-800;
-  
+
   // Headings spacing
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     margin-top: $spacing-10;
     margin-bottom: $spacing-4;
-    
+
     &:first-child {
       margin-top: 0;
     }
   }
-  
+
   // Paragraphs spacing
   p {
     margin-bottom: $spacing-4;
   }
-  
+
   // Links in prose
   a {
     color: $color-accent;
     text-decoration: underline;
-    
+
     &:hover {
       color: $color-accent-dark;
     }
   }
-  
+
   // Images in prose
   img {
     margin: $spacing-8 0;
     border-radius: $radius-lg;
   }
-  
+
   // Lists in prose
-  ul, ol {
+  ul,
+  ol {
     margin-bottom: $spacing-6;
     padding-left: $spacing-6;
   }
-  
+
   ul {
     list-style-type: disc;
   }
-  
+
   ol {
     list-style-type: decimal;
   }
-  
+
   li {
     margin-bottom: $spacing-2;
   }

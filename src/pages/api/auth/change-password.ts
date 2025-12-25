@@ -1,12 +1,17 @@
 export const prerender = false;
 
-import type { APIRoute } from 'astro';
-import { db } from '@/lib/db';
-import { users } from '@/lib/db/schema';
-import { eq } from 'drizzle-orm';
-import { changePasswordSchema } from '@/lib/validations';
-import { verifyPassword, hashPassword, requireAuth, verifyCsrfToken } from '@/lib/auth';
-import { z } from 'zod';
+import type { APIRoute } from "astro";
+import { db } from "@/lib/db";
+import { users } from "@/lib/db/schema";
+import { eq } from "drizzle-orm";
+import { changePasswordSchema } from "@/lib/validations";
+import {
+  verifyPassword,
+  hashPassword,
+  requireAuth,
+  verifyCsrfToken,
+} from "@/lib/auth";
+import { z } from "zod";
 
 export const POST: APIRoute = async ({ request, cookies }) => {
   try {
@@ -14,17 +19,15 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     const { userId } = requireAuth(cookies);
 
     const body = await request.json();
-    const { currentPassword, newPassword, confirmNewPassword, csrfToken } = body;
+    const { currentPassword, newPassword, confirmNewPassword, csrfToken } =
+      body;
 
     // Verify CSRF token
     if (!verifyCsrfToken(cookies, csrfToken)) {
-      return new Response(
-        JSON.stringify({ error: 'Token CSRF invalide' }),
-        {
-          status: 403,
-          headers: { 'Content-Type': 'application/json' },
-        }
-      );
+      return new Response(JSON.stringify({ error: "Token CSRF invalide" }), {
+        status: 403,
+        headers: { "Content-Type": "application/json" },
+      });
     }
 
     // Validate input
@@ -35,34 +38,28 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     });
 
     // Get user from database
-    const [user] = await db
-      .select()
-      .from(users)
-      .where(eq(users.id, userId));
+    const [user] = await db.select().from(users).where(eq(users.id, userId));
 
     if (!user) {
-      return new Response(
-        JSON.stringify({ error: 'Utilisateur non trouvé' }),
-        {
-          status: 404,
-          headers: { 'Content-Type': 'application/json' },
-        }
-      );
+      return new Response(JSON.stringify({ error: "Utilisateur non trouvé" }), {
+        status: 404,
+        headers: { "Content-Type": "application/json" },
+      });
     }
 
     // Verify current password
     const isCurrentPasswordValid = await verifyPassword(
       validatedData.currentPassword,
-      user.password
+      user.password,
     );
 
     if (!isCurrentPasswordValid) {
       return new Response(
-        JSON.stringify({ error: 'Le mot de passe actuel est incorrect' }),
+        JSON.stringify({ error: "Le mot de passe actuel est incorrect" }),
         {
           status: 401,
-          headers: { 'Content-Type': 'application/json' },
-        }
+          headers: { "Content-Type": "application/json" },
+        },
       );
     }
 
@@ -81,34 +78,31 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     return new Response(
       JSON.stringify({
         success: true,
-        message: 'Mot de passe modifié avec succès'
+        message: "Mot de passe modifié avec succès",
       }),
       {
         status: 200,
-        headers: { 'Content-Type': 'application/json' },
-      }
+        headers: { "Content-Type": "application/json" },
+      },
     );
-  } catch (error) {
+  } catch {
     if (error instanceof z.ZodError) {
       return new Response(
         JSON.stringify({
-          error: 'Données invalides',
-          details: error.errors
+          error: "Données invalides",
+          details: error.errors,
         }),
         {
           status: 400,
-          headers: { 'Content-Type': 'application/json' },
-        }
+          headers: { "Content-Type": "application/json" },
+        },
       );
     }
 
-    console.error('Erreur POST /api/auth/change-password:', error);
-    return new Response(
-      JSON.stringify({ error: 'Erreur serveur' }),
-      {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' },
-      }
-    );
+    console.error("Erreur POST /api/auth/change-password:", error);
+    return new Response(JSON.stringify({ error: "Erreur serveur" }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 };

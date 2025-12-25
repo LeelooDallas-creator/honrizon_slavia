@@ -2,8 +2,8 @@
 // FOOTER - Styles SCSS
 // ============================================
 
-@use '@styles/abstracts/variables' as *;
-@use '@styles/abstracts/mixins' as *;
+@use "@styles/abstracts/variables" as *;
+@use "@styles/abstracts/mixins" as *;
 
 // ============================================
 // FOOTER - Base
@@ -22,8 +22,8 @@
   margin-right: auto;
   padding-left: $container-padding;
   padding-right: $container-padding;
-  
-  @include respond-to('lg') {
+
+  @include respond-to("lg") {
     padding-left: $container-padding-lg;
     padding-right: $container-padding-lg;
   }
@@ -38,13 +38,13 @@
   grid-template-columns: 1fr;
   gap: $spacing-10;
   margin-bottom: $spacing-10;
-  
-  @include respond-to('md') {
+
+  @include respond-to("md") {
     grid-template-columns: repeat(2, 1fr);
     gap: $spacing-12;
   }
-  
-  @include respond-to('lg') {
+
+  @include respond-to("lg") {
     grid-template-columns: 2fr 1fr 1fr;
     gap: $spacing-16;
   }
@@ -96,17 +96,17 @@
   color: $color-white;
   text-decoration: none;
   @include transition(background-color, transform, color);
-  
+
   &:hover {
     background-color: $color-accent;
     color: $color-primary;
     transform: translateY(-3px);
   }
-  
+
   &:focus-visible {
     @include keyboard-navigation;
   }
-  
+
   svg {
     width: 20px;
     height: 20px;
@@ -137,16 +137,16 @@
   color: rgba($color-white, 0.85);
   text-decoration: none;
   @include transition(color, transform);
-  
+
   &:hover {
     color: $color-accent;
     transform: translateX(4px);
   }
-  
+
   &:focus-visible {
     @include keyboard-navigation;
   }
-  
+
   svg {
     flex-shrink: 0;
     opacity: 0.7;
@@ -165,8 +165,8 @@
   gap: $spacing-2;
   align-items: center;
   text-align: center;
-  
-  @include respond-to('md') {
+
+  @include respond-to("md") {
     flex-direction: row;
     justify-content: space-between;
     text-align: left;

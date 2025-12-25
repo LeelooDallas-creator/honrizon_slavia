@@ -7,10 +7,10 @@ export interface FlipCardProps {
   subtitle: string;
   description: string;
   imageAlt?: string;
-  aspectRatio?: '16/9' | '4/3' | '1/1' | '3/2';
-  flipDirection?: 'horizontal' | 'vertical';
+  aspectRatio?: "16/9" | "4/3" | "1/1" | "3/2";
+  flipDirection?: "horizontal" | "vertical";
   animationDuration?: number; // en ms (default: 600)
   overlayGradient?: string;
 }
 
-export type FlipDirection = 'horizontal' | 'vertical';
+export type FlipDirection = "horizontal" | "vertical";

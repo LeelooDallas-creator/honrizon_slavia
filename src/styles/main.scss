@@ -15,22 +15,22 @@
 // Design tokens and utilities (no CSS output)
 // =============================================
 
-@use 'abstracts' as *;
+@use "abstracts" as *;
 
 // =============================================
 // 2. BASE
 // Reset and foundational typography
 // =============================================
 
-@use 'base/reset';
-@use 'base/typography';
+@use "base/reset";
+@use "base/typography";
 
 // =============================================
 // 3. LAYOUT
 // Containers and structural elements
 // =============================================
 
-@use 'layout/containers';
+@use "layout/containers";
 
 // TODO: Add when created
 // @use 'layout/header';
@@ -42,7 +42,7 @@
 // Specific page styles
 // =============================================
 
-@use 'pages/mdx';
+@use "pages/mdx";
 
 // =============================================
 // 4. COMPONENTS
@@ -109,21 +109,21 @@ input[type="date"] {
   background: $color-white;
   color: $color-black;
   @include transition(border-color);
-  
+
   // Focus state (accessibility - persona Léa)
   &:focus {
     outline: none;
     border-color: $color-accent;
     box-shadow: 0 0 0 0.1875rem rgba($color-accent, 0.2);
   }
-  
+
   // Disabled state
   &:disabled {
     background: $color-gray-100;
     color: $color-gray-500;
     cursor: not-allowed;
   }
-  
+
   // Placeholder styling
   &::placeholder {
     color: $color-gray-400;
@@ -142,7 +142,7 @@ select {
   background: $color-white;
   cursor: pointer;
   @include transition(border-color);
-  
+
   &:focus {
     outline: none;
     border-color: $color-accent;
@@ -156,7 +156,7 @@ input[type="radio"] {
   width: auto;
   margin-right: $spacing-2;
   cursor: pointer;
-  
+
   &:focus-visible {
     @include keyboard-navigation;
   }
@@ -179,14 +179,14 @@ table {
   width: 100%;
   border-collapse: collapse;
   font-size: $font-size-base;
-  
+
   th,
   td {
     padding: $spacing-3 $spacing-4;
     text-align: left;
     border-bottom: 0.0625rem solid $color-gray-200;
   }
-  
+
   thead th {
     font-weight: $font-weight-semibold;
     color: $color-primary;
@@ -195,18 +195,17 @@ table {
   }
 
   thead th:first-child {
-  color: $color-white;
-}
-  
+    color: $color-white;
+  }
+
   tbody tr {
     @include transition(background-color);
-    
+
     &:hover {
       background-color: $color-gray-50;
     }
   }
 }
-
 
 // =============================================
 // IMAGES
@@ -215,11 +214,11 @@ table {
 
 img {
   border-radius: $radius-base;
-  
+
   &.rounded {
     border-radius: $radius-full;
   }
-  
+
   &.rounded-lg {
     border-radius: $radius-lg;
   }
@@ -232,20 +231,20 @@ img {
 button,
 .button {
   @include button-base($color-accent, $color-white);
-  
+
   &.button-primary {
     background: $color-primary;
     color: $color-white;
-    
+
     &:hover:not(:disabled) {
       background: $color-primary-dark;
     }
   }
-  
+
   &.button-secondary {
     background: $color-secondary;
     color: $color-white;
-    
+
     &:hover:not(:disabled) {
       background: $color-secondary-dark;
     }

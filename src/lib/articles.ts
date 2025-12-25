@@ -1,7 +1,7 @@
-import { db } from './db';
-import { articles, countries } from './db/schema';
-import { eq, and } from 'drizzle-orm';
-import type { DropdownItem } from '@/components/organisms/Header/Header.types';
+import { db } from "./db";
+import { articles, countries } from "./db/schema";
+import { eq, and } from "drizzle-orm";
+import type { DropdownItem } from "@/components/organisms/Header/Header.types";
 
 /**
  * Get all published articles grouped by type
@@ -14,7 +14,7 @@ export async function getPublishedArticles() {
     })
     .from(articles)
     .leftJoin(countries, eq(articles.countryId, countries.id))
-    .where(eq(articles.status, 'published'))
+    .where(eq(articles.status, "published"))
     .orderBy(articles.publishedAt);
 
   return publishedArticles;
@@ -23,7 +23,9 @@ export async function getPublishedArticles() {
 /**
  * Get published articles by type
  */
-export async function getPublishedArticlesByType(type: 'inspiration' | 'carnet' | 'ressource') {
+export async function getPublishedArticlesByType(
+  type: "inspiration" | "carnet" | "ressource",
+) {
   const publishedArticles = await db
     .select({
       article: articles,
@@ -31,10 +33,7 @@ export async function getPublishedArticlesByType(type: 'inspiration' | 'carnet' 
     })
     .from(articles)
     .leftJoin(countries, eq(articles.countryId, countries.id))
-    .where(and(
-      eq(articles.type, type),
-      eq(articles.status, 'published')
-    ))
+    .where(and(eq(articles.type, type), eq(articles.status, "published")))
     .orderBy(articles.publishedAt);
 
   return publishedArticles;
@@ -44,13 +43,16 @@ export async function getPublishedArticlesByType(type: 'inspiration' | 'carnet' 
  * Convert articles to dropdown items for navigation menu
  */
 export function articlesToDropdownItems(
-  articlesData: Array<{ article: any; country: any | null }>,
-  defaultImage: any
+  articlesData: Array<{
+    article: Record<string, unknown>;
+    country: Record<string, unknown> | null;
+  }>,
+  defaultImage: string,
 ): DropdownItem[] {
-  return articlesData.map(({ article, country }) => ({
+  return articlesData.map(({ article }) => ({
     subtitle: article.title,
     href: `/articles/${article.slug}`,
     image: article.coverImageUrl || defaultImage,
-    description: article.excerpt || '',
+    description: article.excerpt || "",
   }));
 }
