@@ -1,29 +1,29 @@
 // ============================================
 // SECTION - Styles
 // ============================================
-@use '@styles/abstracts/variables' as *;
-@use '@styles/abstracts/mixins' as *;
+@use "@styles/abstracts/variables" as *;
+@use "@styles/abstracts/mixins" as *;
 
 .section {
   width: 100%;
   padding-inline: 6rem;
-  
+
   // Variants - Couleurs de fond
   &.section--blue {
     background: $color-primary;
     color: $color-white;
   }
-  
+
   &.section--golden {
     background: $color-accent;
     color: $color-primary;
   }
-  
+
   &.section--white {
     background: $color-white;
     color: $color-primary;
   }
-  
+
   &.section--red {
     background: $color-secondary;
     color: $color-white;

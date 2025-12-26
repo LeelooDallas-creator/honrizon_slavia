@@ -3,8 +3,8 @@
 // ============================================
 // Navigation principale avec sticky, transparence et menu mobile
 
-@use '@styles/abstracts/variables' as *;
-@use '@styles/abstracts/mixins' as *;
+@use "@styles/abstracts/variables" as *;
+@use "@styles/abstracts/mixins" as *;
 
 // ============================================
 // HEADER - Base
@@ -16,7 +16,9 @@
   left: 0;
   width: 100%;
   z-index: $z-sticky;
-  transition: background-color $transition-base, box-shadow $transition-base;
+  transition:
+    background-color $transition-base,
+    box-shadow $transition-base;
   background-color: $color-primary;
   box-shadow: $shadow-md;
 
@@ -39,8 +41,8 @@
   align-items: center;
   justify-content: space-between;
   padding-block: $spacing-4;
-  
-  @include respond-to('lg') {
+
+  @include respond-to("lg") {
     padding-left: $container-padding-lg;
     padding-right: $container-padding-lg;
     padding-block: $spacing-5;
@@ -57,11 +59,11 @@
   gap: $spacing-3;
   text-decoration: none;
   @include transition(transform);
-  
+
   &:hover {
     transform: translateY(-2px);
   }
-  
+
   &:focus-visible {
     @include keyboard-navigation;
   }
@@ -73,8 +75,8 @@
   font-weight: $font-weight-bold;
   color: $color-white;
   display: none;
-  
-  @include respond-to('md') {
+
+  @include respond-to("md") {
     display: block;
   }
 }
@@ -85,8 +87,8 @@
 
 .header__nav {
   display: none;
-  
-  @include respond-to('lg') {
+
+  @include respond-to("lg") {
     display: block;
   }
 }
@@ -103,8 +105,8 @@
 
 .header__cta {
   display: none;
-  
-  @include respond-to('lg') {
+
+  @include respond-to("lg") {
     display: block;
   }
 }
@@ -126,11 +128,11 @@
   cursor: pointer;
   position: relative;
   z-index: $z-sticky + 1;
-  
-  @include respond-to('lg') {
+
+  @include respond-to("lg") {
     display: none;
   }
-  
+
   &:focus-visible {
     @include keyboard-navigation;
   }
@@ -142,33 +144,33 @@
   background-color: $color-white;
   position: relative;
   transition: background-color $transition-base;
-  
+
   &::before,
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     width: 100%;
     height: 2px;
     background-color: $color-white;
     transition: transform $transition-base;
   }
-  
+
   &::before {
     top: -8px;
   }
-  
+
   &::after {
     bottom: -8px;
   }
-  
+
   // Animation when menu is open
   [aria-expanded="true"] & {
     background-color: transparent;
-    
+
     &::before {
       transform: translateY(8px) rotate(45deg);
     }
-    
+
     &::after {
       transform: translateY(-8px) rotate(-45deg);
     }
@@ -189,12 +191,12 @@
   padding-top: 80px;
   transform: translateX(-100%);
   transition: transform $transition-base;
-  
+
   &.is-open {
     transform: translateX(0);
   }
-  
-  @include respond-to('lg') {
+
+  @include respond-to("lg") {
     display: none;
   }
 }

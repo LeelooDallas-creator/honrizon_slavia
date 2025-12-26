@@ -2,10 +2,10 @@
 // MIXINS - HORIZON SLAVIA
 // Reusable SCSS mixins
 // =============================================
-@use 'sass:map';
-@use 'sass:color';
+@use "sass:map";
+@use "sass:color";
 // Load variables for use in mixins
-@use 'variables' as *;
+@use "variables" as *;
 
 // =============================================
 // RESPONSIVE
@@ -53,7 +53,7 @@
 @mixin respond-between($min, $max) {
   $min-value: map.get($breakpoints, $min);
   $max-value: map.get($breakpoints, $max);
-  
+
   @media (min-width: $min-value) and (max-width: calc($max-value - 0.0625em)) {
     @content;
   }
@@ -99,8 +99,8 @@
 ///   }
 @mixin responsive-typography($mobile-size, $desktop-size) {
   font-size: $mobile-size;
-  
-  @include respond-to('md') {
+
+  @include respond-to("md") {
     font-size: $desktop-size;
   }
 }
@@ -194,7 +194,7 @@
   @include hover-lift;
   cursor: pointer;
   transition: all $transition-base;
-  
+
   &:hover {
     box-shadow: $shadow-lg;
   }
@@ -207,8 +207,10 @@
 ///     @include hover-lift(-0.5rem);
 ///   }
 @mixin hover-lift($distance: -0.25rem) {
-  transition: transform $transition-base, box-shadow $transition-base;
-  
+  transition:
+    transform $transition-base,
+    box-shadow $transition-base;
+
   &:hover {
     transform: translateY($distance);
   }
@@ -230,7 +232,7 @@
     outline-offset: 2px;
     border-radius: $radius-sm;
   }
-  
+
   // Remove outline for mouse users (reduce visual noise)
   &:focus:not(:focus-visible) {
     outline: none;
@@ -245,7 +247,7 @@
 ///   }
 @mixin keyboard-navigation {
   @include focus-visible;
-  
+
   &:focus-visible {
     box-shadow: 0 0 0 3px rgba($color-accent, 0.3);
   }
@@ -266,7 +268,7 @@
   text-decoration: none;
   font-weight: $font-weight-bold;
   border-radius: $radius-base;
-  
+
   &:focus {
     left: 50%;
     top: $spacing-4;
@@ -312,15 +314,19 @@
   height: auto;
   object-fit: cover;
   background: $color-neutral-light;
-  
+
   &.loaded {
     animation: fadeIn $transition-base;
   }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /// Aspect ratio (prevent layout shift during image load)
@@ -332,12 +338,12 @@
 ///   }
 @mixin aspect-ratio($width, $height) {
   aspect-ratio: #{$width} / #{$height};
-  
+
   // Fallback for older browsers
   @supports not (aspect-ratio: 1 / 1) {
     position: relative;
     padding-bottom: calc(#{$height} / #{$width} * 100%);
-    
+
     > * {
       position: absolute;
       top: 0;
@@ -400,7 +406,11 @@
 ///   .button {
 ///     @include transition(background-color, $transition-fast, ease-out);
 ///   }
-@mixin transition($property: all, $duration: $transition-base, $easing: ease-in-out) {
+@mixin transition(
+  $property: all,
+  $duration: $transition-base,
+  $easing: ease-in-out
+) {
   transition: $property $duration $easing;
 }
 
@@ -433,7 +443,7 @@
   @include button-reset;
   @include keyboard-navigation;
   @include transition(all);
-  
+
   display: inline-block;
   padding: $spacing-3 $spacing-6;
   background: $bg;
@@ -443,15 +453,15 @@
   text-align: center;
   text-decoration: none;
   cursor: pointer;
-  
+
   &:hover:not(:disabled) {
     background: color.adjust($bg, $lightness: -8%);
   }
-  
+
   &:active:not(:disabled) {
     transform: translateY(-0.0625rem);
   }
-  
+
   &:disabled {
     opacity: 0.6;
     cursor: not-allowed;
@@ -573,21 +583,21 @@
     width: $width;
     height: $width;
   }
-  
+
   &::-webkit-scrollbar-track {
     background: $track-color;
     border-radius: $radius-full;
   }
-  
+
   &::-webkit-scrollbar-thumb {
     background: $thumb-color;
     border-radius: $radius-full;
-    
+
     &:hover {
       background: color.adjust($thumb-color, $lightness: -10%);
     }
   }
-  
+
   // Firefox
   scrollbar-width: thin;
   scrollbar-color: $thumb-color $track-color;

@@ -78,7 +78,7 @@
     16: $spacing-16,
     20: $spacing-20,
     24: $spacing-24,
-    32: $spacing-32
+    32: $spacing-32,
   );
 
   @if map-has-key($spacings, $key) {
@@ -130,27 +130,27 @@
 ///   color: color('accent'); // Returns $color-accent
 @function color($key) {
   $colors: (
-    'primary': $color-primary,
-    'primary-dark': $color-primary-dark,
-    'primary-light': $color-primary-light,
-    'secondary': $color-secondary,
-    'secondary-dark': $color-secondary-dark,
-    'secondary-light': $color-secondary-light,
-    'accent': $color-accent,
-    'accent-dark': $color-accent-dark,
-    'accent-light': $color-accent-light,
-    'nature': $color-nature,
-    'nature-dark': $color-nature-dark,
-    'nature-light': $color-nature-light,
-    'neutral': $color-neutral,
-    'neutral-dark': $color-neutral-dark,
-    'neutral-light': $color-neutral-light,
-    'white': $color-white,
-    'black': $color-black,
-    'error': $color-error,
-    'success': $color-success,
-    'warning': $color-warning,
-    'info': $color-info
+    "primary": $color-primary,
+    "primary-dark": $color-primary-dark,
+    "primary-light": $color-primary-light,
+    "secondary": $color-secondary,
+    "secondary-dark": $color-secondary-dark,
+    "secondary-light": $color-secondary-light,
+    "accent": $color-accent,
+    "accent-dark": $color-accent-dark,
+    "accent-light": $color-accent-light,
+    "nature": $color-nature,
+    "nature-dark": $color-nature-dark,
+    "nature-light": $color-nature-light,
+    "neutral": $color-neutral,
+    "neutral-dark": $color-neutral-dark,
+    "neutral-light": $color-neutral-light,
+    "white": $color-white,
+    "black": $color-black,
+    "error": $color-error,
+    "success": $color-success,
+    "warning": $color-warning,
+    "info": $color-info,
   );
 
   @if map-has-key($colors, $key) {
@@ -183,17 +183,17 @@
 ///   font-size: font-size('xl'); // Returns $font-size-xl
 @function font-size($size) {
   $sizes: (
-    'xs': $font-size-xs,
-    'sm': $font-size-sm,
-    'base': $font-size-base,
-    'lg': $font-size-lg,
-    'xl': $font-size-xl,
-    '2xl': $font-size-2xl,
-    '3xl': $font-size-3xl,
-    '4xl': $font-size-4xl,
-    '5xl': $font-size-5xl,
-    '6xl': $font-size-6xl,
-    '7xl': $font-size-7xl
+    "xs": $font-size-xs,
+    "sm": $font-size-sm,
+    "base": $font-size-base,
+    "lg": $font-size-lg,
+    "xl": $font-size-xl,
+    "2xl": $font-size-2xl,
+    "3xl": $font-size-3xl,
+    "4xl": $font-size-4xl,
+    "5xl": $font-size-5xl,
+    "6xl": $font-size-6xl,
+    "7xl": $font-size-7xl,
   );
 
   @if map-has-key($sizes, $size) {
@@ -297,13 +297,13 @@
 ///   z-index: z-index('modal'); // 1050
 @function z-index($layer) {
   $z-layers: (
-    'dropdown': $z-dropdown,
-    'sticky': $z-sticky,
-    'fixed': $z-fixed,
-    'modal-backdrop': $z-modal-backdrop,
-    'modal': $z-modal,
-    'popover': $z-popover,
-    'tooltip': $z-tooltip
+    "dropdown": $z-dropdown,
+    "sticky": $z-sticky,
+    "fixed": $z-fixed,
+    "modal-backdrop": $z-modal-backdrop,
+    "modal": $z-modal,
+    "popover": $z-popover,
+    "tooltip": $z-tooltip,
   );
 
   @if map-has-key($z-layers, $layer) {
@@ -325,14 +325,14 @@
 ///   border-radius: radius('lg'); // 0.5rem
 @function radius($size) {
   $radii: (
-    'none': $radius-none,
-    'sm': $radius-sm,
-    'base': $radius-base,
-    'md': $radius-md,
-    'lg': $radius-lg,
-    'xl': $radius-xl,
-    '2xl': $radius-2xl,
-    'full': $radius-full
+    "none": $radius-none,
+    "sm": $radius-sm,
+    "base": $radius-base,
+    "md": $radius-md,
+    "lg": $radius-lg,
+    "xl": $radius-xl,
+    "2xl": $radius-2xl,
+    "full": $radius-full,
   );
 
   @if map-has-key($radii, $size) {
@@ -354,11 +354,11 @@
 ///   box-shadow: shadow('lg');
 @function shadow($size) {
   $shadows: (
-    'sm': $shadow-sm,
-    'base': $shadow-base,
-    'md': $shadow-md,
-    'lg': $shadow-lg,
-    'xl': $shadow-xl
+    "sm": $shadow-sm,
+    "base": $shadow-base,
+    "md": $shadow-md,
+    "lg": $shadow-lg,
+    "xl": $shadow-xl,
   );
 
   @if map-has-key($shadows, $size) {
@@ -378,11 +378,11 @@
 /// @return {Number} - Transition duration
 /// @example scss
 ///   transition: all transition-duration('fast');
-@function transition-duration($speed: 'base') {
+@function transition-duration($speed: "base") {
   $durations: (
-    'fast': $transition-fast,
-    'base': $transition-base,
-    'slow': $transition-slow
+    "fast": $transition-fast,
+    "base": $transition-base,
+    "slow": $transition-slow,
   );
 
   @if map-has-key($durations, $speed) {
@@ -404,17 +404,18 @@
 ///   transition: transform 300ms ease('smooth');
 @function ease($ease) {
   $easings: (
-    'in-quad': cubic-bezier(0.55, 0.085, 0.68, 0.53),
-    'out-quad': cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    'in-out-quad': cubic-bezier(0.455, 0.03, 0.515, 0.955),
-    'in-cubic': cubic-bezier(0.55, 0.055, 0.675, 0.19),
-    'out-cubic': cubic-bezier(0.215, 0.61, 0.355, 1),
-    'in-out-cubic': cubic-bezier(0.645, 0.045, 0.355, 1),
-    'in-quart': cubic-bezier(0.895, 0.03, 0.685, 0.22),
-    'out-quart': cubic-bezier(0.165, 0.84, 0.44, 1),
-    'in-out-quart': cubic-bezier(0.77, 0, 0.175, 1),
-    'smooth': cubic-bezier(0.4, 0, 0.2, 1), // Material Design
-    'bounce': cubic-bezier(0.68, -0.55, 0.265, 1.55)
+    "in-quad": cubic-bezier(0.55, 0.085, 0.68, 0.53),
+    "out-quad": cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    "in-out-quad": cubic-bezier(0.455, 0.03, 0.515, 0.955),
+    "in-cubic": cubic-bezier(0.55, 0.055, 0.675, 0.19),
+    "out-cubic": cubic-bezier(0.215, 0.61, 0.355, 1),
+    "in-out-cubic": cubic-bezier(0.645, 0.045, 0.355, 1),
+    "in-quart": cubic-bezier(0.895, 0.03, 0.685, 0.22),
+    "out-quart": cubic-bezier(0.165, 0.84, 0.44, 1),
+    "in-out-quart": cubic-bezier(0.77, 0, 0.175, 1),
+    "smooth": cubic-bezier(0.4, 0, 0.2, 1),
+    // Material Design
+    "bounce": cubic-bezier(0.68, -0.55, 0.265, 1.55),
   );
 
   @if map-has-key($easings, $ease) {
@@ -424,7 +425,6 @@
     @return ease-in-out;
   }
 }
-
 
 // =============================================
 // USAGE EXAMPLES

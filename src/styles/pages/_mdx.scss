@@ -3,19 +3,19 @@
 // Styles for MDX content pages (articles, carnets, inspirations)
 // =============================================
 
-@use '../abstracts/variables' as *;
-@use '../abstracts/mixins' as *;
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
 
 // =============================================
 // HERO STYLE (like homepage)
 // =============================================
 
 .hero-wrapper-mdx {
-		background: linear-gradient(135deg, #1b263b 0%, #0d1b2a 100%);
-		position: relative;
-		margin-block-start: 0;
-		padding-block-start: 0;
-		min-height: 75dvh;
+  background: linear-gradient(135deg, #1b263b 0%, #0d1b2a 100%);
+  position: relative;
+  margin-block-start: 0;
+  padding-block-start: 0;
+  min-height: 75dvh;
 }
 
 .hero-mdx {
@@ -29,12 +29,12 @@
   align-items: center;
   justify-content: center;
 
-  @include respond-to('md') {
+  @include respond-to("md") {
     min-height: 75dvh;
     padding: 10rem 3rem 8rem 3rem;
   }
 
-  @include respond-to('lg') {
+  @include respond-to("lg") {
     min-height: 80dvh;
   }
 
@@ -49,7 +49,7 @@
     opacity: 0.4;
 
     &::after {
-      content: '';
+      content: "";
       position: absolute;
       top: 0;
       left: 0;
@@ -83,18 +83,22 @@
       font-size: 3rem;
       font-weight: $font-weight-bold;
       margin: 0 0 $spacing-6 0;
-      background: linear-gradient(135deg, $color-white 0%, rgba($color-accent-light, 0.9) 100%);
+      background: linear-gradient(
+        135deg,
+        $color-white 0%,
+        rgba($color-accent-light, 0.9) 100%
+      );
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       letter-spacing: -0.02em;
       line-height: $line-height-tight;
 
-      @include respond-to('md') {
+      @include respond-to("md") {
         font-size: 4rem;
       }
 
-      @include respond-to('lg') {
+      @include respond-to("lg") {
         font-size: 5rem;
       }
     }
@@ -108,7 +112,7 @@
       margin-left: auto;
       margin-right: auto;
 
-      @include respond-to('md') {
+      @include respond-to("md") {
         font-size: $font-size-xl;
       }
     }
@@ -135,12 +139,12 @@
   max-width: $max-width-4xl; // ~896px - optimal for reading
   margin: 0 auto;
   padding: $spacing-8 $spacing-4;
-  
-  @include respond-to('md') {
+
+  @include respond-to("md") {
     padding: $spacing-12 $spacing-6;
   }
-  
-  @include respond-to('lg') {
+
+  @include respond-to("lg") {
     padding: $spacing-16 $spacing-8;
   }
 }
@@ -169,7 +173,7 @@
 
     // Gradient overlay for better text readability
     &::after {
-      content: '';
+      content: "";
       position: absolute;
       bottom: 0;
       left: 0;
@@ -183,25 +187,29 @@
       pointer-events: none;
     }
 
-    @include respond-to('md') {
+    @include respond-to("md") {
       height: 70dvh;
       max-height: 70dvh;
       margin-bottom: $spacing-16;
       margin-top: calc(-1 * ($spacing-12 + $spacing-6));
     }
 
-    @include respond-to('lg') {
+    @include respond-to("lg") {
       height: 75dvh;
       max-height: 75dvh;
       margin-top: calc(-1 * ($spacing-16 + $spacing-8));
     }
   }
-  
+
   // Category badge
   .mdx-category {
     display: inline-block;
     padding: $spacing-2 $spacing-4;
-    background: linear-gradient(135deg, rgba($color-primary, 0.2), rgba($color-accent, 0.15));
+    background: linear-gradient(
+      135deg,
+      rgba($color-primary, 0.2),
+      rgba($color-accent, 0.15)
+    );
     color: $color-primary-dark;
     font-size: $font-size-sm;
     font-weight: $font-weight-semibold;
@@ -221,7 +229,7 @@
     color: $color-secondary-dark;
     text-shadow: 0 0.0625rem 0.125rem rgba($color-primary, 0.1);
   }
-  
+
   // Excerpt/description
   .mdx-excerpt {
     @include responsive-typography($font-size-lg, $font-size-xl);
@@ -230,7 +238,7 @@
     margin-bottom: $spacing-6;
     max-width: 65ch;
   }
-  
+
   // Meta info (date, author, reading time, country)
   .mdx-meta {
     display: flex;
@@ -241,15 +249,15 @@
     border-top: 0.0625rem solid $color-gray-200;
     font-size: $font-size-sm;
     color: $color-gray-600;
-    
+
     .mdx-meta-item {
       display: flex;
       align-items: center;
       gap: $spacing-2;
-      
+
       // Icon before text (optional)
       &::before {
-        content: '';
+        content: "";
         width: 1rem;
         height: 1rem;
         display: inline-block;
@@ -257,19 +265,19 @@
         background-repeat: no-repeat;
       }
     }
-    
+
     .mdx-date::before {
-      content: '📅';
+      content: "📅";
     }
-    
+
     .mdx-author::before {
-      content: '✍️';
+      content: "✍️";
     }
-    
+
     .mdx-reading-time::before {
-      content: '⏱️';
+      content: "⏱️";
     }
-    
+
     .mdx-country {
       display: inline-flex;
       align-items: center;
@@ -293,14 +301,14 @@
   max-width: 65ch; // Optimal line length (Marko persona)
   margin: 0 auto;
   color: $color-gray-800;
-  
+
   // All direct children spacing
   > * + * {
     margin-top: $spacing-6;
   }
-  
+
   // ===== HEADINGS =====
-  
+
   h2 {
     @include heading-style;
     @include responsive-typography($font-size-3xl, $font-size-4xl);
@@ -321,28 +329,29 @@
     margin-bottom: $spacing-4;
     color: $color-primary-dark;
   }
-  
+
   h4 {
     @include heading-style;
     @include responsive-typography($font-size-xl, $font-size-2xl);
     margin-top: $spacing-10;
     margin-bottom: $spacing-3;
   }
-  
-  h5, h6 {
+
+  h5,
+  h6 {
     @include responsive-typography($font-size-lg, $font-size-xl);
     margin-top: $spacing-8;
     margin-bottom: $spacing-2;
     font-weight: $font-weight-bold;
     color: $color-primary-dark;
   }
-  
+
   // ===== PARAGRAPHS =====
-  
+
   p {
     line-height: $line-height-relaxed;
     margin-bottom: $spacing-4;
-    
+
     // Drop cap (first letter)
     &.drop-cap::first-letter {
       float: left;
@@ -353,9 +362,9 @@
       color: $color-accent;
     }
   }
-  
+
   // ===== LINKS =====
-  
+
   a {
     color: $color-accent;
     text-decoration: underline;
@@ -363,53 +372,57 @@
     text-underline-offset: 0.125rem;
     font-weight: $font-weight-medium;
     @include transition(color);
-    
+
     &:hover {
       color: $color-accent-dark;
     }
-    
+
     &:focus-visible {
       @include keyboard-navigation;
     }
   }
-  
+
   // ===== EMPHASIS =====
-  
-  strong, b {
+
+  strong,
+  b {
     font-weight: $font-weight-bold;
     color: $color-primary-dark;
   }
-  
-  em, i {
+
+  em,
+  i {
     font-style: italic;
     color: $color-gray-700;
   }
-  
+
   mark {
     background: rgba($color-accent, 0.3);
     color: $color-accent-dark;
     padding: 0.125rem 0.375rem;
     border-radius: $radius-sm;
   }
-  
+
   // ===== LISTS =====
-  
-  ul, ol {
+
+  ul,
+  ol {
     margin-left: $spacing-6;
     margin-bottom: $spacing-6;
-    
+
     li {
       margin-bottom: $spacing-3;
       line-height: $line-height-relaxed;
-      
+
       // Nested lists
-      ul, ol {
+      ul,
+      ol {
         margin-top: $spacing-3;
         margin-bottom: $spacing-3;
       }
     }
   }
-  
+
   ul {
     list-style-type: disc;
 
@@ -426,9 +439,9 @@
       font-weight: $font-weight-bold;
     }
   }
-  
+
   // ===== BLOCKQUOTES =====
-  
+
   blockquote {
     position: relative;
     margin: $spacing-10 0;
@@ -457,15 +470,15 @@
       color: $color-secondary;
       opacity: 0.3;
     }
-    
+
     p {
       margin-bottom: $spacing-3;
-      
+
       &:last-child {
         margin-bottom: 0;
       }
     }
-    
+
     cite {
       display: block;
       margin-top: $spacing-4;
@@ -473,15 +486,15 @@
       font-style: normal;
       color: $color-gray-600;
       font-weight: $font-weight-semibold;
-      
+
       &::before {
-        content: '— ';
+        content: "— ";
       }
     }
   }
-  
+
   // ===== CODE =====
-  
+
   code {
     font-family: $font-mono;
     font-size: 0.875em;
@@ -491,7 +504,7 @@
     border-radius: $radius-sm;
     font-weight: $font-weight-medium;
   }
-  
+
   pre {
     font-family: $font-mono;
     font-size: $font-size-sm;
@@ -502,7 +515,7 @@
     overflow-x: auto;
     margin: $spacing-8 0;
     box-shadow: $shadow-md;
-    
+
     code {
       background: none;
       color: inherit;
@@ -510,13 +523,13 @@
       border-radius: 0;
       font-size: inherit;
     }
-    
+
     // Custom scrollbar
     @include custom-scrollbar(0.5rem, $color-gray-700, $color-gray-500);
   }
-  
+
   // ===== IMAGES =====
-  
+
   img {
     width: 100%;
     height: auto;
@@ -524,20 +537,20 @@
     margin: $spacing-10 0;
     box-shadow: $shadow-md;
     @include transition(transform, $transition-base);
-    
+
     &:hover {
       transform: scale(1.02);
       box-shadow: $shadow-lg;
     }
   }
-  
+
   figure {
     margin: $spacing-10 0;
-    
+
     img {
       margin-bottom: $spacing-4;
     }
-    
+
     figcaption {
       text-align: center;
       font-size: $font-size-sm;
@@ -546,9 +559,9 @@
       padding: 0 $spacing-4;
     }
   }
-  
+
   // ===== HORIZONTAL RULE =====
-  
+
   hr {
     border: none;
     height: 0.0625rem;
@@ -560,7 +573,7 @@
     );
     margin: $spacing-16 0;
   }
-  
+
   // ===== TABLES =====
 
   table {
@@ -638,9 +651,9 @@
       }
     }
   }
-  
+
   // ===== CALLOUTS / ADMONITIONS =====
-  
+
   .callout {
     margin: $spacing-8 0;
     padding: $spacing-6;
@@ -650,7 +663,11 @@
 
     &.callout-info {
       border-color: $color-primary;
-      background: linear-gradient(135deg, rgba($color-primary, 0.08), rgba($color-primary-light, 0.05));
+      background: linear-gradient(
+        135deg,
+        rgba($color-primary, 0.08),
+        rgba($color-primary-light, 0.05)
+      );
 
       .callout-title {
         color: $color-primary-dark;
@@ -659,7 +676,11 @@
 
     &.callout-warning {
       border-color: $color-accent;
-      background: linear-gradient(135deg, rgba($color-accent, 0.1), rgba($color-accent-light, 0.05));
+      background: linear-gradient(
+        135deg,
+        rgba($color-accent, 0.1),
+        rgba($color-accent-light, 0.05)
+      );
 
       .callout-title {
         color: $color-accent-dark;
@@ -668,7 +689,11 @@
 
     &.callout-success {
       border-color: $color-nature;
-      background: linear-gradient(135deg, rgba($color-nature, 0.08), rgba($color-nature-light, 0.05));
+      background: linear-gradient(
+        135deg,
+        rgba($color-nature, 0.08),
+        rgba($color-nature-light, 0.05)
+      );
 
       .callout-title {
         color: $color-nature-dark;
@@ -677,7 +702,11 @@
 
     &.callout-error {
       border-color: $color-secondary;
-      background: linear-gradient(135deg, rgba($color-secondary, 0.08), rgba($color-secondary-light, 0.05));
+      background: linear-gradient(
+        135deg,
+        rgba($color-secondary, 0.08),
+        rgba($color-secondary-light, 0.05)
+      );
 
       .callout-title {
         color: $color-secondary-dark;
@@ -703,16 +732,16 @@
 
 .mdx-gallery {
   margin: $spacing-12 0;
-  
+
   .gallery-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
     gap: $spacing-4;
-    
-    @include respond-to('md') {
+
+    @include respond-to("md") {
       gap: $spacing-6;
     }
-    
+
     img {
       width: 100%;
       height: 15rem;
@@ -721,7 +750,7 @@
       box-shadow: $shadow-base;
       @include transition(transform);
       cursor: pointer;
-      
+
       &:hover {
         transform: scale(1.05);
         box-shadow: $shadow-lg;
@@ -739,14 +768,14 @@
   margin-top: $spacing-16;
   padding-top: $spacing-12;
   border-top: 0.125rem solid $color-gray-200;
-  
+
   // Tags
   .mdx-tags {
     display: flex;
     flex-wrap: wrap;
     gap: $spacing-3;
     margin-bottom: $spacing-8;
-    
+
     .tag {
       display: inline-block;
       padding: $spacing-2 $spacing-4;
@@ -766,14 +795,18 @@
       }
     }
   }
-  
+
   // PDF download button
   .mdx-download {
     display: inline-flex;
     align-items: center;
     gap: $spacing-3;
     padding: $spacing-4 $spacing-6;
-    background: linear-gradient(135deg, $color-secondary, $color-secondary-dark);
+    background: linear-gradient(
+      135deg,
+      $color-secondary,
+      $color-secondary-dark
+    );
     color: $color-white;
     font-weight: $font-weight-semibold;
     border-radius: $radius-lg;
@@ -783,14 +816,18 @@
     @include transition(all);
 
     &:hover {
-      background: linear-gradient(135deg, $color-secondary-dark, $color-secondary);
+      background: linear-gradient(
+        135deg,
+        $color-secondary-dark,
+        $color-secondary
+      );
       transform: translateY(-0.125rem);
       box-shadow: $shadow-lg;
       border-color: $color-accent-light;
     }
 
     &::before {
-      content: '📄';
+      content: "📄";
       font-size: $font-size-xl;
     }
   }
@@ -800,7 +837,7 @@
 // RESPONSIVE ADJUSTMENTS
 // =============================================
 
-@include respond-to('md') {
+@include respond-to("md") {
   .mdx-content {
     font-size: $font-size-lg;
   }
@@ -835,11 +872,7 @@
     padding: $spacing-5 $spacing-6;
     cursor: pointer;
     list-style: none;
-    background: linear-gradient(
-      135deg,
-      $color-primary-dark,
-      $color-primary
-    );
+    background: linear-gradient(135deg, $color-primary-dark, $color-primary);
     @include transition(all, $transition-base);
 
     &::-webkit-details-marker {
@@ -885,7 +918,7 @@
     line-height: 1.3;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); // ACCESSIBILITY: Better contrast on gradient
 
-    @include respond-to('md') {
+    @include respond-to("md") {
       font-size: $font-size-3xl;
     }
   }
@@ -911,7 +944,7 @@
     animation: slideDown 0.3s ease-out;
     background: rgba($color-white, 0.5);
 
-    @include respond-to('md') {
+    @include respond-to("md") {
       padding: $spacing-8;
     }
 
@@ -944,7 +977,7 @@
   list-style: none;
 
   &::marker {
-    content: '';
+    content: "";
   }
 }
 
@@ -970,7 +1003,7 @@
     border-color: $color-nature-dark;
 
     &::after {
-      content: '✓';
+      content: "✓";
       position: absolute;
       top: 50%;
       left: 50%;
@@ -1016,21 +1049,21 @@
     max-width: 100%;
     padding: 0;
   }
-  
+
   .mdx-header .mdx-meta,
   .mdx-footer {
     display: none;
   }
-  
+
   .mdx-content {
     max-width: 100%;
     color: #000;
-    
+
     a {
       color: #000;
       text-decoration: underline;
     }
-    
+
     blockquote {
       border-left: 0.125rem solid #000;
       background: none;

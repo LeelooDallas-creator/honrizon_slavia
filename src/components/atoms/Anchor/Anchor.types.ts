@@ -2,8 +2,8 @@
 // ANCHOR - Types & Interfaces
 // ============================================
 
-export type AnchorVariant = 'primary' | 'secondary' | 'outline' | 'ghost';
-export type AnchorSize = 'sm' | 'md' | 'lg';
+export type AnchorVariant = "primary" | "secondary" | "outline" | "ghost";
+export type AnchorSize = "sm" | "md" | "lg";
 
 export interface AnchorProps {
   text: string;

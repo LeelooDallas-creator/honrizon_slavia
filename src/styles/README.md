@@ -49,7 +49,7 @@ Toutes les couleurs sont définies selon le **Design System Horizon Slavia** (Ca
 
 ```scss
 // === PRIMARY - Mystery and Slavic folklore ===
-$color-primary: #1B263B;      // Bleu Nuit
+$color-primary: #1b263b; // Bleu Nuit
 $color-primary-dark: #0f1621;
 $color-primary-light: #2d3a54;
 
@@ -58,7 +58,7 @@ $color-primary-light: #2d3a54;
 // Screen reader compatible (persona Léa)
 
 // === SECONDARY - History and traditions ===
-$color-secondary: #8B0000;    // Rouge Grenat
+$color-secondary: #8b0000; // Rouge Grenat
 $color-secondary-dark: #6b0000;
 $color-secondary-light: #c41e1e;
 
@@ -66,7 +66,7 @@ $color-secondary-light: #c41e1e;
 // Rouge Grenat on white: 8.2:1 (AAA)
 
 // === ACCENT - Heritage and legends ===
-$color-accent: #C4A000;       // Or Vieilli
+$color-accent: #c4a000; // Or Vieilli
 $color-accent-dark: #9a7d00;
 $color-accent-light: #d4b333;
 
@@ -74,22 +74,22 @@ $color-accent-light: #d4b333;
 // Or Vieilli on Bleu Nuit: 4.7:1 (AA)
 
 // === NATURE - Authenticity ===
-$color-nature: #2E472E;       // Vert Forêt
+$color-nature: #2e472e; // Vert Forêt
 $color-nature-dark: #1d2d1d;
 $color-nature-light: #3f5e3f;
 
 // === NEUTRAL - Mystical ambiance ===
-$color-neutral: #B0B0B0;      // Gris Brumeux
+$color-neutral: #b0b0b0; // Gris Brumeux
 $color-neutral-dark: #666666;
-$color-neutral-light: #E5E5E5;
+$color-neutral-light: #e5e5e5;
 
 // === SYSTEM COLORS ===
-$color-white: #FFFFFF;
+$color-white: #ffffff;
 $color-black: #000000;
-$color-error: #DC2626;
-$color-success: #16A34A;
-$color-warning: #F59E0B;
-$color-info: #3B82F6;
+$color-error: #dc2626;
+$color-success: #16a34a;
+$color-warning: #f59e0b;
+$color-info: #3b82f6;
 ```
 
 #### Map des couleurs (pour itération)
@@ -97,13 +97,13 @@ $color-info: #3B82F6;
 ```scss
 // Color map for iteration
 $colors: (
-  'primary': $color-primary,
-  'secondary': $color-secondary,
-  'accent': $color-accent,
-  'nature': $color-nature,
-  'neutral': $color-neutral,
-  'white': $color-white,
-  'black': $color-black
+  "primary": $color-primary,
+  "secondary": $color-secondary,
+  "accent": $color-accent,
+  "nature": $color-nature,
+  "neutral": $color-neutral,
+  "white": $color-white,
+  "black": $color-black,
 );
 ```
 
@@ -111,22 +111,22 @@ $colors: (
 
 ```scss
 // === FONT FAMILIES (CDC page 48) ===
-$font-heading: "Uncial Antiqua", serif;  // Headings - Medieval style
+$font-heading: "Uncial Antiqua", serif; // Headings - Medieval style
 $font-body: "Merriweather", Georgia, serif; // Body text - Optimal readability
 
 // === FONT SIZES (modular scale 1.250) ===
 // Using rem for accessibility and scalability
-$font-size-xs: 0.75rem;    // ~12px at default browser size
-$font-size-sm: 0.875rem;   // ~14px
-$font-size-base: 1rem;     // 16px (browser default)
-$font-size-lg: 1.125rem;   // ~18px
-$font-size-xl: 1.25rem;    // ~20px
-$font-size-2xl: 1.563rem;  // ~25px
-$font-size-3xl: 1.953rem;  // ~31px
-$font-size-4xl: 2.441rem;  // ~39px
-$font-size-5xl: 3.052rem;  // ~49px
-$font-size-6xl: 3.815rem;  // ~61px
-$font-size-7xl: 4.768rem;  // ~76px
+$font-size-xs: 0.75rem; // ~12px at default browser size
+$font-size-sm: 0.875rem; // ~14px
+$font-size-base: 1rem; // 16px (browser default)
+$font-size-lg: 1.125rem; // ~18px
+$font-size-xl: 1.25rem; // ~20px
+$font-size-2xl: 1.563rem; // ~25px
+$font-size-3xl: 1.953rem; // ~31px
+$font-size-4xl: 2.441rem; // ~39px
+$font-size-5xl: 3.052rem; // ~49px
+$font-size-6xl: 3.815rem; // ~61px
+$font-size-7xl: 4.768rem; // ~76px
 
 // === FONT WEIGHTS ===
 $font-weight-light: 300;
@@ -151,19 +151,19 @@ Système basé sur **rem** pour un design fluide et accessible (1rem = 16px par 
 // Spacing system based on rem for fluid and accessible design
 // Base: 1rem = 16px (browser default)
 $spacing-0: 0;
-$spacing-1: 0.25rem;  // ~4px at default size
-$spacing-2: 0.5rem;   // ~8px
-$spacing-3: 0.75rem;  // ~12px
-$spacing-4: 1rem;     // 16px (base unit)
-$spacing-5: 1.25rem;  // ~20px
-$spacing-6: 1.5rem;   // ~24px
-$spacing-8: 2rem;     // ~32px
-$spacing-10: 2.5rem;  // ~40px
-$spacing-12: 3rem;    // ~48px
-$spacing-16: 4rem;    // ~64px
-$spacing-20: 5rem;    // ~80px
-$spacing-24: 6rem;    // ~96px
-$spacing-32: 8rem;    // ~128px
+$spacing-1: 0.25rem; // ~4px at default size
+$spacing-2: 0.5rem; // ~8px
+$spacing-3: 0.75rem; // ~12px
+$spacing-4: 1rem; // 16px (base unit)
+$spacing-5: 1.25rem; // ~20px
+$spacing-6: 1.5rem; // ~24px
+$spacing-8: 2rem; // ~32px
+$spacing-10: 2.5rem; // ~40px
+$spacing-12: 3rem; // ~48px
+$spacing-16: 4rem; // ~64px
+$spacing-20: 5rem; // ~80px
+$spacing-24: 6rem; // ~96px
+$spacing-32: 8rem; // ~128px
 ```
 
 ### Breakpoints (responsive)
@@ -174,19 +174,19 @@ $spacing-32: 8rem;    // ~128px
 // === BREAKPOINTS (Mobile-first approach) ===
 // Target: Anna (mobile), Marko (desktop), Léa (all devices)
 // Using px for breakpoints (industry standard for media queries)
-$breakpoint-sm: 40em;     // 640px - Large mobile / Phablet
-$breakpoint-md: 48em;     // 768px - Tablet
-$breakpoint-lg: 64em;     // 1024px - Desktop
-$breakpoint-xl: 80em;     // 1280px - Large desktop
-$breakpoint-2xl: 96em;    // 1536px - Extra large desktop
+$breakpoint-sm: 40em; // 640px - Large mobile / Phablet
+$breakpoint-md: 48em; // 768px - Tablet
+$breakpoint-lg: 64em; // 1024px - Desktop
+$breakpoint-xl: 80em; // 1280px - Large desktop
+$breakpoint-2xl: 96em; // 1536px - Extra large desktop
 
 // Map for mixin usage
 $breakpoints: (
-  'sm': $breakpoint-sm,
-  'md': $breakpoint-md,
-  'lg': $breakpoint-lg,
-  'xl': $breakpoint-xl,
-  '2xl': $breakpoint-2xl
+  "sm": $breakpoint-sm,
+  "md": $breakpoint-md,
+  "lg": $breakpoint-lg,
+  "xl": $breakpoint-xl,
+  "2xl": $breakpoint-2xl,
 );
 ```
 
@@ -197,20 +197,28 @@ $breakpoints: (
 ```scss
 // === BORDER RADIUS ===
 $radius-none: 0;
-$radius-sm: 0.125rem;   // ~2px
-$radius-base: 0.25rem;  // ~4px
-$radius-md: 0.375rem;   // ~6px
-$radius-lg: 0.5rem;     // ~8px
-$radius-xl: 0.75rem;    // ~12px
-$radius-2xl: 1rem;      // ~16px
-$radius-full: 9999px;   // Fully rounded (independent of size)
+$radius-sm: 0.125rem; // ~2px
+$radius-base: 0.25rem; // ~4px
+$radius-md: 0.375rem; // ~6px
+$radius-lg: 0.5rem; // ~8px
+$radius-xl: 0.75rem; // ~12px
+$radius-2xl: 1rem; // ~16px
+$radius-full: 9999px; // Fully rounded (independent of size)
 
 // === SHADOWS ===
 $shadow-sm: 0 0.0625rem 0.125rem 0 rgba(0, 0, 0, 0.05);
-$shadow-base: 0 0.0625rem 0.1875rem 0 rgba(0, 0, 0, 0.1), 0 0.0625rem 0.125rem -0.0625rem rgba(0, 0, 0, 0.1);
-$shadow-md: 0 0.25rem 0.375rem -0.0625rem rgba(0, 0, 0, 0.1), 0 0.125rem 0.25rem -0.125rem rgba(0, 0, 0, 0.1);
-$shadow-lg: 0 0.625rem 0.9375rem -0.1875rem rgba(0, 0, 0, 0.1), 0 0.25rem 0.375rem -0.25rem rgba(0, 0, 0, 0.1);
-$shadow-xl: 0 1.25rem 1.5625rem -0.3125rem rgba(0, 0, 0, 0.1), 0 0.5rem 0.625rem -0.375rem rgba(0, 0, 0, 0.1);
+$shadow-base:
+  0 0.0625rem 0.1875rem 0 rgba(0, 0, 0, 0.1),
+  0 0.0625rem 0.125rem -0.0625rem rgba(0, 0, 0, 0.1);
+$shadow-md:
+  0 0.25rem 0.375rem -0.0625rem rgba(0, 0, 0, 0.1),
+  0 0.125rem 0.25rem -0.125rem rgba(0, 0, 0, 0.1);
+$shadow-lg:
+  0 0.625rem 0.9375rem -0.1875rem rgba(0, 0, 0, 0.1),
+  0 0.25rem 0.375rem -0.25rem rgba(0, 0, 0, 0.1);
+$shadow-xl:
+  0 1.25rem 1.5625rem -0.3125rem rgba(0, 0, 0, 0.1),
+  0 0.5rem 0.625rem -0.375rem rgba(0, 0, 0, 0.1);
 
 // === TRANSITIONS ===
 $transition-fast: 150ms ease-in-out;
@@ -234,55 +242,56 @@ $z-tooltip: 1070;
 **Pourquoi éviter les pixels (`px`) ?**
 
 Les pixels sont des unités **absolues** qui ne s'adaptent pas aux préférences de l'utilisateur. Utiliser des unités relatives améliore :
+
 - **Accessibilité** : Respect du zoom navigateur et des préférences de taille de texte
 - **Responsive** : Adaptation fluide aux différentes tailles d'écran
 - **Maintenance** : Un seul changement de variable affecte tout le site proportionnellement
 
 **Tableau de référence des unités**
 
-| Unité | Type | Usage recommandé | Exemple |
-|-------|------|------------------|---------|
-| `rem` | Relative (root) | Font-size, spacing, sizing | `font-size: 1.5rem;` |
-| `em` | Relative (parent) | Media queries, spacing contextuel | `@media (min-width: 48em)` |
-| `%` | Relative (parent) | Widths, heights, positions | `width: 100%;` |
-| `vw` | Viewport | Widths responsive, fluid typography | `width: 90vw;` |
-| `vh` | Viewport | Heights fullscreen, hero sections | `min-height: 100vh;` |
-| `svh` | Small viewport | Heights mobile (exclut UI navigateur) | `min-height: 100svh;` |
-| `ch` | Caractère | Largeur de texte optimale | `max-width: 65ch;` |
-| `clamp()` | Fonction | Valeurs fluides min/max | `font-size: clamp(1rem, 2vw, 2rem);` |
-| `calc()` | Fonction | Calculs dynamiques | `width: calc(100% - 2rem);` |
-| `px` | Absolue | Border-width, box-shadow détails | `border: 1px solid;` |
+| Unité     | Type              | Usage recommandé                      | Exemple                              |
+| --------- | ----------------- | ------------------------------------- | ------------------------------------ |
+| `rem`     | Relative (root)   | Font-size, spacing, sizing            | `font-size: 1.5rem;`                 |
+| `em`      | Relative (parent) | Media queries, spacing contextuel     | `@media (min-width: 48em)`           |
+| `%`       | Relative (parent) | Widths, heights, positions            | `width: 100%;`                       |
+| `vw`      | Viewport          | Widths responsive, fluid typography   | `width: 90vw;`                       |
+| `vh`      | Viewport          | Heights fullscreen, hero sections     | `min-height: 100vh;`                 |
+| `svh`     | Small viewport    | Heights mobile (exclut UI navigateur) | `min-height: 100svh;`                |
+| `ch`      | Caractère         | Largeur de texte optimale             | `max-width: 65ch;`                   |
+| `clamp()` | Fonction          | Valeurs fluides min/max               | `font-size: clamp(1rem, 2vw, 2rem);` |
+| `calc()`  | Fonction          | Calculs dynamiques                    | `width: calc(100% - 2rem);`          |
+| `px`      | Absolue           | Border-width, box-shadow détails      | `border: 1px solid;`                 |
 
 **Exemples pratiques**
 
 ```scss
 // Scalable and accessible
 .container {
-  max-width: 80rem;              // ~1280px at default size
+  max-width: 80rem; // ~1280px at default size
   padding: clamp(1rem, 5vw, 4rem); // Fluid padding
   margin-inline: auto;
 }
 
 .text-content {
-  max-width: 65ch;               // Optimal line length (60-75 characters)
+  max-width: 65ch; // Optimal line length (60-75 characters)
   font-size: clamp(1rem, 0.9rem + 0.5vw, 1.25rem); // Fluid typography
-  line-height: 1.6;              // Unitless (relative to font-size)
+  line-height: 1.6; // Unitless (relative to font-size)
 }
 
 .hero {
-  min-height: 100vh;             // Full viewport height
-  min-height: 100svh;            // Small viewport (mobile friendly)
+  min-height: 100vh; // Full viewport height
+  min-height: 100svh; // Small viewport (mobile friendly)
   padding: clamp(2rem, 5vh, 8rem) clamp(1rem, 5vw, 4rem);
 }
 
 // Not scalable
 .container {
-  max-width: 1280px;             // Fixed, doesn't scale
-  padding: 64px;                 // Doesn't respect user preferences
+  max-width: 1280px; // Fixed, doesn't scale
+  padding: 64px; // Doesn't respect user preferences
 }
 
 .hero {
-  min-height: 1080px;            // Doesn't adapt to viewport
+  min-height: 1080px; // Doesn't adapt to viewport
 }
 ```
 
@@ -310,11 +319,11 @@ margin-top: -1px; // Optical alignment
 .my-component {
   padding: $spacing-4;
 
-  @include respond-to('md') {
+  @include respond-to("md") {
     padding: $spacing-8;
   }
-  
-  @include respond-to('lg') {
+
+  @include respond-to("lg") {
     padding: $spacing-12;
   }
 }
@@ -373,8 +382,8 @@ margin-top: -1px; // Optical alignment
 // Responsive typography
 @mixin responsive-typography($mobile-size, $desktop-size) {
   font-size: $mobile-size;
-  
-  @include respond-to('md') {
+
+  @include respond-to("md") {
     font-size: $desktop-size;
   }
 }
@@ -453,7 +462,7 @@ Conformément au **BNF04** (CDC page 11) - Score Lighthouse Accessibilité ≥ 9
     outline-offset: 2px;
     border-radius: $radius-sm;
   }
-  
+
   // Remove outline for mouse users
   &:focus:not(:focus-visible) {
     outline: none;
@@ -463,7 +472,7 @@ Conformément au **BNF04** (CDC page 11) - Score Lighthouse Accessibilité ≥ 9
 // Keyboard navigation enhancement
 @mixin keyboard-navigation {
   @include focus-visible;
-  
+
   &:focus-visible {
     box-shadow: 0 0 0 3px rgba($color-accent, 0.3);
   }
@@ -480,7 +489,7 @@ Conformément au **BNF04** (CDC page 11) - Score Lighthouse Accessibilité ≥ 9
   text-decoration: none;
   font-weight: $font-weight-bold;
   border-radius: $radius-base;
-  
+
   &:focus {
     left: 50%;
     top: $spacing-4;
@@ -505,13 +514,13 @@ Conformément au **BNF04** (CDC page 11) - Score Lighthouse Accessibilité ≥ 9
 @mixin a11y-check($bg, $fg, $min-ratio: 4.5) {
   background: $bg;
   color: $fg;
-  
+
   // Minimum contrast ratios (WCAG 2.1):
   // - Normal text AA: 4.5:1
   // - Large text AA: 3:1
   // - Normal text AAA: 7:1
   // - Large text AAA: 4.5:1
-  
+
   // TODO: Add automated validation in development mode
 }
 ```
@@ -523,7 +532,7 @@ Conformément au **BNF04** (CDC page 11) - Score Lighthouse Accessibilité ≥ 9
 .nav-link {
   @include keyboard-navigation;
   color: $color-white;
-  
+
   &:hover {
     color: $color-accent;
   }
@@ -552,10 +561,10 @@ Conformément au **BNF01** (CDC page 10) - LCP < 2.5s, Score Lighthouse ≥ 90/1
   width: 100%;
   height: auto;
   object-fit: cover;
-  
+
   // Placeholder while loading
   background: $color-neutral-light;
-  
+
   // Smooth transition when loaded
   &.loaded {
     animation: fadeIn $transition-base;
@@ -563,8 +572,12 @@ Conformément au **BNF01** (CDC page 10) - LCP < 2.5s, Score Lighthouse ≥ 90/1
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 // Optimize font loading (prevent FOIT/FOUT)
@@ -575,12 +588,12 @@ Conformément au **BNF01** (CDC page 10) - LCP < 2.5s, Score Lighthouse ≥ 90/1
 // Aspect ratio (prevent layout shift)
 @mixin aspect-ratio($width, $height) {
   aspect-ratio: #{$width} / #{$height};
-  
+
   // Fallback for older browsers
   @supports not (aspect-ratio: 1 / 1) {
     position: relative;
     padding-bottom: calc(#{$height} / #{$width} * 100%);
-    
+
     > * {
       position: absolute;
       top: 0;
@@ -630,7 +643,7 @@ Conformément au **BNF01** (CDC page 10) - LCP < 2.5s, Score Lighthouse ≥ 90/1
   @include hover-lift;
   cursor: pointer;
   transition: all $transition-base;
-  
+
   &:hover {
     box-shadow: $shadow-lg;
   }
@@ -638,8 +651,10 @@ Conformément au **BNF01** (CDC page 10) - LCP < 2.5s, Score Lighthouse ≥ 90/1
 
 // Hover lift animation (for Anna persona - immersive UX)
 @mixin hover-lift($distance: -0.25rem) {
-  transition: transform $transition-base, box-shadow $transition-base;
-  
+  transition:
+    transform $transition-base,
+    box-shadow $transition-base;
+
   &:hover {
     transform: translateY($distance);
   }
@@ -703,14 +718,16 @@ Les container queries permettent un design **vraiment responsive** au niveau du 
 .child {
   padding: $spacing-4;
 
-  @container my-container (min-width: 37.5rem) { // ~600px
+  @container my-container (min-width: 37.5rem) {
+    // ~600px
     padding: $spacing-8;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: $spacing-6;
   }
-  
-  @container my-container (min-width: 56.25rem) { // ~900px
+
+  @container my-container (min-width: 56.25rem) {
+    // ~900px
     grid-template-columns: repeat(3, 1fr);
   }
 }
@@ -738,11 +755,11 @@ Les container queries permettent un design **vraiment responsive** au niveau du 
 
 .card {
   padding: $spacing-4;
-  
+
   @include container-query(card-container, 400px) {
     padding: $spacing-6;
   }
-  
+
   @include container-query(card-container, 600px) {
     display: flex;
     gap: $spacing-6;
@@ -799,22 +816,22 @@ Les container queries permettent un design **vraiment responsive** au niveau du 
 .hero {
   // Convert 320px to rem (only if working from px design)
   max-width: rem(320); // 20rem
-  
+
   // Dynamic spacing (1rem * 6 = 6rem)
   padding: spacing(6);
-  
+
   // Semi-transparent background
   background: alpha($color-primary, 0.9);
-  
+
   // Get color from map
-  border-color: color('accent');
-  
+  border-color: color("accent");
+
   // Fluid typography (responsive without media queries)
   font-size: clamp(1rem, 2vw + 1rem, 3rem);
-  
+
   // Full viewport height hero
   min-height: 100vh;
-  
+
   // Responsive width with vw
   width: min(90vw, 80rem); // 90% of viewport or max 80rem
 }
@@ -822,16 +839,16 @@ Les container queries permettent un design **vraiment responsive** au niveau du 
 
 **Unités recommandées selon le contexte** :
 
-| Propriété | Unité recommandée | Raison |
-|-----------|------------------|--------|
-| `font-size` | `rem` | Respect préférences utilisateur |
-| `padding`, `margin` | `rem` | Scalabilité et cohérence |
-| `width`, `max-width` | `rem`, `%`, `ch` | Lisibilité et flexibilité |
-| `height` (hero, sections) | `vh`, `svh` | Adaptabilité viewport |
-| `border-radius` | `rem`, `%` | Proportionnel au contexte |
-| `border-width` | `px` | Précision visuelle |
-| `box-shadow` | `rem` | Cohérence avec espacements |
-| `breakpoints` | `em` | Accessibilité (zoom texte) |
+| Propriété                 | Unité recommandée | Raison                          |
+| ------------------------- | ----------------- | ------------------------------- |
+| `font-size`               | `rem`             | Respect préférences utilisateur |
+| `padding`, `margin`       | `rem`             | Scalabilité et cohérence        |
+| `width`, `max-width`      | `rem`, `%`, `ch`  | Lisibilité et flexibilité       |
+| `height` (hero, sections) | `vh`, `svh`       | Adaptabilité viewport           |
+| `border-radius`           | `rem`, `%`        | Proportionnel au contexte       |
+| `border-width`            | `px`              | Précision visuelle              |
+| `box-shadow`              | `rem`             | Cohérence avec espacements      |
+| `breakpoints`             | `em`              | Accessibilité (zoom texte)      |
 
 ---
 
@@ -919,6 +936,7 @@ h3 {
 ### Outils de validation
 
 1. **Lighthouse** (Chrome DevTools)
+
    ```bash
    # Generate accessibility report
    npm run build
@@ -951,14 +969,13 @@ h3 {
 .hero-image {
   @include img-lazy;
   @include aspect-ratio(16, 9); // Prevent layout shift
-  
+
   // Modern formats with fallback
-  background-image: 
-    image-set(
-      url('hero.avif') type('image/avif'),
-      url('hero.webp') type('image/webp'),
-      url('hero.jpg') type('image/jpeg')
-    );
+  background-image: image-set(
+    url("hero.avif") type("image/avif"),
+    url("hero.webp") type("image/webp"),
+    url("hero.jpg") type("image/jpeg")
+  );
 }
 ```
 
@@ -967,14 +984,18 @@ h3 {
 ```scss
 // Triggers reflow/repaint
 .bad-animation {
-  transition: width 300ms, height 300ms;
+  transition:
+    width 300ms,
+    height 300ms;
 }
 
 // GPU-accelerated
 .good-animation {
   @include gpu-accelerate;
-  transition: transform $transition-base, opacity $transition-base;
-  
+  transition:
+    transform $transition-base,
+    opacity $transition-base;
+
   &:hover {
     transform: scale(1.05); // Unitless for scale
   }
@@ -997,16 +1018,16 @@ h3 {
 // abstracts/_typography.scss
 
 @font-face {
-  font-family: 'Uncial Antiqua';
-  src: url('/fonts/uncial-antiqua.ttf') format('ttf');
+  font-family: "Uncial Antiqua";
+  src: url("/fonts/uncial-antiqua.ttf") format("ttf");
   font-weight: 400;
   font-style: normal;
   font-display: swap; // Show fallback immediately (prevent FOIT)
 }
 
 @font-face {
-  font-family: 'Merriweather';
-  src: url('/fonts/merriweather-regular.ttf') format('ttf');
+  font-family: "Merriweather";
+  src: url("/fonts/merriweather-regular.ttf") format("ttf");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -1037,21 +1058,18 @@ npx vite-bundle-visualizer
 .hero {
   @include flex-center;
   @include gpu-accelerate;
-  
+
   // Background with overlay
-  background: 
-    linear-gradient(
-      rgba($color-primary, 0.75),
-      rgba($color-primary, 0.9)
-    ),
-    url('/images/hero-eastern-europe.jpg');
+  background:
+    linear-gradient(rgba($color-primary, 0.75), rgba($color-primary, 0.9)),
+    url("/images/hero-eastern-europe.jpg");
   background-size: cover;
   background-position: center;
-  
+
   // Full viewport height (use svh for mobile browsers if available)
   min-height: 100vh;
   min-height: 100svh; // Small viewport height (excludes browser UI)
-  
+
   color: $color-white;
   text-align: center;
   padding: clamp(2rem, 5vh, 8rem) clamp(1rem, 5vw, 4rem);
@@ -1060,7 +1078,7 @@ npx vite-bundle-visualizer
   &__title {
     @include heading-style;
     @include responsive-typography($font-size-4xl, $font-size-7xl);
-    
+
     font-family: $font-heading; // Uncial Antiqua
     color: $color-accent; // Or Vieilli
     margin-bottom: clamp(1.5rem, 3vh, 3rem);
@@ -1071,7 +1089,7 @@ npx vite-bundle-visualizer
   &__subtitle {
     @include body-text;
     @include responsive-typography($font-size-lg, $font-size-2xl);
-    
+
     color: $color-white;
     margin-bottom: clamp(2rem, 4vh, 4rem);
     max-width: 42rem; // ~672px
@@ -1084,7 +1102,7 @@ npx vite-bundle-visualizer
     @include hover-lift;
     @include keyboard-navigation; // Accessibility for Léa
     @include transition(all);
-    
+
     display: inline-block;
     padding: $spacing-4 $spacing-10;
     background: $color-secondary; // Rouge Grenat
@@ -1094,12 +1112,12 @@ npx vite-bundle-visualizer
     font-size: $font-size-lg;
     text-decoration: none;
     box-shadow: $shadow-lg;
-    
+
     &:hover {
       background: $color-secondary-dark;
       box-shadow: $shadow-xl;
     }
-    
+
     &:active {
       transform: translateY(-0.125rem);
     }
@@ -1112,26 +1130,26 @@ npx vite-bundle-visualizer
 ```scss
 .article-card {
   @include card-interactive($spacing-0);
-  
+
   // Enable container queries
   container-type: inline-size;
   container-name: article-card;
-  
+
   overflow: hidden;
-  
+
   // Image with lazy loading
   &__image {
     @include img-lazy;
     @include aspect-ratio(16, 9);
-    
+
     width: 100%;
     object-fit: cover;
   }
-  
+
   // Content wrapper
   &__content {
     padding: $spacing-6;
-    
+
     // Responsive padding with container queries
     @container article-card (min-width: 400px) {
       padding: $spacing-8;
@@ -1140,7 +1158,7 @@ npx vite-bundle-visualizer
       gap: $spacing-4;
     }
   }
-  
+
   // Article category badge
   &__category {
     display: inline-block;
@@ -1153,50 +1171,50 @@ npx vite-bundle-visualizer
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
-  
+
   // Title
   &__title {
     @include heading-style;
     @include responsive-typography($font-size-xl, $font-size-2xl);
-    
+
     color: $color-primary;
     margin-top: $spacing-3;
     margin-bottom: $spacing-3;
-    
+
     // Accessibility: maintain readable line-height
     line-height: $line-height-tight;
   }
-  
+
   // Excerpt
   &__excerpt {
     @include body-text;
     @include truncate(3); // Max 3 lines
-    
+
     color: $color-neutral-dark;
     font-size: $font-size-base;
     margin-bottom: $spacing-4;
   }
-  
+
   // Read more link
   &__link {
     @include keyboard-navigation;
-    
+
     display: inline-flex;
     align-items: center;
     gap: $spacing-2;
     color: $color-accent;
     font-weight: $font-weight-semibold;
     text-decoration: none;
-    
+
     &:hover {
       color: $color-accent-dark;
-      
+
       // Arrow animation
       .arrow {
         transform: translateX(4px);
       }
     }
-    
+
     .arrow {
       @include transition(transform);
     }
@@ -1211,32 +1229,32 @@ npx vite-bundle-visualizer
   @include card($spacing-8);
   max-width: rem(600);
   margin: 0 auto;
-  
+
   // Form group
   &__group {
     margin-bottom: $spacing-6;
   }
-  
+
   // Label
   &__label {
     display: block;
     font-weight: $font-weight-semibold;
     color: $color-primary;
     margin-bottom: $spacing-2;
-    
+
     // Required indicator
     .required {
       color: $color-error;
       margin-left: $spacing-1;
     }
   }
-  
+
   // Input fields
   &__input,
   &__textarea {
     @include keyboard-navigation;
     @include transition(all);
-    
+
     width: 100%;
     padding: $spacing-3 $spacing-4;
     border: 2px solid $color-neutral;
@@ -1244,39 +1262,39 @@ npx vite-bundle-visualizer
     font-family: $font-body;
     font-size: $font-size-base;
     color: $color-black;
-    
+
     &::placeholder {
       color: $color-neutral-dark;
       opacity: 0.7;
     }
-    
+
     // Focus state
     &:focus {
       border-color: $color-accent;
       box-shadow: 0 0 0 3px alpha($color-accent, 0.1);
     }
-    
+
     // Error state
     &.error {
       border-color: $color-error;
-      
+
       &:focus {
         box-shadow: 0 0 0 3px alpha($color-error, 0.1);
       }
     }
-    
+
     // Success state
     &.success {
       border-color: $color-success;
     }
   }
-  
+
   // Textarea specific
   &__textarea {
     min-height: 9.375rem; // ~150px
     resize: vertical;
   }
-  
+
   // Error message
   &__error {
     display: block;
@@ -1285,14 +1303,14 @@ npx vite-bundle-visualizer
     font-size: $font-size-sm;
     font-weight: $font-weight-medium;
   }
-  
+
   // RGPD checkbox (BF03)
   &__checkbox {
     display: flex;
     align-items: flex-start;
     gap: $spacing-3;
     margin-top: $spacing-6;
-    
+
     input[type="checkbox"] {
       @include keyboard-navigation;
       margin-top: 0.15625rem; // ~2.5px for visual alignment
@@ -1300,29 +1318,29 @@ npx vite-bundle-visualizer
       height: 1.25rem;
       cursor: pointer;
     }
-    
+
     label {
       font-size: $font-size-sm;
       color: $color-neutral-dark;
       cursor: pointer;
-      
+
       a {
         color: $color-accent;
         text-decoration: underline;
-        
+
         &:hover {
           color: $color-accent-dark;
         }
       }
     }
   }
-  
+
   // Submit button
   &__submit {
     @include hover-lift;
     @include keyboard-navigation;
     @include transition(all);
-    
+
     width: 100%;
     padding: $spacing-4;
     background: $color-secondary;
@@ -1333,16 +1351,16 @@ npx vite-bundle-visualizer
     font-size: $font-size-lg;
     font-weight: $font-weight-bold;
     cursor: pointer;
-    
+
     &:hover:not(:disabled) {
       background: $color-secondary-dark;
       box-shadow: $shadow-md;
     }
-    
+
     &:active:not(:disabled) {
       transform: translateY(-2px);
     }
-    
+
     &:disabled {
       background: $color-neutral;
       cursor: not-allowed;
@@ -1357,18 +1375,18 @@ npx vite-bundle-visualizer
 ```scss
 .header {
   @include flex-between;
-  
+
   position: sticky;
   top: 0;
   z-index: $z-sticky;
   background: $color-primary;
   padding: $spacing-4 $spacing-6;
   box-shadow: $shadow-md;
-  
+
   // Logo
   &__logo {
     @include keyboard-navigation;
-    
+
     display: flex;
     align-items: center;
     gap: $spacing-3;
@@ -1376,35 +1394,35 @@ npx vite-bundle-visualizer
     font-family: $font-heading;
     font-size: $font-size-2xl;
     text-decoration: none;
-    
+
     &:hover {
       color: $color-accent-light;
     }
   }
-  
+
   // Navigation menu
   &__nav {
     display: none; // Hidden on mobile
-    
-    @include respond-to('md') {
+
+    @include respond-to("md") {
       display: flex;
       gap: $spacing-6;
     }
   }
-  
+
   // Nav links
   &__link {
     @include keyboard-navigation;
     @include transition(color);
-    
+
     color: $color-white;
     font-weight: $font-weight-medium;
     text-decoration: none;
     position: relative;
-    
+
     // Underline animation
     &::after {
-      content: '';
+      content: "";
       position: absolute;
       bottom: -0.25rem; // ~4px
       left: 0;
@@ -1413,21 +1431,21 @@ npx vite-bundle-visualizer
       background: $color-accent;
       transition: width $transition-base;
     }
-    
+
     &:hover,
     &.active {
       color: $color-accent;
-      
+
       &::after {
         width: 100%;
       }
     }
   }
-  
+
   // Mobile menu button
   &__menu-button {
     @include keyboard-navigation;
-    
+
     display: block;
     background: transparent;
     border: none;
@@ -1435,11 +1453,11 @@ npx vite-bundle-visualizer
     font-size: $font-size-2xl;
     cursor: pointer;
     padding: $spacing-2;
-    
-    @include respond-to('md') {
+
+    @include respond-to("md") {
       display: none;
     }
-    
+
     &:hover {
       color: $color-accent;
     }
@@ -1507,16 +1525,16 @@ const { title, excerpt, image } = Astro.props;
   // Import variables and mixins
   @import '@styles/abstracts/variables';
   @import '@styles/abstracts/mixins';
-  
+
   // Scoped styles for this component
   .card {
     @include card-interactive;
-    
+
     &__image {
       @include img-lazy;
       @include aspect-ratio(16, 9);
     }
-    
+
     &__title {
       @include heading-style;
       font-size: $font-size-xl;
@@ -1539,6 +1557,7 @@ npm run preview
 ```
 
 Le CSS final est automatiquement :
+
 - **Minifié**
 - **Purgé** (unused CSS removed)
 - **Optimisé** par Astro
@@ -1554,7 +1573,7 @@ Le CSS final est automatiquement :
 
 ```scss
 // New color for feature highlight
-$color-highlight: #FF6B6B;
+$color-highlight: #ff6b6b;
 $color-highlight-dark: darken($color-highlight, 10%);
 $color-highlight-light: lighten($color-highlight, 10%);
 ```
@@ -1572,7 +1591,7 @@ Utiliser : https://webaim.org/resources/contrastchecker/
 ```scss
 $colors: (
   // ... existing colors
-  'highlight': $color-highlight
+  "highlight": $color-highlight
 );
 ```
 
@@ -1620,12 +1639,12 @@ npx lighthouse http://localhost:4173 --preset=mobile
 .article-list {
   display: grid;
   gap: $spacing-8;
-  
-  @include respond-to('md') {
+
+  @include respond-to("md") {
     grid-template-columns: repeat(2, 1fr);
   }
-  
-  @include respond-to('lg') {
+
+  @include respond-to("lg") {
     grid-template-columns: repeat(3, 1fr);
   }
 }
@@ -1639,7 +1658,7 @@ npx lighthouse http://localhost:4173 --preset=mobile
 // ... other imports
 
 // Components
-@import 'components/article-list';
+@import "components/article-list";
 ```
 
 3. **Tester l'intégration**
@@ -1667,6 +1686,7 @@ cat dist/assets/*.css
 #### Problèmes courants
 
 **Styles non appliqués** :
+
 ```scss
 // Oubli d'import
 .my-component {
@@ -1674,7 +1694,7 @@ cat dist/assets/*.css
 }
 
 // Solution
-@import '@styles/abstracts/variables';
+@import "@styles/abstracts/variables";
 
 .my-component {
   color: $color-primary; // Works
@@ -1682,6 +1702,7 @@ cat dist/assets/*.css
 ```
 
 **Spécificité CSS** :
+
 ```scss
 // Spécificité trop faible
 .button {
@@ -1708,7 +1729,7 @@ cat dist/assets/*.css
 ```scss
 // CSS
 .hero {
-  color: #1B263B;
+  color: #1b263b;
   padding: 16px;
 }
 
@@ -1761,19 +1782,26 @@ Utiliser la **méthodologie BEM** (Block Element Modifier) pour les composants c
 
 ```scss
 // Block
-.card { }
+.card {
+}
 
 // Element (enfant du block)
-.card__header { }
-.card__body { }
-.card__footer { }
+.card__header {
+}
+.card__body {
+}
+.card__footer {
+}
 
 // Modifier (variation du block)
-.card--featured { }
-.card--large { }
+.card--featured {
+}
+.card--large {
+}
 
 // Combinaison
-.card--featured .card__header { }
+.card--featured .card__header {
+}
 ```
 
 **Exemple complet** :
@@ -1781,21 +1809,21 @@ Utiliser la **méthodologie BEM** (Block Element Modifier) pour les composants c
 ```scss
 .article-card {
   @include card;
-  
+
   // Element: image
   &__image {
     width: 100%;
   }
-  
+
   // Element: title
   &__title {
     font-size: $font-size-2xl;
   }
-  
+
   // Modifier: featured article
   &--featured {
     border: 2px solid $color-accent;
-    
+
     .article-card__title {
       color: $color-accent;
     }
@@ -1810,7 +1838,7 @@ Utiliser la **méthodologie BEM** (Block Element Modifier) pour les composants c
 .card {
   container-type: inline-size;
   padding: $spacing-4;
-  
+
   @container (min-width: 400px) {
     padding: $spacing-6;
     display: flex;
@@ -1820,8 +1848,8 @@ Utiliser la **méthodologie BEM** (Block Element Modifier) pour les composants c
 // Less flexible: Responsive based on viewport
 .card {
   padding: $spacing-4;
-  
-  @include respond-to('md') {
+
+  @include respond-to("md") {
     padding: $spacing-6;
     display: flex;
   }
@@ -1862,7 +1890,7 @@ components/
 .header {
   .nav-link {
     color: $color-white;
-    
+
     &:hover {
       color: $color-accent;
     }
@@ -1872,7 +1900,7 @@ components/
 // Using BEM
 .header__nav-link {
   color: $color-white;
-  
+
   &:hover {
     color: $color-accent;
   }
@@ -1883,13 +1911,21 @@ components/
 
 ```scss
 // Utility classes (helpers)
-.u-text-center { text-align: center; }
-.u-sr-only { @include sr-only; }
-.u-hidden { display: none; }
+.u-text-center {
+  text-align: center;
+}
+.u-sr-only {
+  @include sr-only;
+}
+.u-hidden {
+  display: none;
+}
 
 // Avoid conflicts with component classes
-.text-center { } // Component class
-.u-text-center { } // Utility class (clear distinction)
+.text-center {
+} // Component class
+.u-text-center {
+} // Utility class (clear distinction)
 ```
 
 ### 8. Commenter les sections importantes
@@ -1905,7 +1941,7 @@ components/
 .hero {
   @include flex-center;
   min-height: 100vh;
-  
+
   // Background with gradient overlay
   background: /* ... */;
 }

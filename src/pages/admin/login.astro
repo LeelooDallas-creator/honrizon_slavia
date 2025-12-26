@@ -245,7 +245,7 @@ const title = 'Connexion - Admin Horizon Slavia';
           errorMessage.textContent = data.error || 'Erreur de connexion';
           errorMessage.classList.add('show');
         }
-      } catch (error) {
+      } catch {
         errorMessage.textContent = 'Erreur de connexion au serveur';
         errorMessage.classList.add('show');
       } finally {

@@ -8,6 +8,9 @@ export const prerender = false;
  * Access to this page will redirect to the login page.
  */
 
+const title = "Inscription - Horizon Slavia";
+const csrfToken = "";
+
 return Astro.redirect('/admin/login');
 ---
 
@@ -394,7 +397,7 @@ return Astro.redirect('/admin/login');
             errorMessage.classList.add('show');
           }
         }
-      } catch (error) {
+      } catch {
         errorMessage.textContent = 'Erreur de connexion au serveur';
         errorMessage.classList.add('show');
       } finally {

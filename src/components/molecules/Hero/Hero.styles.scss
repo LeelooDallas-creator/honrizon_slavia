@@ -2,8 +2,8 @@
 // HERO VIDEO + INTERSECTION - Styles SCSS
 // ============================================
 
-@use '@styles/abstracts/variables' as *;
-@use '@styles/abstracts/mixins' as *;
+@use "@styles/abstracts/variables" as *;
+@use "@styles/abstracts/mixins" as *;
 
 // ============================================
 // HERO VIDEO SECTION
@@ -39,7 +39,7 @@
   height: 100%;
   object-fit: cover;
   display: block;
-  opacity: 1; 
+  opacity: 1;
 }
 
 .hero-video__overlay {
@@ -77,20 +77,19 @@
 }
 
 .hero-video__title {
-
   margin: 0 0 $spacing-6 0;
   line-height: $line-height-tight;
   color: $color-accent;
-  
-  @include respond-to('md') {
+
+  @include respond-to("md") {
     font-size: $font-size-5xl;
   }
-  
-  @include respond-to('lg') {
+
+  @include respond-to("lg") {
     font-size: $font-size-6xl;
   }
-  
-  @include respond-to('xl') {
+
+  @include respond-to("xl") {
     font-size: $font-size-7xl;
   }
 }
@@ -102,12 +101,12 @@
   line-height: $line-height-relaxed;
   color: $color-accent;
   opacity: 0.95;
-  
-  @include respond-to('md') {
+
+  @include respond-to("md") {
     font-size: $font-size-xl;
   }
-  
-  @include respond-to('lg') {
+
+  @include respond-to("lg") {
     font-size: $font-size-2xl;
   }
 }
@@ -125,19 +124,23 @@
   animation: bounce 2s infinite;
   z-index: 2;
   transition: opacity $transition-base;
-  
+
   &.hidden {
     opacity: 0;
     pointer-events: none;
   }
-  
+
   svg {
     filter: drop-shadow(0 2px 4px rgba($color-black, 0.5));
   }
 }
 
 @keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
     transform: translateX(-50%) translateY(0);
   }
   40% {
@@ -147,7 +150,6 @@
     transform: translateX(-50%) translateY(-5px);
   }
 }
-
 
 // ============================================
 // ANIMATIONS
@@ -181,7 +183,7 @@
   .hero-video {
     min-height: 500px;
   }
-  
+
   .hero-video__video {
     // Fixe sur mobile pour éviter les problèmes de performance
     position: fixed;
@@ -199,7 +201,7 @@
   .hero-video__subtitle {
     animation: none;
   }
-  
+
   .hero-video__scroll-indicator {
     animation: none;
   }

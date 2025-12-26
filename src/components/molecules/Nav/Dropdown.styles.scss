@@ -3,8 +3,8 @@
 // ============================================
 // Navigation dropdown avec accessibilité et animations
 
-@use '@styles/abstracts/variables' as *;
-@use '@styles/abstracts/mixins' as *;
+@use "@styles/abstracts/variables" as *;
+@use "@styles/abstracts/mixins" as *;
 
 // ============================================
 // DROPDOWN - Base
@@ -33,10 +33,10 @@
   border-radius: $radius-base;
   transition: all $transition-base;
   position: relative;
-  
+
   // Underline effect
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: 0;
     left: $spacing-4;
@@ -47,28 +47,28 @@
     transition: transform $transition-base;
     transform-origin: center;
   }
-  
+
   &:hover {
     color: $color-primary;
-    
+
     &::after {
       transform: scaleX(1);
     }
   }
-  
+
   &:focus-visible {
     outline: 2px solid $color-accent;
     outline-offset: 2px;
   }
-  
+
   // When dropdown is open
   &[aria-expanded="true"] {
     color: $color-accent;
-    
+
     .dropdown__chevron {
       transform: rotate(180deg);
     }
-    
+
     &::after {
       transform: scaleX(1);
     }
@@ -99,31 +99,31 @@
   box-shadow: $shadow-xl;
   overflow: hidden;
   z-index: $z-dropdown;
-  
+
   // Position sera calculée dynamiquement en JS
   // top: var(--dropdown-top, 80px);
-  
+
   // Animation
   opacity: 0;
   visibility: hidden;
-  transition: 
+  transition:
     opacity $transition-base,
     visibility $transition-base,
     max-height $transition-base cubic-bezier(0.4, 0, 0.2, 1);
-  
+
   // Adapter la largeur selon le nombre d'items
   &[data-items="1"] {
     width: min(90dvw, 500px);
   }
-  
+
   &[data-items="2"] {
     width: min(90dvw, 850px);
   }
-  
+
   &[data-items="3"] {
     width: min(90dvw, 1200px);
   }
-  
+
   // When open
   &[data-state="open"] {
     opacity: 1;
@@ -137,27 +137,27 @@
   padding: $spacing-8 $spacing-6;
   max-height: 80dvh;
   overflow-y: auto;
-  
+
   // Custom scrollbar
   &::-webkit-scrollbar {
     width: 8px;
   }
-  
+
   &::-webkit-scrollbar-track {
     background: rgba($color-neutral, 0.1);
     border-radius: $radius-full;
   }
-  
+
   &::-webkit-scrollbar-thumb {
     background: $color-accent;
     border-radius: $radius-full;
-    
+
     &:hover {
       background: $color-accent-dark;
     }
   }
-  
-  @include respond-to('md') {
+
+  @include respond-to("md") {
     padding: $spacing-10 $spacing-8;
   }
 }
@@ -169,14 +169,14 @@
 .dropdown__grid {
   display: grid;
   gap: $spacing-6;
-  
+
   // 1 item : 1 colonne centrée, max-width
   grid-template-columns: 1fr;
   max-width: 400px;
   margin: 0 auto;
-  
+
   // 2 items : 2 colonnes sur mobile paysage et +
-  @include respond-to('sm') {
+  @include respond-to("sm") {
     &[data-items="2"],
     &[data-items="4"],
     &[data-items="6"] {
@@ -184,9 +184,9 @@
       max-width: 800px;
     }
   }
-  
+
   // 3+ items : Grid auto-fit
-  @include respond-to('md') {
+  @include respond-to("md") {
     &[data-items="3"],
     &[data-items="5"],
     &[data-items="6"],
@@ -196,7 +196,7 @@
       max-width: 1200px;
     }
   }
-  
+
   // Forcer 1 colonne sur mobile peu importe le nombre
   @media (max-width: 640px) {
     grid-template-columns: 1fr;
@@ -217,21 +217,21 @@
   border-radius: $radius-md;
   padding: $spacing-4;
   transition: all $transition-base;
-  
+
   &:hover {
     background: rgba($color-primary, 0.03);
     transform: translateY(-2px);
-    
+
     .dropdown__item-title {
       color: $color-accent;
     }
-    
+
     // Trigger flip card on hover
     :global(.card) {
       transform: rotateY(180deg);
     }
   }
-  
+
   &:focus-visible {
     outline: 2px solid $color-accent;
     outline-offset: 2px;
@@ -261,11 +261,11 @@
     top: 70px;
     width: 95dvw;
   }
-  
+
   .dropdown__inner {
     padding: $spacing-6 $spacing-4;
   }
-  
+
   .dropdown__grid {
     grid-template-columns: 1fr;
   }
@@ -300,8 +300,10 @@
   z-index: calc($z-dropdown - 1);
   opacity: 0;
   visibility: hidden;
-  transition: opacity $transition-base, visibility $transition-base;
-  
+  transition:
+    opacity $transition-base,
+    visibility $transition-base;
+
   &[data-state="visible"] {
     opacity: 1;
     visibility: visible;

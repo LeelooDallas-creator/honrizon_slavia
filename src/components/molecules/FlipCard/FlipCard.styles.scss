@@ -3,8 +3,8 @@
 // ============================================
 // Carte avec effet flip 3D au hover
 
-@use '@styles/abstracts/variables' as *;
-@use '@styles/abstracts/mixins' as *;
+@use "@styles/abstracts/variables" as *;
+@use "@styles/abstracts/mixins" as *;
 
 // ============================================
 // CONTAINER
@@ -16,30 +16,30 @@
   border-radius: $radius-lg;
   overflow: hidden;
   perspective: 1000px;
-  
+
   // Aspect ratios
   &--ratio-16-9 {
     aspect-ratio: 16 / 9;
   }
-  
+
   &--ratio-4-3 {
     aspect-ratio: 4 / 3;
   }
-  
+
   &--ratio-1-1 {
     aspect-ratio: 1 / 1;
   }
-  
+
   &--ratio-3-2 {
     aspect-ratio: 3 / 2;
   }
-  
+
   // Focus state for keyboard navigation
   &:focus-visible {
     outline: 3px solid $color-accent;
     outline-offset: 4px;
   }
-  
+
   // Keyboard focus also flips the card
   &[data-keyboard-focus] .flipcard__inner {
     transform: rotateY(180deg);
@@ -56,27 +56,27 @@
   height: 100%;
   transform-style: preserve-3d;
   transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
-  
+
   // Flip on hover
   .flipcard:hover & {
     transform: rotateY(180deg);
   }
-  
+
   // Faster animation option
   .flipcard--fast & {
     transition-duration: 0.4s;
   }
-  
+
   // Slower animation option
   .flipcard--slow & {
     transition-duration: 0.8s;
   }
-  
+
   // Vertical flip
   .flipcard--vertical & {
     transform-origin: center center;
   }
-  
+
   .flipcard--vertical:hover & {
     transform: rotateX(180deg);
   }
@@ -115,7 +115,7 @@
   object-fit: cover;
   display: block;
   transition: transform $transition-slow;
-  
+
   // Subtle zoom on hover
   .flipcard:hover & {
     transform: scale(1.05);
@@ -137,7 +137,7 @@
   opacity: 0;
   transition: opacity $transition-base;
   pointer-events: none;
-  
+
   .flipcard:hover & {
     opacity: 1;
   }
@@ -158,7 +158,7 @@
   align-items: center;
   justify-content: center;
   padding: $spacing-6;
-  
+
   // Alternative gradient styles
   .flipcard--accent & {
     background: linear-gradient(
@@ -167,7 +167,7 @@
       $color-accent-dark 100%
     );
   }
-  
+
   .flipcard--secondary & {
     background: linear-gradient(
       135deg,
@@ -175,7 +175,7 @@
       $color-secondary-dark 100%
     );
   }
-  
+
   .flipcard--nature & {
     background: linear-gradient(
       135deg,
@@ -183,8 +183,8 @@
       $color-nature-dark 100%
     );
   }
-  
-  @include respond-to('md') {
+
+  @include respond-to("md") {
     padding: $spacing-8;
   }
 }
@@ -208,8 +208,8 @@
   color: $color-accent;
   margin: 0;
   line-height: $line-height-tight;
-  
-  @include respond-to('md') {
+
+  @include respond-to("md") {
     font-size: $font-size-xl;
   }
 }
@@ -219,8 +219,8 @@
   line-height: $line-height-relaxed;
   margin: 0;
   color: $color-primary;
-  
-  @include respond-to('md') {
+
+  @include respond-to("md") {
     font-size: $font-size-base;
   }
 }
@@ -261,7 +261,7 @@
     &:active .flipcard__inner {
       transform: rotateY(180deg);
     }
-    
+
     &:hover .flipcard__inner {
       transform: none;
     }
@@ -276,7 +276,7 @@
   .flipcard__inner {
     transition-duration: 0.01ms !important;
   }
-  
+
   .flipcard__image {
     transition: none !important;
   }

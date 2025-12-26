@@ -1,79 +1,285 @@
-# Horizon Slavia
+# Horizon Slavia - Documentation Technique
 
-> Parcourez les sentiers des légendes oubliées
+Documentation complète du projet Horizon Slavia, site web dédié à la découverte de l'Europe de l'Est.
 
-Horizon Slavia est un site web dédié à l'exploration culturelle et pratique de l'Europe de l'Est. Découvrez les légendes slaves, préparez vos voyages avec des guides de survie linguistique et plongez dans la richesse de cette région fascinante.
+## 📋 Sommaire
 
-## Fonctionnalités
+- [Stack Technique](#stack-technique)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Architecture](#architecture)
+- [Base de Données](#base-de-données)
+- [API](#api)
+- [Tests](#tests)
+- [Accessibilité](#accessibilité)
+- [Performance](#performance)
+- [Commandes](#commandes)
 
-- Guide de survie linguistique multi-langues (polonais, tchèque, slovaque, etc.)
-- Collection de légendes et mythes slaves
-- Checklists de départ pour voyageurs
-- Contacts d'urgence par pays
-- Guides thématiques sur l'Europe Centrale
-- Performance optimisée avec Astro
-- SEO-friendly avec URLs canoniques et OpenGraph
-- Support RSS et Sitemap
+## 🚀 Stack Technique
 
-## Structure du projet
+- **Framework**: Astro 5.16.6 + TypeScript (strict)
+- **Styling**: SCSS (architecture 7-in-1)
+- **Database**: PostgreSQL + Drizzle ORM
+- **Auth**: HMAC-SHA256 + bcrypt
+- **Tests**: Vitest + Playwright
+- **Code Quality**: ESLint, Prettier, Husky, Commitlint
 
-```text
-├── public/              # Assets statiques (images, favicon, etc.)
-├── src/
-│   ├── assets/         # Assets optimisés par Astro
-│   ├── components/     # Composants réutilisables
-│   ├── content/        # Contenu Markdown (guides, légendes)
-│   ├── layouts/        # Layouts de pages
-│   ├── pages/          # Pages du site (routing automatique)
-│   ├── styles/         # Styles globaux
-│   └── types/          # Types TypeScript
-├── tests/              # Tests unitaires (Vitest)
-├── e2e-tests/          # Tests end-to-end (Playwright)
-└── astro.config.mjs    # Configuration Astro
+## 📦 Installation
+
+```bash
+npm install
+npx playwright install
 ```
 
-### Organisation du contenu
+## ⚙️ Configuration
 
-- `src/content/guide-survis.md` - Lexiques de survie linguistique
-- `src/content/checklist-departure.md` - Checklists pour préparer son voyage
-- `src/content/emergency-contacts.md` - Contacts d'urgence par pays
+### Variables d'environnement (.env)
 
-## Commandes
+```env
+DATABASE_URL=postgresql://...
+SESSION_SECRET=<clé-aléatoire-longue>
+```
 
-Toutes les commandes doivent être exécutées depuis la racine du projet :
+**Note**: Ne jamais commiter le fichier `.env`.
 
-| Commande                   | Action                                                    |
-| :------------------------- | :-------------------------------------------------------- |
-| `npm install`              | Installe les dépendances                                  |
-| `npm run dev`              | Lance le serveur de développement sur `localhost:4321`   |
-| `npm run build`            | Compile le site pour la production dans `./dist/`        |
-| `npm run preview`          | Prévisualise le build en local avant déploiement         |
-| `npm run lint`             | Vérifie le code avec ESLint                              |
-| `npm run unit-tests`       | Lance les tests unitaires avec Vitest                    |
-| `npm run e2e-tests`        | Lance les tests end-to-end avec Playwright               |
-| `npm run local-ci`         | Lance tous les checks (format, lint, tests, build)       |
-| `npm run commit`           | Crée un commit avec Commitizen (conventional commits)    |
+### Base de données
 
-## Stack technique
+```bash
+npm run db:generate  # Générer migrations
+npm run db:push      # Appliquer migrations
+npm run db:studio    # Interface graphique
+```
 
-- **Framework** : [Astro](https://astro.build/) v5.8
-- **Langage** : TypeScript
-- **Tests** : Vitest (unitaires) + Playwright (E2E)
-- **Qualité du code** : ESLint, Prettier
-- **Git hooks** : Husky + lint-staged + Commitlint
-- **Plugins Astro** : MDX, RSS, Sitemap
+## 🏗️ Architecture
 
-## Développement
+```
+src/
+├── components/        # Atomic Design (atoms/molecules/organisms)
+├── pages/            # Routes (index, admin, articles, api)
+├── layouts/          # Layouts réutilisables
+├── lib/              # Logique métier (db, auth, validations)
+├── styles/           # SCSS modulaire
+├── scripts/          # JavaScript utilitaires
+├── assets/           # Images optimisées
+└── types/            # Types TypeScript
 
-1. Clonez le repository
-2. Installez les dépendances : `npm install`
-3. Lancez le serveur de dev : `npm run dev`
-4. Ouvrez votre navigateur sur `http://localhost:4321`
+tests/                # Tests unitaires Vitest
+e2e-tests/            # Tests E2E Playwright
+drizzle/              # Migrations SQL
+public/uploads/       # Fichiers uploadés
+```
 
-## Contribution
+### Design System
 
-Ce projet utilise les [Conventional Commits](https://www.conventionalcommits.org/). Utilisez `npm run commit` pour créer des commits formatés correctement.
+**Couleurs** (WCAG AAA/AA) :
 
-## Licence
+- Primaire: `#1B263B` (contraste 13.6:1)
+- Secondaire: `#8B0000` (contraste 8.2:1)
+- Accent: `#C4A000` (contraste 4.7:1)
 
-Ce projet est basé sur le template [Bear Blog](https://github.com/HermanMartinus/bearblog/) pour Astro.
+**Typographie** :
+
+- Headings: Uncial Antiqua
+- Body: Merriweather
+- Échelle: 1.250
+
+**Breakpoints** :
+
+- sm: 640px, md: 768px, lg: 1024px, xl: 1280px, 2xl: 1536px
+
+## 🗄️ Base de Données
+
+### Schéma
+
+**users**: id, email, password (bcrypt), firstName, lastName, timestamps
+
+**countries**: id, name, slug, createdAt
+
+**articles**: id, title, slug, excerpt, content, coverImageUrl, pdfUrl, type (inspiration|carnet|ressource), status (draft|published), authorId (FK), countryId (FK nullable), readingTime, timestamps, publishedAt
+
+### Requêtes communes
+
+```typescript
+import { db } from "@/lib/db";
+import { articles, countries } from "@/lib/db/schema";
+import { eq, desc } from "drizzle-orm";
+
+// Articles publiés
+const published = await db
+  .select()
+  .from(articles)
+  .where(eq(articles.status, "published"))
+  .orderBy(desc(articles.publishedAt));
+
+// Article avec pays
+const article = await db
+  .select()
+  .from(articles)
+  .leftJoin(countries, eq(articles.countryId, countries.id))
+  .where(eq(articles.slug, "slug"));
+```
+
+## 🔌 API
+
+Toutes les routes utilisent `export const prerender = false`.
+
+### Auth
+
+- `POST /api/auth/login` - Connexion (cookie session 30min)
+- `POST /api/auth/logout` - Déconnexion
+- `POST /api/auth/change-password` - Changement mot de passe (auth requis)
+
+### Articles
+
+- `GET /api/articles` - Liste (auth requis)
+- `POST /api/articles` - Création (auth + CSRF)
+- `GET /api/articles/[id]` - Détail (auth requis)
+- `PUT /api/articles/[id]` - Modification (auth + CSRF)
+- `DELETE /api/articles/[id]` - Suppression (auth + CSRF)
+
+### Médias
+
+- `POST /api/upload` - Upload PDF max 10MB (auth + CSRF)
+
+### Contact
+
+- `POST /api/contact` - Formulaire contact (validation RGPD)
+
+## 🧪 Tests
+
+### Unitaires (Vitest)
+
+```bash
+npm run unit-tests
+vitest              # Mode watch
+vitest --coverage   # Coverage
+```
+
+Fichiers :
+
+- `tests/validations.spec.ts` - Schemas Zod
+- `tests/auth.spec.ts` - Fonctions auth
+- `tests/utils.spec.ts` - Utilitaires
+
+### E2E (Playwright)
+
+```bash
+npm run e2e-tests           # Tous les tests
+npm run test:a11y           # Accessibilité uniquement
+npx playwright test --ui    # Mode UI
+npx playwright show-report  # Rapport HTML
+```
+
+Fichiers :
+
+- `e2e-tests/homepage.spec.ts` - Page d'accueil
+- `e2e-tests/contact-form.spec.ts` - Formulaire
+- `e2e-tests/accessibility.spec.ts` - WCAG 2.1
+
+### CI Local
+
+```bash
+npm run local-ci  # Format, lint, tests, build
+```
+
+## ♿ Accessibilité
+
+Conforme **WCAG 2.1 niveau AA**.
+
+### Implémenté
+
+✅ Navigation clavier (Tab, focus visible)
+✅ ARIA (labels, required, live, expanded)
+✅ Contraste couleurs (min 4.5:1)
+✅ Images (alt obligatoire, lazy loading)
+✅ Formulaires (labels associés, erreurs accessibles)
+✅ Structure sémantique (headings hiérarchiques, landmarks)
+✅ Reduced motion (`prefers-reduced-motion`)
+
+### Tests
+
+Automatisés : `npm run test:a11y`
+
+Manuels : NVDA, JAWS, VoiceOver, TalkBack
+
+## 🚀 Performance
+
+### Optimisations
+
+- HTML compressé
+- CSS minifié + inliné auto
+- JS minifié (Terser)
+- Images WebP optimisées
+- Lazy loading
+- Code splitting (vendor chunks)
+
+### Lighthouse
+
+Objectif : **Score > 90** sur toutes les catégories
+
+```bash
+npm run build
+npm run preview
+# Chrome DevTools > Lighthouse
+```
+
+### SEO
+
+- Meta description, canonical URL
+- Open Graph, Twitter Card
+- Sitemap: `/sitemap-index.xml`
+- RSS: `/rss.xml`
+- JSON-LD structured data
+
+## 🔐 Sécurité
+
+### Auth
+
+- Passwords: bcrypt (cost 12)
+- Sessions: HMAC-SHA256, httpOnly cookies, 30min expiration
+- CSRF protection (tokens timing-safe)
+
+### Validation
+
+- Zod sur toutes les entrées
+- Sanitization fichiers
+- Protection path traversal
+- Limites taille fichiers
+
+## 📜 Commandes
+
+| Commande              | Description            |
+| --------------------- | ---------------------- |
+| `npm run dev`         | Dev server (port 4321) |
+| `npm run build`       | Build production       |
+| `npm run preview`     | Preview build          |
+| `npm run lint`        | ESLint                 |
+| `npm run unit-tests`  | Tests Vitest           |
+| `npm run e2e-tests`   | Tests Playwright       |
+| `npm run test:a11y`   | Tests accessibilité    |
+| `npm run local-ci`    | Tous les checks        |
+| `npm run commit`      | Commit Commitizen      |
+| `npm run db:generate` | Générer migrations     |
+| `npm run db:push`     | Appliquer migrations   |
+| `npm run db:studio`   | Drizzle Studio UI      |
+
+## 📝 Conventions
+
+### Commits (Conventional Commits)
+
+```bash
+npm run commit
+```
+
+Types : `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
+
+### Code
+
+- Prettier (auto-format pre-commit)
+- ESLint (linting TS/JS)
+- TypeScript strict mode
+
+---
+
+**Version**: 0.0.1
+**Dernière mise à jour**: Décembre 2024
